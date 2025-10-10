@@ -11,7 +11,7 @@ export default function Footer() {
                 color: pallete.grey[600],
             }}
         >
-            © Copyright 2025. BPJS Kesehatan KC Ambon.
+            © Copyright 2025. Sistem Pelayanan dan Pengaduan Masyarakat.
         </Layout.Footer>
     );
 }

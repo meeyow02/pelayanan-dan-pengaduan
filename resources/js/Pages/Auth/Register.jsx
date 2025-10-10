@@ -5,7 +5,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import CustomInput from "@/Components/CustomInput";
 import CustomButton from "@/Components/CustomButton";
 
-export default function Login() {
+export default function Register() {
     const { data, setData, post, processing } = useForm({
         username: "",
         password: "",
@@ -15,7 +15,7 @@ export default function Login() {
 
     const submit = async () => {
         try {
-            // post(route("login"), {
+            // post(route("register"), {
             //     onError: (errors) => {
             //         if (errors.username) {
             //             messageApi.error(errors.username);
@@ -33,7 +33,7 @@ export default function Login() {
 
     return (
         <>
-            <Head title="Login" />
+            <Head title="Register" />
             {contextHolder}
             <Layout
                 style={{
@@ -67,7 +67,7 @@ export default function Login() {
                                 fontWeight: "bold"
                             }}
                         >
-                            Login
+                            Registrasi Akun
                         </Typography.Title>
                         <Typography.Text
                             style={{
@@ -122,15 +122,34 @@ export default function Login() {
                             password
                         />
 
+                        <CustomInput
+                            blackLabel
+                            label="Konfirmasi Password"
+                            name="confirmpassword"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Password harus diisi",
+                                },
+                            ]}
+                            placeholder="Konfirmasi password"
+                            type="password"
+                            value={data.password}
+                            onChange={(e) => {
+                                setData("password", e.target.value);
+                            }}
+                            password
+                        />
+
                         <CustomButton
                             loading={processing}
                             disabled={processing}
-                            className="mt-5"
+                            className="mt-2"
                             variant="primary"
                                     htmlType="submit"
                                     block
                                 >
-                                    <Link href="/">LOGIN</Link>
+                                    <Link href="/login">DAFTAR</Link>
                                 </CustomButton>
                             </Form>
 
@@ -143,7 +162,8 @@ export default function Login() {
                                         color: pallete.grey[600],
                                     }}
                                 >
-                                    © Copyright 2025. BPJS Kesehatan KC Ambon.
+                                    © Copyright 2025. 
+                                    Sistem Pelayanan dan Pengaduan Masyarakat.
                                 </Typography.Text>
                             )}
                         </div>
