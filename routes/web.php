@@ -14,6 +14,10 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+});
+
 Route::get('/', function () {
-    return Inertia::render('Test');
+    return Inertia::render('Dashboard');
 });
