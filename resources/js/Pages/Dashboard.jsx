@@ -1,4 +1,4 @@
-import { Col, Row, Typography } from 'antd';
+import { Col, Divider, Row, Typography } from 'antd';
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
@@ -82,7 +82,7 @@ export default function Dashboard() {
                                             fontSize: "2.5rem",
                                         }}
                                     >
-                                        100
+                                        125
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
@@ -90,7 +90,7 @@ export default function Dashboard() {
                                             fontSize: "3rem",
                                         }}
                                     >
-                                        100
+                                        125
                                     </Typography.Text>
                                 )}
                             </div>
@@ -138,7 +138,7 @@ export default function Dashboard() {
                                             fontSize: "2.5rem"
                                         }}
                                     >
-                                        100
+                                        125
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
@@ -146,7 +146,7 @@ export default function Dashboard() {
                                                 fontSize: "3rem",
                                             }}
                                         >
-                                            100
+                                            125
                                     </Typography.Text>
                                 )}
                             </div>
@@ -155,390 +155,960 @@ export default function Dashboard() {
                 </Row>
 
                 {/* ADUAN */}
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-                    style={{ 
-                        marginTop: "1rem",
-                    }}
-                >
-                    <Col span={8}>
-                        <Card variant='borderless'
-                            styles={{
-                                body: {
-                                        padding: "1.1rem",
-                                        borderRadius: ".3rem"
-                                    },
-                                }}
-                            >
-                            <Row 
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
-                                        style={{ 
-                                            fontSize: ".8rem",
-                                            textAlign: "center",
+                {isMobile ? (
+                    <Divider orientation='center'
+                        style={{ 
+                            marginTop: "1.5rem"
+                        }}
+                    >
+                        Aduan Masyarakat
+                    </Divider>
+                    
+                ) : (
+                    <Divider orientation='left'
+                        style={{ 
+                            marginTop: "1.5rem"
+                        }}
+                    >
+                        Aduan Masyarakat
+                    </Divider>
+                )}
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    {isMobile ? (
+                        <>
+                            <Col span={12}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem"
+                                            },
                                         }}
                                     >
-                                        Aduan Selesai
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
+                                    <Row 
                                         style={{ 
-                                            fontSize: "1rem",
+                                            display: "flex",
+                                            justifyContent: "center",
                                         }}
                                     >
-                                        Aduan Selesai
-                                    </Typography.Text>                               
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Aduan Selesai
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Selesai
+                                            </Typography.Text>                               
 
-                                )}
-                            </Row>
-                            <div
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
+                                        )}
+                                    </Row>
+                                    <div
                                         style={{ 
-                                            fontSize: "2rem",
+                                            display: "flex",
+                                            justifyContent: "center"
                                         }}
                                     >
-                                        50
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
-                                            style={{ 
-                                                fontSize: "3rem",
-                                            }}
-                                        >
-                                            50
-                                    </Typography.Text>
-                                )}
-                            </div>
-                        </Card>
-                    </Col>
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                50
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    50
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
 
-                    <Col span={8}>
-                        <Card
-                            styles={{
-                                body: {
-                                        padding: "1.1rem",
-                                        borderRadius: ".3rem"
-                                    },
-                                }}
-                            >
-                            <Row 
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
-                                        style={{ 
-                                            fontSize: ".8rem",
-                                            textAlign: "center",
+                            <Col span={12}>
+                                <Card
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem"
+                                            },
                                         }}
                                     >
-                                        Aduan Ditindaklanjuti
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
+                                    <Row 
                                         style={{ 
-                                            fontSize: "1rem",
+                                            display: "flex",
+                                            justifyContent: "center",
                                         }}
                                     >
-                                        Aduan Ditindaklanjuti
-                                    </Typography.Text>                               
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Aduan Ditindaklanjuti
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Ditindaklanjuti
+                                            </Typography.Text>                               
 
-                                )}
-                            </Row>
-                            <div
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
+                                        )}
+                                    </Row>
+                                    <div
                                         style={{ 
-                                            fontSize: "2rem",
+                                            display: "flex",
+                                            justifyContent: "center"
                                         }}
                                     >
-                                        25
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
-                                            style={{ 
-                                                fontSize: "3rem",
-                                            }}
-                                        >
-                                            25
-                                    </Typography.Text>
-                                )}
-                            </div>
-                        </Card>
-                    </Col>
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
 
-                    <Col span={8}>
-                        <Card variant='borderless'
-                            styles={{
-                                body: {
-                                        padding: "1.1rem",
-                                        borderRadius: ".3rem"
-                                    },
-                                }}
-                            >
-                            <Row 
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
-                                        style={{ 
-                                            fontSize: ".8rem",
-                                            textAlign: "center",
+                            <Col span={12}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                                marginTop: "1rem"
+                                            },
                                         }}
                                     >
-                                        Aduan yang Masuk
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
+                                    <Row 
                                         style={{ 
-                                            fontSize: "1rem",
+                                            display: "flex",
+                                            justifyContent: "center",
                                         }}
                                     >
-                                        Aduan yang Masuk
-                                    </Typography.Text>                               
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Aduan Pending
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Pending
+                                            </Typography.Text>                               
 
-                                )}
-                            </Row>
-                            <div
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
+                                        )}
+                                    </Row>
+                                    <div
                                         style={{ 
-                                            fontSize: "2rem",
+                                            display: "flex",
+                                            justifyContent: "center"
                                         }}
                                     >
-                                        25
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
-                                            style={{ 
-                                                fontSize: "3rem",
-                                            }}
-                                        >
-                                            25
-                                    </Typography.Text>
-                                )}
-                            </div>
-                        </Card>
-                    </Col>
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={12}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                                marginTop: "1rem"
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Aduan Dibatalkan
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan yang Masuk
+                                            </Typography.Text>                               
+
+                                        )}
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                        </>
+                    ) : (
+                        <>
+                            <Col span={6}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem"
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Selesai
+                                        </Typography.Text>  
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                50
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    50
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={6}>
+                                <Card
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem"
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Ditindaklanjuti
+                                        </Typography.Text> 
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={6}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Pending
+                                        </Typography.Text> 
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={6}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Aduan Dibatalkan
+                                        </Typography.Text>  
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+                        </>
+                    )}
                     
                 </Row>
 
                 {/* PELAYANAN */}
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-                    style={{ 
-                        marginTop: "1rem",
-                    }}
-                >
-                    <Col span={8}>
-                        <Card variant='borderless'
-                            styles={{
-                                body: {
-                                        padding: "1.1rem",
-                                        borderRadius: ".3rem"
-                                    },
-                                }}
-                            >
-                            <Row 
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
-                                        style={{ 
-                                            fontSize: ".8rem",
-                                            textAlign: "center",
+                {isMobile ? (
+                    <Divider orientation='center'
+                        style={{ 
+                            marginTop: "1.5rem"
+                        }}
+                    >
+                        Pelayanan Administrasi
+                    </Divider>
+                    
+                ) : (
+                    <Divider orientation='left'
+                        style={{ 
+                            marginTop: "1.5rem"
+                        }}
+                    >
+                        Pelayanan Administrasi
+                    </Divider>
+                )}
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    {isMobile ? (
+                        <>
+                            <Col span={12}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.8rem",
+                                                borderRadius: ".3rem"
+                                            },
                                         }}
                                     >
-                                        Pelayanan Selesai
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
+                                    <Row 
                                         style={{ 
-                                            fontSize: "1rem",
+                                            display: "flex",
+                                            justifyContent: "center",
                                         }}
                                     >
-                                        Pelayanan Selesai
-                                    </Typography.Text>                               
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Pelayanan Selesai
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Selesai
+                                            </Typography.Text>                               
 
-                                )}
-                            </Row>
-                            <div
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
+                                        )}
+                                    </Row>
+                                    <div
                                         style={{ 
-                                            fontSize: "2rem",
+                                            display: "flex",
+                                            justifyContent: "center"
                                         }}
                                     >
-                                        50
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
-                                            style={{ 
-                                                fontSize: "3rem",
-                                            }}
-                                        >
-                                            50
-                                    </Typography.Text>
-                                )}
-                            </div>
-                        </Card>
-                    </Col>
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                50
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    50
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
 
-                    <Col span={8}>
-                        <Card
-                            styles={{
-                                body: {
-                                        padding: "1.1rem",
-                                        borderRadius: ".3rem"
-                                    },
-                                }}
-                            >
-                            <Row 
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
-                                        style={{ 
-                                            fontSize: ".8rem",
-                                            textAlign: "center",
+                            <Col span={12}>
+                                <Card
+                                    styles={{
+                                        body: {
+                                                padding: "1.2rem",
+                                                borderRadius: ".3rem"
+                                            },
                                         }}
                                     >
-                                        Pelayanan Ditindaklanjuti
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
+                                    <Row 
                                         style={{ 
-                                            fontSize: "1rem",
+                                            display: "flex",
+                                            justifyContent: "center",
                                         }}
                                     >
-                                        Pelayanan Ditindaklanjuti
-                                    </Typography.Text>                               
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Pelayanan Ditindaklanjuti
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Ditindaklanjuti
+                                            </Typography.Text>                               
 
-                                )}
-                            </Row>
-                            <div
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
+                                        )}
+                                    </Row>
+                                    <div
                                         style={{ 
-                                            fontSize: "2rem",
+                                            display: "flex",
+                                            justifyContent: "center"
                                         }}
                                     >
-                                        25
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
-                                            style={{ 
-                                                fontSize: "3rem",
-                                            }}
-                                        >
-                                            25
-                                    </Typography.Text>
-                                )}
-                            </div>
-                        </Card>
-                    </Col>
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
 
-                    <Col span={8}>
-                        <Card variant='borderless'
-                            styles={{
-                                body: {
-                                        padding: "1.1rem",
-                                        borderRadius: ".3rem"
-                                    },
-                                }}
-                            >
-                            <Row 
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
-                                        style={{ 
-                                            fontSize: ".8rem",
-                                            textAlign: "center",
+                            <Col span={12}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                                marginTop: "1rem"
+                                            },
                                         }}
                                     >
-                                        Pelayanan yang Masuk
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
+                                    <Row 
                                         style={{ 
-                                            fontSize: "1rem",
+                                            display: "flex",
+                                            justifyContent: "center",
                                         }}
                                     >
-                                        Pelayanan yang Masuk
-                                    </Typography.Text>                               
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Pelayanan Pending
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Pending
+                                            </Typography.Text>                               
 
-                                )}
-                            </Row>
-                            <div
-                                style={{ 
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {isMobile ? (
-                                    <Typography.Text
+                                        )}
+                                    </Row>
+                                    <div
                                         style={{ 
-                                            fontSize: "2rem",
+                                            display: "flex",
+                                            justifyContent: "center"
                                         }}
                                     >
-                                        25
-                                    </Typography.Text>
-                                ) : (
-                                    <Typography.Text
-                                            style={{ 
-                                                fontSize: "3rem",
-                                            }}
-                                        >
-                                            25
-                                    </Typography.Text>
-                                )}
-                            </div>
-                        </Card>
-                    </Col>
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={12}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                                marginTop: "1rem"
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: ".8rem",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                Pelayanan Dibatalkan
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan yang Masuk
+                                            </Typography.Text>                               
+
+                                        )}
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                        </>
+                    ) : (
+                        <>
+                            <Col span={6}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem"
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Selesai
+                                        </Typography.Text>
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                50
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    50
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={6}>
+                                <Card
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem"
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Ditindaklanjuti
+                                        </Typography.Text>
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={6}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Pending
+                                        </Typography.Text>  
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+
+                            <Col span={6}>
+                                <Card variant='borderless'
+                                    styles={{
+                                        body: {
+                                                padding: "1.1rem",
+                                                borderRadius: ".3rem",
+                                            },
+                                        }}
+                                    >
+                                    <Row 
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <Typography.Text
+                                                style={{ 
+                                                    fontSize: "1rem",
+                                                }}
+                                            >
+                                                Pelayanan Dibatalkan
+                                        </Typography.Text> 
+                                    </Row>
+                                    <div
+                                        style={{ 
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        {isMobile ? (
+                                            <Typography.Text
+                                                style={{ 
+                                                    fontSize: "2rem",
+                                                }}
+                                            >
+                                                25
+                                            </Typography.Text>
+                                        ) : (
+                                            <Typography.Text
+                                                    style={{ 
+                                                        fontSize: "3rem",
+                                                    }}
+                                                >
+                                                    25
+                                            </Typography.Text>
+                                        )}
+                                    </div>
+                                </Card>
+                            </Col>
+                        </>
+                    )}
                     
                 </Row>
                 
