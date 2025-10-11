@@ -193,7 +193,7 @@ export default function Header() {
                                             color: pallete.grey[600],
                                         }}
                                     >
-                                        johndoe@gmail.com
+                                        anonym@example.com
                                     </Typography.Text>
                                 </Flex>
                             )}

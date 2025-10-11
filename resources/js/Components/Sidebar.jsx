@@ -1,6 +1,5 @@
 import { Flex, Image, Layout, Menu, Typography } from "antd";
 import { Link, usePage } from "@inertiajs/react";
-import sidebarLogo from "../../../public/logo-vpro.svg";
 import pallete from "../utils/pallete";
 import PropTypes from "prop-types";
 import useSidebarStore from "../store/sidebarStore";
@@ -99,7 +98,7 @@ function Sidebar({ collapsed, isMobile = false }) {
                 align="center"
                 style={{ height: 32, marginBottom: 16 }}
             >
-                <Typography.Text>SiPePe</Typography.Text>
+                <Typography.Text>SiDUKMA</Typography.Text>
             </Flex>
             <Menu
                 items={[
@@ -124,42 +123,42 @@ function Sidebar({ collapsed, isMobile = false }) {
                         ),
                     },
                     {
-                        key: "pelayanan",
-                        icon: isParentActive("pelayanan", []) ? (
-                            <Icon
-                                // icon="material-symbols:dashboard"
-                                className="scale-110"
-                            />
-                        ) : (
-                            <Icon
-                                color={defaultIconColor}
-                                // icon="material-symbols:dashboard"
-                                className="scale-110"
-                            />
-                        ),
-                        label: (
-                            <Link href="/" onClick={handleLinkClick}>
-                                Pelayanan
-                            </Link>
-                        ),
-                    },
-                    {
                         key: "pengaduan",
                         icon: isParentActive("pengaduan", []) ? (
                             <Icon
-                                // icon="material-symbols:dashboard"
+                                icon="material-symbols:note-stack-sharp"
                                 className="scale-110"
                             />
                         ) : (
                             <Icon
                                 color={defaultIconColor}
-                                // icon="material-symbols:dashboard"
+                                icon="material-symbols:note-stack-sharp"
                                 className="scale-110"
                             />
                         ),
                         label: (
                             <Link href="/" onClick={handleLinkClick}>
                                 Pengaduan
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: "pelayanan",
+                        icon: isParentActive("pelayanan", []) ? (
+                            <Icon
+                                icon="material-symbols:folder-open"
+                                className="scale-110"
+                            />
+                        ) : (
+                            <Icon
+                                color={defaultIconColor}
+                                icon="material-symbols:folder-open"
+                                className="scale-110"
+                            />
+                        ),
+                        label: (
+                            <Link href="/" onClick={handleLinkClick}>
+                                Pelayanan
                             </Link>
                         ),
                     },
