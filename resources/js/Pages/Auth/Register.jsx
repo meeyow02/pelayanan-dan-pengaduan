@@ -1,4 +1,4 @@
-import { Col, Flex, Form, Layout, message, Row, Typography, Image } from "antd";
+import { Form, Layout, message, Typography } from "antd";
 import { useResponsive } from "../../hooks/useResponsive";
 import pallete from "../../utils/pallete";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -7,25 +7,19 @@ import CustomButton from "@/Components/CustomButton";
 
 export default function Register() {
     const { data, setData, post, processing } = useForm({
+        name: "",
+        email: "",
         username: "",
+        phone_number: "",
         password: "",
+        password_confirmation: "",
     });
     const [messageApi, contextHolder] = message.useMessage();
     const { isMobile } = useResponsive();
 
     const submit = async () => {
         try {
-            // post(route("register"), {
-            //     onError: (errors) => {
-            //         if (errors.username) {
-            //             messageApi.error(errors.username);
-            //         } else if (errors.password) {
-            //             messageApi.error(errors.password);
-            //         } else {
-            //             messageApi.error("Login gagal, silakan coba lagi.");
-            //         }
-            //     },
-            // });
+            post(route("register"));
         } catch (error) {
             messageApi.error("Terjadi kesalahan, silakan coba lagi.");
         }
@@ -39,7 +33,6 @@ export default function Register() {
                 style={{
                     minHeight: "100vh",
                     height: "100vh",
-                    position: "fixed",
                     width: "100%",
                     top: 0,
                     left: 0,
@@ -54,9 +47,7 @@ export default function Register() {
                         padding: "20px",
                     }}
                 >
-                    <div
-                        style={{ textAlign: "start", marginBottom: 20 }}
-                    >
+                    <div style={{ textAlign: "center", marginBottom: 20 }}>
                         <Typography.Title
                             level={3}
                             style={{
@@ -64,7 +55,7 @@ export default function Register() {
                                 marginBottom: 10,
                                 textAlign: "center",
                                 fontSize: "2rem",
-                                fontWeight: "bold"
+                                fontWeight: "bold",
                             }}
                         >
                             Registrasi Akun
@@ -76,7 +67,8 @@ export default function Register() {
                                 color: pallete.grey[600],
                             }}
                         >
-                            Silahkan masukkan username dan password Anda
+                            Silahkan masukkan data yang diperlukan untuk
+                            melakukan pembuatan akun
                         </Typography.Text>
                     </div>
 
@@ -88,6 +80,23 @@ export default function Register() {
                     >
                         <CustomInput
                             blackLabel
+                            label="Nama Lengkap"
+                            name="name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Nama Lengkap harus diisi",
+                                },
+                            ]}
+                            placeholder="Masukkan Nama Lengkap"
+                            value={data.name}
+                            onChange={(e) => {
+                                setData("name", e.target.value);
+                            }}
+                        />
+
+                        <CustomInput
+                            blackLabel
                             label="Username"
                             name="username"
                             rules={[
@@ -96,10 +105,53 @@ export default function Register() {
                                     message: "Username harus diisi",
                                 },
                             ]}
-                            placeholder="Masukkan username"
+                            placeholder="Masukkan Username"
                             value={data.username}
                             onChange={(e) => {
                                 setData("username", e.target.value);
+                            }}
+                        />
+
+                        <CustomInput
+                            blackLabel
+                            label="Email"
+                            name="email"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Email harus diisi",
+                                },
+                                {
+                                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: "Format email tidak valid",
+                                },
+                            ]}
+                            placeholder="Masukkan Email"
+                            value={data.email}
+                            onChange={(e) => {
+                                setData("email", e.target.value);
+                            }}
+                        />
+
+                        <CustomInput
+                            blackLabel
+                            label="Nomor Telepon"
+                            name="phone_number"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Nomor Telepon harus diisi",
+                                },
+                                {
+                                    pattern: /^(?:\+62|0)[0-9]{9,13}$/,
+                                    message:
+                                        "Nomor telepon tidak valid (contoh: 081234567890 atau +6281234567890)",
+                                },
+                            ]}
+                            placeholder="Masukkan Nomor Telepon"
+                            value={data.phone_number}
+                            onChange={(e) => {
+                                setData("phone_number", e.target.value);
                             }}
                         />
 
@@ -125,18 +177,21 @@ export default function Register() {
                         <CustomInput
                             blackLabel
                             label="Konfirmasi Password"
-                            name="confirmpassword"
+                            name="password_confirmation"
                             rules={[
                                 {
                                     required: true,
-                                    message: "Password harus diisi",
+                                    message: "Konfirmasi Password harus diisi",
                                 },
                             ]}
                             placeholder="Konfirmasi password"
                             type="password"
-                            value={data.password}
+                            value={data.password_confirmation}
                             onChange={(e) => {
-                                setData("password", e.target.value);
+                                setData(
+                                    "password_confirmation",
+                                    e.target.value
+                                );
                             }}
                             password
                         />
@@ -146,27 +201,31 @@ export default function Register() {
                             disabled={processing}
                             className="mt-2"
                             variant="primary"
-                                    htmlType="submit"
-                                    block
-                                >
-                                    <Link href="/login">DAFTAR</Link>
-                                </CustomButton>
-                            </Form>
+                            htmlType="submit"
+                            block
+                        >
+                            DAFTAR
+                        </CustomButton>
+                    </Form>
 
-                            {isMobile && (
-                                <Typography.Text
-                                    style={{
-                                        display: "block",
-                                        textAlign: "center",
-                                        marginTop: 40,
-                                        color: pallete.grey[600],
-                                    }}
-                                >
-                                    © Copyright 2025. 
-                                    Sistem Pelayanan dan Pengaduan Masyarakat.
-                                </Typography.Text>
-                            )}
-                        </div>
+                    <div className="mt-3 text-center">
+                        Sudah punya akun? <Link href="/login">Login</Link>
+                    </div>
+
+                    {isMobile && (
+                        <Typography.Text
+                            style={{
+                                display: "block",
+                                textAlign: "center",
+                                marginTop: 40,
+                                color: pallete.grey[600],
+                            }}
+                        >
+                            © Copyright 2025. Sistem Pelayanan dan Pengaduan
+                            Masyarakat.
+                        </Typography.Text>
+                    )}
+                </div>
             </Layout>
         </>
     );

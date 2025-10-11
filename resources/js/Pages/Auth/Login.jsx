@@ -1,4 +1,4 @@
-import { Col, Flex, Form, Layout, message, Row, Typography, Image } from "antd";
+import { Form, Layout, message, Typography } from "antd";
 import { useResponsive } from "../../hooks/useResponsive";
 import pallete from "../../utils/pallete";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -7,7 +7,7 @@ import CustomButton from "@/Components/CustomButton";
 
 export default function Login() {
     const { data, setData, post, processing } = useForm({
-        username: "",
+        email: "",
         password: "",
     });
     const [messageApi, contextHolder] = message.useMessage();
@@ -15,17 +15,17 @@ export default function Login() {
 
     const submit = async () => {
         try {
-            // post(route("login"), {
-            //     onError: (errors) => {
-            //         if (errors.username) {
-            //             messageApi.error(errors.username);
-            //         } else if (errors.password) {
-            //             messageApi.error(errors.password);
-            //         } else {
-            //             messageApi.error("Login gagal, silakan coba lagi.");
-            //         }
-            //     },
-            // });
+            post(route("login"), {
+                onError: (errors) => {
+                    if (errors.email) {
+                        messageApi.error(errors.email);
+                    } else if (errors.password) {
+                        messageApi.error(errors.password);
+                    } else {
+                        messageApi.error("Login gagal, silakan coba lagi.");
+                    }
+                },
+            });
         } catch (error) {
             messageApi.error("Terjadi kesalahan, silakan coba lagi.");
         }
@@ -39,7 +39,6 @@ export default function Login() {
                 style={{
                     minHeight: "100vh",
                     height: "100vh",
-                    position: "fixed",
                     width: "100%",
                     top: 0,
                     left: 0,
@@ -54,9 +53,7 @@ export default function Login() {
                         padding: "20px",
                     }}
                 >
-                    <div
-                        style={{ textAlign: "start", marginBottom: 20 }}
-                    >
+                    <div style={{ textAlign: "center", marginBottom: 20 }}>
                         <Typography.Title
                             level={3}
                             style={{
@@ -64,7 +61,7 @@ export default function Login() {
                                 marginBottom: 10,
                                 textAlign: "center",
                                 fontSize: "2rem",
-                                fontWeight: "bold"
+                                fontWeight: "bold",
                             }}
                         >
                             Login
@@ -76,7 +73,7 @@ export default function Login() {
                                 color: pallete.grey[600],
                             }}
                         >
-                            Silahkan masukkan username dan password Anda
+                            Silahkan masukkan email dan password Anda
                         </Typography.Text>
                     </div>
 
@@ -88,18 +85,18 @@ export default function Login() {
                     >
                         <CustomInput
                             blackLabel
-                            label="Username"
-                            name="username"
+                            label="Email"
+                            name="email"
                             rules={[
                                 {
                                     required: true,
-                                    message: "Username harus diisi",
+                                    message: "Email harus diisi",
                                 },
                             ]}
-                            placeholder="Masukkan username"
-                            value={data.username}
+                            placeholder="Masukkan Email"
+                            value={data.email}
                             onChange={(e) => {
-                                setData("username", e.target.value);
+                                setData("email", e.target.value);
                             }}
                         />
 
@@ -127,26 +124,31 @@ export default function Login() {
                             disabled={processing}
                             className="mt-5"
                             variant="primary"
-                                    htmlType="submit"
-                                    block
-                                >
-                                    <Link href="/">LOGIN</Link>
-                                </CustomButton>
-                            </Form>
+                            htmlType="submit"
+                            block
+                        >
+                            LOGIN
+                        </CustomButton>
+                    </Form>
 
-                            {isMobile && (
-                                <Typography.Text
-                                    style={{
-                                        display: "block",
-                                        textAlign: "center",
-                                        marginTop: 40,
-                                        color: pallete.grey[600],
-                                    }}
-                                >
-                                    © Copyright 2025. BPJS Kesehatan KC Ambon.
-                                </Typography.Text>
-                            )}
-                        </div>
+                    <div className="mt-3 text-center">
+                        Belum punya akun? <Link href="/register">Register</Link>
+                    </div>
+
+                    {isMobile && (
+                        <Typography.Text
+                            style={{
+                                display: "block",
+                                textAlign: "center",
+                                marginTop: 40,
+                                color: pallete.grey[600],
+                            }}
+                        >
+                            © Copyright 2025. Sistem Pelayanan dan Pengaduan
+                            Masyarakat.
+                        </Typography.Text>
+                    )}
+                </div>
             </Layout>
         </>
     );

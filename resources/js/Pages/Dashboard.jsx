@@ -8,7 +8,6 @@ import useTitleStore from "@/store/titleStore";
 import {
     useQueryClient,
 } from "@tanstack/react-query";
-import pallete from '../utils/pallete';
 
 export default function Dashboard() {
     // Hooks
