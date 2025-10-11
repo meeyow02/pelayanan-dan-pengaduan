@@ -1,11 +1,13 @@
-import { Col, Row, Typography } from "antd";
+import { Col, Row, Typography } from 'antd';
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import { Card, Form, message } from "antd";
 import useTitleStore from "@/store/titleStore";
-import { useQueryClient } from "@tanstack/react-query";
+import {
+    useQueryClient,
+} from "@tanstack/react-query";
 
 export default function Dashboard() {
     // Hooks
@@ -40,18 +42,17 @@ export default function Dashboard() {
                 <Head title="Dashboard" />
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col span={12}>
-                        <Card
-                            variant="borderless"
+                        <Card variant='borderless'
                             styles={{
                                 body: {
-                                    padding: "auto",
-                                },
-                            }}
-                        >
-                            <Row>
+                                        padding: "auto",
+                                    },
+                                }}
+                            >
+                            <Row >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -60,23 +61,23 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Total Aduan Masyarakat
-                                    </Typography.Text>
+                                    </Typography.Text>                               
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2.5rem",
                                         }}
                                     >
@@ -84,7 +85,7 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "3rem",
                                         }}
                                     >
@@ -96,18 +97,17 @@ export default function Dashboard() {
                     </Col>
 
                     <Col span={12}>
-                        <Card
-                            variant="borderless"
+                        <Card variant='borderless'
                             styles={{
                                 body: {
-                                    padding: "auto",
-                                },
-                            }}
-                        >
-                            <Row>
+                                        padding: "auto",
+                                    },
+                                }}
+                            >
+                            <Row >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -116,35 +116,36 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Total Pelayanan Administrasi
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "2.5rem",
+                                        style={{ 
+                                            fontSize: "2.5rem"
                                         }}
                                     >
                                         100
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        100
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            100
                                     </Typography.Text>
                                 )}
                             </div>
@@ -153,31 +154,29 @@ export default function Dashboard() {
                 </Row>
 
                 {/* ADUAN */}
-                <Row
-                    gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-                    style={{
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+                    style={{ 
                         marginTop: "1rem",
                     }}
                 >
                     <Col span={8}>
-                        <Card
-                            variant="borderless"
+                        <Card variant='borderless'
                             styles={{
                                 body: {
-                                    padding: "1.1rem",
-                                    borderRadius: ".3rem",
-                                },
-                            }}
-                        >
-                            <Row
-                                style={{
+                                        padding: "1.1rem",
+                                        borderRadius: ".3rem"
+                                    },
+                                }}
+                            >
+                            <Row 
+                                style={{ 
                                     display: "flex",
                                     justifyContent: "center",
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -186,23 +185,24 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Aduan Selesai
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2rem",
                                         }}
                                     >
@@ -210,11 +210,11 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        50
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            50
                                     </Typography.Text>
                                 )}
                             </div>
@@ -225,20 +225,20 @@ export default function Dashboard() {
                         <Card
                             styles={{
                                 body: {
-                                    padding: "1.1rem",
-                                    borderRadius: ".3rem",
-                                },
-                            }}
-                        >
-                            <Row
-                                style={{
+                                        padding: "1.1rem",
+                                        borderRadius: ".3rem"
+                                    },
+                                }}
+                            >
+                            <Row 
+                                style={{ 
                                     display: "flex",
                                     justifyContent: "center",
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -247,23 +247,24 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Aduan Ditindaklanjuti
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2rem",
                                         }}
                                     >
@@ -271,11 +272,11 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        25
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            25
                                     </Typography.Text>
                                 )}
                             </div>
@@ -283,24 +284,23 @@ export default function Dashboard() {
                     </Col>
 
                     <Col span={8}>
-                        <Card
-                            variant="borderless"
+                        <Card variant='borderless'
                             styles={{
                                 body: {
-                                    padding: "1.1rem",
-                                    borderRadius: ".3rem",
-                                },
-                            }}
-                        >
-                            <Row
-                                style={{
+                                        padding: "1.1rem",
+                                        borderRadius: ".3rem"
+                                    },
+                                }}
+                            >
+                            <Row 
+                                style={{ 
                                     display: "flex",
                                     justifyContent: "center",
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -309,23 +309,24 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Aduan yang Masuk
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2rem",
                                         }}
                                     >
@@ -333,44 +334,43 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        25
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            25
                                     </Typography.Text>
                                 )}
                             </div>
                         </Card>
                     </Col>
+                    
                 </Row>
 
                 {/* PELAYANAN */}
-                <Row
-                    gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-                    style={{
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+                    style={{ 
                         marginTop: "1rem",
                     }}
                 >
                     <Col span={8}>
-                        <Card
-                            variant="borderless"
+                        <Card variant='borderless'
                             styles={{
                                 body: {
-                                    padding: "1.1rem",
-                                    borderRadius: ".3rem",
-                                },
-                            }}
-                        >
-                            <Row
-                                style={{
+                                        padding: "1.1rem",
+                                        borderRadius: ".3rem"
+                                    },
+                                }}
+                            >
+                            <Row 
+                                style={{ 
                                     display: "flex",
                                     justifyContent: "center",
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -379,23 +379,24 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Pelayanan Selesai
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2rem",
                                         }}
                                     >
@@ -403,11 +404,11 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        50
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            50
                                     </Typography.Text>
                                 )}
                             </div>
@@ -418,20 +419,20 @@ export default function Dashboard() {
                         <Card
                             styles={{
                                 body: {
-                                    padding: "1.1rem",
-                                    borderRadius: ".3rem",
-                                },
-                            }}
-                        >
-                            <Row
-                                style={{
+                                        padding: "1.1rem",
+                                        borderRadius: ".3rem"
+                                    },
+                                }}
+                            >
+                            <Row 
+                                style={{ 
                                     display: "flex",
                                     justifyContent: "center",
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -440,23 +441,24 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Pelayanan Ditindaklanjuti
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2rem",
                                         }}
                                     >
@@ -464,11 +466,11 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        25
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            25
                                     </Typography.Text>
                                 )}
                             </div>
@@ -476,24 +478,23 @@ export default function Dashboard() {
                     </Col>
 
                     <Col span={8}>
-                        <Card
-                            variant="borderless"
+                        <Card variant='borderless'
                             styles={{
                                 body: {
-                                    padding: "1.1rem",
-                                    borderRadius: ".3rem",
-                                },
-                            }}
-                        >
-                            <Row
-                                style={{
+                                        padding: "1.1rem",
+                                        borderRadius: ".3rem"
+                                    },
+                                }}
+                            >
+                            <Row 
+                                style={{ 
                                     display: "flex",
                                     justifyContent: "center",
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: ".8rem",
                                             textAlign: "center",
                                         }}
@@ -502,23 +503,24 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "1rem",
                                         }}
                                     >
                                         Pelayanan yang Masuk
-                                    </Typography.Text>
+                                    </Typography.Text>                               
+
                                 )}
                             </Row>
                             <div
-                                style={{
+                                style={{ 
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "center"
                                 }}
                             >
                                 {isMobile ? (
                                     <Typography.Text
-                                        style={{
+                                        style={{ 
                                             fontSize: "2rem",
                                         }}
                                     >
@@ -526,17 +528,19 @@ export default function Dashboard() {
                                     </Typography.Text>
                                 ) : (
                                     <Typography.Text
-                                        style={{
-                                            fontSize: "3rem",
-                                        }}
-                                    >
-                                        25
+                                            style={{ 
+                                                fontSize: "3rem",
+                                            }}
+                                        >
+                                            25
                                     </Typography.Text>
                                 )}
                             </div>
                         </Card>
                     </Col>
+                    
                 </Row>
+                
             </MainLayout>
         </>
     );
