@@ -65,7 +65,6 @@ class MakeRepository extends Command
         {
             public function getAll(string \$search);
             public function findById(int \$id);
-            public function findByUuid(string \$uuid);
             public function store(array \$data);
             public function update(int \$id, array \$data);
             public function delete(int \$id);
@@ -93,12 +92,10 @@ class MakeRepository extends Command
 
             public function getAll(\$search = null)
             {
-                \$query =  \$this->{$name}::with('replacethis');
+                \$query =  \$this->{$name};
 
                 if (\$search) {
-                    \$query->whereHas('replacethis', function (\$q) use (\$search) {
-                        \$q->where('replacethis', 'LIKE', '%' . \$search . '%');
-                    })
+                    \$query->where('replacethis', 'LIKE', '%' . \$search . '%');
                 }
 
                 return \$query->paginate(10);
@@ -107,11 +104,6 @@ class MakeRepository extends Command
             public function findById(int \$id)
             {
                 return \$this->{$name}::find(\$id);
-            }
-
-            public function findByUuid(string \$uuid)
-            {
-                return \$this->{$name}::where('uuid', \$uuid)->first();
             }
 
             public function store(array \$data)
@@ -158,11 +150,6 @@ class MakeRepository extends Command
             public function findById(int \$id)
             {
                 return \$this->{$name}Repository->findById(\$id);
-            }
-
-            public function findByUuid(string \$uuid)
-            {
-                return \$this->{$name}Repository->findByUuid(\$uuid);
             }
 
             public function store(array \$data)

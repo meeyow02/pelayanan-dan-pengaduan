@@ -7,12 +7,10 @@ import useSidebarStore from "../store/sidebarStore";
 import { router, usePage } from "@inertiajs/react";
 
 export default function Header() {
-    // const user = usePage().props.auth.user;
+    const user = usePage().props.auth.user;
     const { title } = useTitleStore();
     const { isMobile } = useResponsive();
     const { toggleDrawer, toggleCollapsed, isCollapsed } = useSidebarStore();
-    const maleAvatar = "/man.png";
-    const femaleAvatar = "/woman.png";
 
     const handleLogout = () => {
         router.post(route("logout"));
@@ -59,15 +57,15 @@ export default function Header() {
         //           { type: "divider" },
         //       ]
         //     : []),
-        // {
-        //     key: "change-password",
-        //     label: "Ubah Password",
-        //     icon: <Icon icon="material-symbols:key" width="14" height="14" />,
-        //     onClick: () => {
-        //         router.visit("/ubah-password");
-        //     },
-        // },
-        // { type: "divider" },
+        {
+            key: "change-password",
+            label: "Ubah Password",
+            icon: <Icon icon="material-symbols:key" width="14" height="14" />,
+            onClick: () => {
+                router.visit("/ubah-password");
+            },
+        },
+        { type: "divider" },
         {
             key: "logout",
             label: "Logout",
@@ -162,20 +160,15 @@ export default function Header() {
                             gap={8}
                             style={{ cursor: "pointer" }}
                         >
-                            {/* <Avatar
+                            <Avatar
                                 shape="circle"
                                 style={{
                                     backgroundColor: pallete.primary[50],
                                     color: pallete.primary[600],
                                 }}
-                                src={
-                                    user.gender === "male"
-                                        ? maleAvatar
-                                        : femaleAvatar
-                                }
                             >
-                                {!user.gender && (user.name?.[0] || "A")}
-                            </Avatar> */}
+                                {user.name?.[0] || "A"}
+                            </Avatar>
                             {!isMobile && (
                                 <Flex vertical>
                                     <Typography.Text
@@ -184,7 +177,7 @@ export default function Header() {
                                             fontWeight: 700,
                                         }}
                                     >
-                                        Anonymous
+                                        {user.name}
                                     </Typography.Text>
                                     <Typography.Text
                                         style={{
@@ -193,7 +186,7 @@ export default function Header() {
                                             color: pallete.grey[600],
                                         }}
                                     >
-                                        anonym@example.com
+                                        {user.email}
                                     </Typography.Text>
                                 </Flex>
                             )}

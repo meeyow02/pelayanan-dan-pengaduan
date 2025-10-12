@@ -28,6 +28,8 @@ function Sidebar({ collapsed, isMobile = false }) {
         switch (true) {
             case pathname === "/":
                 return ["dashboard"];
+            case pathname === "/pengaduan":
+                return ["pengaduan"];
             default:
                 return [];
         }
@@ -137,7 +139,7 @@ function Sidebar({ collapsed, isMobile = false }) {
                             />
                         ),
                         label: (
-                            <Link href="/" onClick={handleLinkClick}>
+                            <Link href="/pengaduan" onClick={handleLinkClick}>
                                 Pengaduan
                             </Link>
                         ),
