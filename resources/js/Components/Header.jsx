@@ -85,7 +85,7 @@ export default function Header() {
                 lineHeight: "normal",
                 padding: "12px 12px",
             }}
-            className="bg-blue-300"
+            className="shadow-md"
         >
             <Flex
                 align="center"

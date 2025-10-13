@@ -30,6 +30,8 @@ function Sidebar({ collapsed, isMobile = false }) {
                 return ["dashboard"];
             case pathname === "/pengaduan":
                 return ["pengaduan"];
+            case pathname === "/pelayanan":
+                return ["pelayanan"];
             default:
                 return [];
         }
@@ -159,7 +161,7 @@ function Sidebar({ collapsed, isMobile = false }) {
                             />
                         ),
                         label: (
-                            <Link href="/" onClick={handleLinkClick}>
+                            <Link href="/pelayanan" onClick={handleLinkClick}>
                                 Pelayanan
                             </Link>
                         ),

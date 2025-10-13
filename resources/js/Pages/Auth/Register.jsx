@@ -19,6 +19,8 @@ export default function Register() {
 
     const submit = async () => {
         try {
+            console.log(data.name);
+            
             post(route("register"));
         } catch (error) {
             messageApi.error("Terjadi kesalahan, silakan coba lagi.");

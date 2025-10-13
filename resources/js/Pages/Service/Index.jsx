@@ -16,24 +16,19 @@ const columns = [
         render: text => <a>{text}</a>,
     },
     {
-        title: 'Tanggal Aduan',
+        title: 'Tanggal Inputan',
         dataIndex: 'date',
         key: 'date',
     },
     {
-        title: 'Nomor Aduan',
-        dataIndex: 'complaint_number',
-        key: 'complaint_number',
-    },
-    {
         title: 'Kategori',
-        key: 'complaint_category_id',
-        dataIndex: 'complaint_category_id',
+        key: 'service_category_id',
+        dataIndex: 'service_category_id',
     },
     {
-        title: 'Aduan',
-        key: 'content',
-        dataIndex: 'content',
+        title: 'Deskripsi',
+        key: 'description',
+        dataIndex: 'description',
     },
     {
         title: 'Status Aduan',
@@ -41,35 +36,11 @@ const columns = [
         dataIndex: 'status',
     },
     {
-        title: 'Bukti Aduan',
+        title: 'Dokumen',
         key: 'filename',
         dataIndex: 'filename',
     },
 ];
-
-// const data = [
-//     {
-//         key: '1',
-//         name: 'John Brown',
-//         age: 32,
-//         address: 'New York No. 1 Lake Park',
-//         tags: ['nice', 'developer'],
-//     },
-//     {
-//         key: '2',
-//         name: 'Jim Green',
-//         age: 42,
-//         address: 'London No. 1 Lake Park',
-//         tags: ['loser'],
-//     },
-//     {
-//         key: '3',
-//         name: 'Joe Black',
-//         age: 32,
-//         address: 'Sydney No. 1 Lake Park',
-//         tags: ['cool', 'teacher'],
-//     },
-// ];
 
 export default function Index() {
     // Hooks
@@ -84,13 +55,8 @@ export default function Index() {
     const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
-        setTitle("Pengaduan");
-    }, [setTitle]);
-
-    console.log(complaints);
-
-
-    
+        setTitle("Pelayanan");
+    }, [setTitle]);    
 
     return (
         <>
@@ -101,10 +67,10 @@ export default function Index() {
                 isMobile={isMobile}
                 setIsDrawerOpen={setIsDrawerOpen}
             >
-                <Head title="Pengaduan" />
+                <Head title="Pelayanan" />
 
                 <Button type="primary" style={{ marginBottom: 16 }}>
-                    Tambah Aduan
+                    Tambah Permohonan Layanan 
                 </Button>
 
                 <Table Table columns={columns}  />

@@ -20,6 +20,7 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 });
 
+
 Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -27,6 +28,12 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('complaint.index');
 });
+
+Route::get('/pelayanan', function () {
+    return Inertia::render('Service/Index');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('service_category_id')->constrained('service_categories')->onDelete('cascade');
             $table->string('description');
             $table->enum('status', ['pending', 'on_progress', 'completed', 'cancel'])->default('pending');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });
