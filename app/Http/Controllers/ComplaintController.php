@@ -18,4 +18,9 @@ class ComplaintController extends Controller
         $complaints = $this->complaintService->getAll();
         return Inertia::render('Complaint/Index', compact('complaints'));
     }
+
+    public function create()
+    {
+        return Inertia::render('');
+    }
 }
