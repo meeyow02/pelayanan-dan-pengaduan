@@ -30,7 +30,15 @@ function Sidebar({ collapsed, isMobile = false }) {
                 return ["dashboard"];
             case pathname === "/pengaduan":
                 return ["pengaduan"];
+            case pathname === "/pengaduan/buat_aduan":
+                return ["pengaduan"];
+            case pathname === "/pengaduan/detail_aduan":
+                return ["pengaduan"];
             case pathname === "/pelayanan":
+                return ["pelayanan"];
+            case pathname === "/pelayanan/buat_permohonan_layanan":
+                return ["pelayanan"];
+            case pathname === "/pelayanan/detail_permohonan_layanan":
                 return ["pelayanan"];
             default:
                 return [];

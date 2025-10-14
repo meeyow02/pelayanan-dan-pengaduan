@@ -29,8 +29,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('complaint.index');
 });
 
+Route::get('/pengaduan/buat_aduan', function () {
+    return Inertia::render('Complaint/Create');
+});
+
+Route::get('/pengaduan/detail_aduan', function () {
+    return Inertia::render('Complaint/Detail');
+});
+
+
 Route::get('/pelayanan', function () {
     return Inertia::render('Service/Index');
+});
+
+Route::get('/pelayanan/buat_permohonan_layanan', function () {
+    return Inertia::render('Service/Create');
+});
+
+Route::get('/pelayanan/detail_permohonan_layanan', function () {
+    return Inertia::render('Service/Detail');
 });
 
 
