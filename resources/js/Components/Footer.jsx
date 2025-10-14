@@ -11,7 +11,7 @@ export default function Footer() {
                 color: pallete.grey[600],
             }}
         >
-            © Copyright 2025. Sistem Aduan dan Pelayanan Masyarakat.
+            © Copyright 2025. Sistem Aduan dan Pelayanan Administrasi.
         </Layout.Footer>
     );
 }

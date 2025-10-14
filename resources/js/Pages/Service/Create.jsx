@@ -73,14 +73,25 @@ export default function Index() {
                         },
                     }}
                 >
-                    <Typography.Title
-                        style={{ 
-                            fontSize: "2rem",
-                            textAlign: "center"
-                        }}
-                    >
-                        Form Pengisian Permohonan Layanan
-                    </Typography.Title>
+                    {isMobile ? (
+                        <Typography.Title
+                            style={{ 
+                                fontSize: "1rem",
+                                textAlign: "center"
+                            }}
+                        >
+                            Form Pengisian Permohonan Layanan
+                        </Typography.Title>
+                    ) : (
+                        <Typography.Title
+                            style={{ 
+                                fontSize: "2rem",
+                                textAlign: "center"
+                            }}
+                        >
+                            Form Pengisian Permohonan Layanan
+                        </Typography.Title>
+                    )}
                     <Form 
                         // labelCol={{ span: 4 }}
                         // wrapperCol={{ span: 14 }}
@@ -93,59 +104,115 @@ export default function Index() {
                             padding: "1.1rem",
                             margin: "auto 2rem"
                         }}
-                    >   
-                        <Row>
-                            <Col span={5}>
-                                <Typography.Text>Kategori Pelayanan</Typography.Text>
-                            </Col>
-                            <Col span={19}>
-                                <Form.Item>
-                                    <Select>
-                                        <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
-                                        <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
-                                        <Select.Option value="population">Administrasi Kependudukan</Select.Option>
-                                        <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
-                                        <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
+                    >
+                        {isMobile ? (
+                            <>
+                                <div>
+                                    <Typography.Text>Kategori Pelayanan</Typography.Text>
+                                    <Col span={24}>
+                                        <Form.Item>
+                                            <Select>
+                                                <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
+                                                <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
+                                                <Select.Option value="population">Administrasi Kependudukan</Select.Option>
+                                                <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
+                                                <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
 
-                                    </Select>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                </div>
+
+                                <div>
+                                    <Typography.Text>Unggah Dokumen</Typography.Text>
+                                    <Col span={24}>
+                                        <Form.Item>
+                                            <Form.Item name="filename" valuePropName="filename" noStyle>
+                                                <Upload.Dragger name="filename" action="/upload.do">
+                                                    <p className="ant-upload-drag-icon">
+                                                        <InboxOutlined />
+                                                    </p>
+                                                    <p className="ant-upload-text">Klik atau unggah file ke area ini</p>
+                                                    <p className="ant-upload-hint">Dapat mengunggah satu atau beberapa file sekaligus.</p>
+                                                </Upload.Dragger>
+                                            </Form.Item>    
+                                        </Form.Item>
+                                    </Col>
+                                </div>
+
+                                <Form.Item
+                                    style={{ 
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        marginTop: "1rem"
+                                    }}
+                                >
+                                        <Space>
+                                            <Button>Kembali</Button>
+                                            <Button type="primary" htmlType="submit">
+                                                Submit
+                                            </Button>
+                                        </Space>
                                 </Form.Item>
-                            </Col>
-                        </Row>
+                            </>
+                        ) : (
+                            <>
+                                <Row>
+                                    <Col span={5}>
+                                        <Typography.Text>Kategori Pelayanan</Typography.Text>
+                                    </Col>
+                                    <Col span={19}>
+                                        <Form.Item>
+                                            <Select>
+                                                <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
+                                                <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
+                                                <Select.Option value="population">Administrasi Kependudukan</Select.Option>
+                                                <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
+                                                <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
+
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                
+                                <Row>
+                                    <Col span={5}>
+                                        <Typography.Text>Unggah Dokumen</Typography.Text>
+                                    </Col>
+                                    <Col span={19}>
+                                        <Form.Item>
+                                            <Form.Item name="filename" valuePropName="filename" noStyle>
+                                                <Upload.Dragger name="filename" action="/upload.do">
+                                                    <p className="ant-upload-drag-icon">
+                                                        <InboxOutlined />
+                                                    </p>
+                                                    <p className="ant-upload-text">Klik atau unggah file ke area ini</p>
+                                                    <p className="ant-upload-hint">Dapat mengunggah satu atau beberapa file sekaligus.</p>
+                                                </Upload.Dragger>
+                                            </Form.Item>    
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+
+                                <Form.Item
+                                    style={{ 
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        marginTop: "1rem"
+                                    }}
+                                >
+                                        <Space>
+                                            <Button>Kembali</Button>
+                                            <Button type="primary" htmlType="submit">
+                                                Submit
+                                            </Button>
+                                        </Space>
+                                </Form.Item>
+                            </>
+                        )}
                         
-                        <Row>
-                            <Col span={5}>
-                                <Typography.Text>Unggah Dokumen</Typography.Text>
-                            </Col>
-                            <Col span={19}>
-                                <Form.Item>
-                                    <Form.Item name="filename" valuePropName="filename" noStyle>
-                                        <Upload.Dragger name="filename" action="/upload.do">
-                                            <p className="ant-upload-drag-icon">
-                                                <InboxOutlined />
-                                            </p>
-                                            <p className="ant-upload-text">Klik atau unggah file ke area ini</p>
-                                            <p className="ant-upload-hint">Dapat mengunggah satu atau beberapa file sekaligus.</p>
-                                        </Upload.Dragger>
-                                    </Form.Item>    
-                                </Form.Item>
-                            </Col>
-                        </Row>
-
-
-                        <Form.Item
-                            style={{ 
-                                display: "flex",
-                                justifyContent: "center",
-                                marginTop: "1rem"
-                            }}
-                        >
-                                <Space>
-                                    <Button>Kembali</Button>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Space>
-                        </Form.Item>
+                        
                         
                     </Form>
                 </Card>

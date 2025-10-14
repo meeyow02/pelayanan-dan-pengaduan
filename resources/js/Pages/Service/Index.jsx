@@ -81,46 +81,91 @@ export default function Index() {
                         },
                     }}
                 >
-                    {/* Card Header */}
-                    <Flex
-                        justify="space-between"
-                        direction="row"
-                        style={{
-                            paddingInline: 24,
-                            marginBottom: 24,
-                            flexWrap: "wrap",
-                            gap: "12px",
-                        }}
-                    >
-                        <Input
-                            // onChange={(e) => setKeyword(e.target.value)}
-                            // value={keyword}
-                            style={{ width: 320 }}
-                            placeholder="Cari"
-                            prefix={
-                                <Icon
-                                    icon="hugeicons:search-01"
-                                    width={16}
-                                    height={16}
+                    {isMobile ? (
+                        <>
+                            <Flex
+                                direction="column"
+                                style={{
+                                    paddingInline: 24,
+                                    marginBottom: 24,
+                                    flexWrap: "wrap",
+                                    gap: "12px",
+                                }}
+                            >
+                                <Input
+                                    // onChange={(e) => setKeyword(e.target.value)}
+                                    // value={keyword}
+                                    style={{ width: 320 }}
+                                    placeholder="Cari"
+                                    prefix={
+                                        <Icon
+                                            icon="hugeicons:search-01"
+                                            width={16}
+                                            height={16}
+                                        />
+                                    }
                                 />
-                            }
-                        />
-                        <Button
-                            variant="solid"
-                            color="primary"
-                            icon={
-                                <Icon
-                                    icon={"hugeicons:plus-sign"}
-                                    width={16}
-                                    height={16}
+                                <Button
+                                    variant="solid"
+                                    color="primary"
+                                    icon={
+                                        <Icon
+                                            icon={"hugeicons:plus-sign"}
+                                            width={16}
+                                            height={16}
+                                        />
+                                    }
+                                    onClick={() => navigate("/karir/faq/tambah")}
+                                    style={{ fontSize: "0.85em", fontWeight: "bold" }}
+                                >
+                                    Buat Permohonan Layanan
+                                </Button>
+                            </Flex>
+                        </>
+                    ) : (
+                        <>
+                            <Flex
+                                justify="space-between"
+                                direction="row"
+                                style={{
+                                    paddingInline: 24,
+                                    marginBottom: 24,
+                                    flexWrap: "wrap",
+                                    gap: "12px",
+                                }}
+                            >
+                                <Input
+                                    // onChange={(e) => setKeyword(e.target.value)}
+                                    // value={keyword}
+                                    style={{ width: 320 }}
+                                    placeholder="Cari"
+                                    prefix={
+                                        <Icon
+                                            icon="hugeicons:search-01"
+                                            width={16}
+                                            height={16}
+                                        />
+                                    }
                                 />
-                            }
-                            onClick={() => navigate("/karir/faq/tambah")}
-                            style={{ fontSize: "0.85em", fontWeight: "bold" }}
-                        >
-                            Buat Permohonan Layanan
-                        </Button>
-                    </Flex>
+                                <Button
+                                    variant="solid"
+                                    color="primary"
+                                    icon={
+                                        <Icon
+                                            icon={"hugeicons:plus-sign"}
+                                            width={16}
+                                            height={16}
+                                        />
+                                    }
+                                    onClick={() => navigate("/karir/faq/tambah")}
+                                    style={{ fontSize: "0.85em", fontWeight: "bold" }}
+                                >
+                                    Buat Permohonan Layanan
+                                </Button>
+                            </Flex>
+                        </>
+                    )}
+                    
 
                     {/* Loading Indicator */}
                     {/* {(isLoading || isRefetching) && (

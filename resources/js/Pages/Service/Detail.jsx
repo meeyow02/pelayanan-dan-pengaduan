@@ -86,14 +86,25 @@ export default function Index() {
                         },
                     }}
                 >
-                    <Typography.Title
-                        style={{ 
-                            fontSize: "2rem",
-                            textAlign: "center",
-                        }}
-                    >
-                        Detail Permohonan Layanan
-                    </Typography.Title>
+                    {isMobile ? (
+                        <Typography.Title
+                            style={{ 
+                                fontSize: "1rem",
+                                textAlign: "center",
+                            }}
+                        >
+                            Detail Permohonan Layanan
+                        </Typography.Title>
+                    ) : (
+                        <Typography.Title
+                            style={{ 
+                                fontSize: "2rem",
+                                textAlign: "center",
+                            }}
+                        >
+                            Detail Permohonan Layanan
+                        </Typography.Title>
+                    )}
                     <Form 
                         // labelCol={{ span: 4 }}
                         // wrapperCol={{ span: 14 }}
@@ -107,47 +118,88 @@ export default function Index() {
                             margin: "auto 2rem"
                         }}
                     >   
-                        <Row>
-                            <Col span={5}>
-                                <Typography.Text>Kategori Pelayanan Administrasi</Typography.Text>
-                            </Col>
-                            <Col span={19}>
-                                <Form.Item>
-                                    <Select>
-                                        <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
-                                        <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
-                                        <Select.Option value="population">Administrasi Kependudukan</Select.Option>
-                                        <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
-                                        <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
-                                    </Select>
+                        {isMobile ? (
+                            <>
+                                <div>
+                                    <Typography.Text>Kategori Pelayanan Administrasi</Typography.Text>
+                                    <Col span={24}>
+                                        <Form.Item>
+                                            <Select>
+                                                <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
+                                                <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
+                                                <Select.Option value="population">Administrasi Kependudukan</Select.Option>
+                                                <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
+                                                <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                </div>
+
+                                <div>
+                                    <Typography.Text>Dokumen Yang Diperlukan</Typography.Text>
+                                    <Col span={24}>
+                                        <Upload {...props}>
+                                            <Button icon={<UploadOutlined />}>Upload</Button>
+                                        </Upload>
+                                    </Col>
+                                </div>
+
+                                <Form.Item
+                                    style={{ 
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        marginTop: "1rem"
+                                    }}
+                                >
+                                    <Space>
+                                        <Button>Kembali</Button>
+                                    </Space>
                                 </Form.Item>
-                            </Col>
-                        </Row>
-                        
-                        <Row>
-                            <Col span={5}>
-                                <Typography.Text>Dokumen Yang Diperlukan</Typography.Text>
-                            </Col>
-                            <Col span={8}>
-                                <Upload {...props}>
-                                    <Button icon={<UploadOutlined />}>Upload</Button>
-                                </Upload>
+                            </>
+                        ) : (
+                            <>
+                                <Row>
+                                    <Col span={5}>
+                                        <Typography.Text>Kategori Pelayanan Administrasi</Typography.Text>
+                                    </Col>
+                                    <Col span={19}>
+                                        <Form.Item>
+                                            <Select>
+                                                <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
+                                                <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
+                                                <Select.Option value="population">Administrasi Kependudukan</Select.Option>
+                                                <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
+                                                <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
                                 
-                            </Col>
-                        </Row>
+                                <Row>
+                                    <Col span={5}>
+                                        <Typography.Text>Dokumen Yang Diperlukan</Typography.Text>
+                                    </Col>
+                                    <Col span={8}>
+                                        <Upload {...props}>
+                                            <Button icon={<UploadOutlined />}>Upload</Button>
+                                        </Upload>
+                                    </Col>
+                                </Row>
 
 
-                        <Form.Item
-                            style={{ 
-                                display: "flex",
-                                justifyContent: "center",
-                                marginTop: "1rem"
-                            }}
-                        >
-                            <Space>
-                                <Button>Kembali</Button>
-                            </Space>
-                        </Form.Item>
+                                <Form.Item
+                                    style={{ 
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        marginTop: "1rem"
+                                    }}
+                                >
+                                    <Space>
+                                        <Button>Kembali</Button>
+                                    </Space>
+                                </Form.Item>
+                            </>
+                        )}
                         
                     </Form>
                 </Card>
