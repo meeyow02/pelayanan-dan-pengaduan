@@ -1,46 +1,89 @@
-import { Button, Flex, Input, Space, Table, Tag } from "antd";
+import { Button, Flex, Input, Pagination, Table } from "antd";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
 import { Card, Form, message } from "antd";
 import useTitleStore from "@/store/titleStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useTableHeight } from "@/hooks/useTableHeight";
+import TableAction from "@/Components/TableAction";
 
 const columns = [
     {
         title: "No.",
         dataIndex: "no",
         key: "no",
-        render: (text) => <a>{text}</a>,
+        width: 50,
+        fixed: "left",
+        render: (_, __, index) => index + 1,
     },
     {
         title: "Tanggal Inputan",
-        dataIndex: "date",
-        key: "date",
+        dataIndex: "created_at",
+        key: "created_at",
+        render: (date) => {
+            const options = {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            };
+            return new Date(date).toLocaleDateString("id-ID", options);
+        },
     },
     {
         title: "Kategori",
-        key: "service_category_id",
-        dataIndex: "service_category_id",
+        dataIndex: ["service_category", "name"],
+        key: "service_category",
     },
     {
         title: "Deskripsi",
         key: "description",
         dataIndex: "description",
+        render: (description) => <div>{description ?? "-"}</div>,
     },
     {
-        title: "Status Aduan",
-        key: "status",
+        title: "Status Permohonan",
         dataIndex: "status",
+        key: "status",
+        render: (status) => {
+            const statusColor = {
+                pending: "orange",
+                on_progress: "blue",
+                completed: "green",
+                cancel: "red",
+            };
+            const statusLabel = {
+                pending: "Menunggu Persetujuan",
+                on_progress: "Diproses",
+                completed: "Selesai",
+                cancel: "Ditolak",
+            };
+            return (
+                <span style={{ color: statusColor[status] || "gray" }}>
+                    {statusLabel[status] || status}
+                </span>
+            );
+        },
     },
     {
-        title: "Dokumen",
-        key: "filename",
-        dataIndex: "filename",
+        title: "Aksi",
+        className: "last-cell-p",
+        dataIndex: "id",
+        key: "id",
+        align: "center",
+        width: 90,
+        fixed: "right",
+        render: (id) => (
+            <TableAction
+                showDetail
+                showEdit={false}
+                onClickDetail={() => router.visit(route("service.detail", id))}
+                handleDelete={() => router.delete(route("service.destroy", id))}
+            />
+        ),
     },
 ];
 
@@ -48,7 +91,7 @@ export default function Index() {
     // Hooks
     const [form] = Form.useForm();
     const { setTitle } = useTitleStore();
-    const { flash, auth, complaints } = usePage().props;
+    const { flash, auth, services } = usePage().props;
     const { isMobile, isTablet } = useResponsive();
     const tableHeight = useTableHeight(420);
 
@@ -57,10 +100,39 @@ export default function Index() {
     const queryClient = useQueryClient();
 
     const [messageApi, contextHolder] = message.useMessage();
+    const [page, setPage] = useState(services.current_page);
+    const [limit, setLimit] = useState(services.per_page);
 
     useEffect(() => {
         setTitle("Pelayanan");
     }, [setTitle]);
+
+    useEffect(() => {
+        if (flash?.success) {
+            messageApi.success(flash.success);
+        }
+        if (flash?.error) {
+            messageApi.error(flash.error);
+        }
+    }, [flash, messageApi]);
+
+    const handleCreateService = () => {
+        router.visit(route("service.create"));
+    };
+
+    const handleChangePage = (newPage, newPageSize) => {
+        setPage(newPage);
+        setLimit(newPageSize);
+
+        Inertia.get(
+            route("service.index"),
+            { page: newPage, limit: newPageSize },
+            {
+                preserveScroll: true,
+                preserveState: true,
+            }
+        );
+    };
 
     return (
         <>
@@ -115,8 +187,11 @@ export default function Index() {
                                             height={16}
                                         />
                                     }
-                                    onClick={() => navigate("/karir/faq/tambah")}
-                                    style={{ fontSize: "0.85em", fontWeight: "bold" }}
+                                    onClick={handleCreateService}
+                                    style={{
+                                        fontSize: "0.85em",
+                                        fontWeight: "bold",
+                                    }}
                                 >
                                     Buat Permohonan Layanan
                                 </Button>
@@ -157,58 +232,33 @@ export default function Index() {
                                             height={16}
                                         />
                                     }
-                                    onClick={() => navigate("/karir/faq/tambah")}
-                                    style={{ fontSize: "0.85em", fontWeight: "bold" }}
+                                    onClick={handleCreateService}
+                                    style={{
+                                        fontSize: "0.85em",
+                                        fontWeight: "bold",
+                                    }}
                                 >
                                     Buat Permohonan Layanan
                                 </Button>
                             </Flex>
                         </>
                     )}
-                    
-
-                    {/* Loading Indicator */}
-                    {/* {(isLoading || isRefetching) && (
-                        <div style={{ padding: "0 24px", marginBottom: 16 }}>
-                            <div
-                                style={{
-                                    width: "100%",
-                                    height: 3,
-                                    backgroundColor: "#f0f0f0",
-                                    overflow: "hidden",
-                                    borderRadius: 4,
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        width: "30%",
-                                        height: "100%",
-                                        backgroundColor: "#1890ff",
-                                        animation: "loading 1.5s infinite",
-                                    }}
-                                />
-                            </div>
-                            <style>{`
-              @keyframes loading {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(400%); }
-              }
-            `}</style>
-                        </div>
-                    )} */}
 
                     {/* Table Data */}
                     <Table
                         columns={columns}
-                        // dataSource={dataItems}
+                        dataSource={services.data}
                         pagination={false}
                         size="small"
-                        loading={false} // We're handling the loading state separately
+                        loading={false}
                         rowKey={"id"}
                         scroll={{ y: tableHeight, x: 1000 }}
+                        style={{
+                            paddingInline: 24,
+                        }}
                     />
 
-                    {/* <Pagination
+                    <Pagination
                         style={{
                             marginInline: 24,
                             marginTop: 24,
@@ -216,18 +266,16 @@ export default function Index() {
                             flexWrap: "wrap",
                             justifyContent: "flex-end",
                         }}
-                        total={total}
+                        total={services.total}
                         showTotal={(total, range) =>
                             `${range[0]}-${range[1]} dari ${total} item`
                         }
-                        current={dataParams.page}
-                        pageSize={limit}
+                        current={services.current_page}
+                        pageSize={services.per_page}
                         onChange={handleChangePage}
                         responsive
-                        showSizeChanger={{
-                            showSearch: false,
-                        }}
-                    /> */}
+                        showSizeChanger
+                    />
                 </Card>
             </MainLayout>
         </>

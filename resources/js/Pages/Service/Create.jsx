@@ -1,46 +1,36 @@
-import { Button, Col, Flex, Input, Row, Select, Space, Table, Tag, Typography, Upload } from "antd";
-import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+    Button,
+    Col,
+    Flex,
+    Input,
+    Row,
+    Select,
+    Space,
+    Table,
+    Tag,
+    Typography,
+    Upload,
+} from "antd";
+import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import { Card, Form, message } from "antd";
 import useTitleStore from "@/store/titleStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useTableHeight } from "@/hooks/useTableHeight";
 import TextArea from "antd/es/input/TextArea";
-
-// const data = [
-//     {
-//         key: '1',
-//         name: 'John Brown',
-//         age: 32,
-//         address: 'New York No. 1 Lake Park',
-//         tags: ['nice', 'developer'],
-//     },
-//     {
-//         key: '2',
-//         name: 'Jim Green',
-//         age: 42,
-//         address: 'London No. 1 Lake Park',
-//         tags: ['loser'],
-//     },
-//     {
-//         key: '3',
-//         name: 'Joe Black',
-//         age: 32,
-//         address: 'Sydney No. 1 Lake Park',
-//         tags: ['cool', 'teacher'],
-//     },
-// ];
 
 export default function Index() {
     // Hooks
     const [form] = Form.useForm();
     const { setTitle } = useTitleStore();
-    const { flash, auth, complaints } = usePage().props;
+    const [uploading, setUploading] = useState(false);
+    const [fileList, setFileList] = useState([]);
+    const { flash, auth, serviceCategories } = usePage().props;
     const tableHeight = useTableHeight(420);
 
     const { isMobile, isTablet } = useResponsive();
@@ -53,6 +43,76 @@ export default function Index() {
     useEffect(() => {
         setTitle("Pelayanan");
     }, [setTitle]);
+
+    useEffect(() => {
+        if (flash?.success) {
+            messageApi.success(flash.success);
+        }
+        if (flash?.error) {
+            messageApi.error(flash.error);
+        }
+    }, [flash, messageApi]);
+
+    const handleSubmit = (values) => {
+        setUploading(true);
+
+        const formData = new FormData();
+        formData.append("service_category_id", values.service_category_id);
+
+        // Append file jika ada
+        if (fileList.length > 0) {
+            fileList.forEach((file) => {
+                formData.append("files[]", file);
+            });
+        }
+
+        router.post(route("service.store"), formData, {
+            forceFormData: true,
+            onFinish: () => {
+                setUploading(false);
+            },
+        });
+    };
+
+    const handleBack = () => {
+        router.visit(route("service.index"));
+    };
+
+    const uploadProps = {
+        beforeUpload: (file) => {
+            // Validasi tipe file
+            const isValidType =
+                file.type === "image/jpeg" ||
+                file.type === "image/png" ||
+                file.type === "application/pdf";
+
+            if (!isValidType) {
+                messageApi.error(
+                    "Hanya dapat mengunggah file JPG, PNG, atau PDF!"
+                );
+                return Upload.LIST_IGNORE;
+            }
+
+            // Validasi ukuran file (< 5 MB)
+            const isLt5M = file.size / 1024 / 1024 < 5;
+            if (!isLt5M) {
+                messageApi.error("File harus lebih kecil dari 5MB!");
+                return Upload.LIST_IGNORE;
+            }
+
+            setFileList((prevList) => [...prevList, file]);
+
+            return false;
+        },
+        onRemove: (file) => {
+            setFileList((prevList) =>
+                prevList.filter((item) => item.uid !== file.uid)
+            );
+        },
+        fileList: fileList,
+        multiple: true,
+        maxCount: 10,
+    };
 
     return (
         <>
@@ -75,145 +135,209 @@ export default function Index() {
                 >
                     {isMobile ? (
                         <Typography.Title
-                            style={{ 
+                            style={{
                                 fontSize: "1rem",
-                                textAlign: "center"
+                                textAlign: "center",
                             }}
                         >
                             Form Pengisian Permohonan Layanan
                         </Typography.Title>
                     ) : (
                         <Typography.Title
-                            style={{ 
+                            style={{
                                 fontSize: "2rem",
-                                textAlign: "center"
+                                textAlign: "center",
                             }}
                         >
                             Form Pengisian Permohonan Layanan
                         </Typography.Title>
                     )}
-                    <Form 
-                        // labelCol={{ span: 4 }}
-                        // wrapperCol={{ span: 14 }}
-                        // layout="horizontal"
+                    <Form
                         form={form}
-                        style={{ 
+                        onFinish={handleSubmit}
+                        style={{
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
                             padding: "1.1rem",
-                            margin: "auto 2rem"
+                            margin: "auto 2rem",
                         }}
                     >
                         {isMobile ? (
                             <>
                                 <div>
-                                    <Typography.Text>Kategori Pelayanan</Typography.Text>
+                                    <Typography.Text>
+                                        Kategori Pelayanan
+                                    </Typography.Text>
                                     <Col span={24}>
-                                        <Form.Item>
-                                            <Select>
-                                                <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
-                                                <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
-                                                <Select.Option value="population">Administrasi Kependudukan</Select.Option>
-                                                <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
-                                                <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
-
+                                        <Form.Item
+                                            name="complaint_category_id"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        "Pilih kategori permohonan layanan!",
+                                                },
+                                            ]}
+                                        >
+                                            <Select placeholder="Pilih kategori">
+                                                {serviceCategories?.data.map(
+                                                    (category) => (
+                                                        <Select.Option
+                                                            key={category.id}
+                                                            value={category.id}
+                                                        >
+                                                            {category.name}
+                                                        </Select.Option>
+                                                    )
+                                                )}
                                             </Select>
                                         </Form.Item>
                                     </Col>
                                 </div>
 
                                 <div>
-                                    <Typography.Text>Unggah Dokumen</Typography.Text>
+                                    <Typography.Text>
+                                        Unggah Dokumen
+                                    </Typography.Text>
                                     <Col span={24}>
                                         <Form.Item>
-                                            <Form.Item name="filename" valuePropName="filename" noStyle>
-                                                <Upload.Dragger name="filename" action="/upload.do">
+                                            <Form.Item name="files[]">
+                                                <Upload.Dragger
+                                                    {...uploadProps}
+                                                >
                                                     <p className="ant-upload-drag-icon">
                                                         <InboxOutlined />
                                                     </p>
-                                                    <p className="ant-upload-text">Klik atau unggah file ke area ini</p>
-                                                    <p className="ant-upload-hint">Dapat mengunggah satu atau beberapa file sekaligus.</p>
+                                                    <p className="ant-upload-text">
+                                                        Klik atau unggah file ke
+                                                        area ini
+                                                    </p>
+                                                    <p className="ant-upload-hint">
+                                                        Dapat mengunggah satu
+                                                        atau beberapa file
+                                                        sekaligus.
+                                                    </p>
                                                 </Upload.Dragger>
-                                            </Form.Item>    
+                                            </Form.Item>
                                         </Form.Item>
                                     </Col>
                                 </div>
 
                                 <Form.Item
-                                    style={{ 
+                                    style={{
                                         display: "flex",
                                         justifyContent: "center",
-                                        marginTop: "1rem"
+                                        marginTop: "1rem",
                                     }}
                                 >
-                                        <Space>
-                                            <Button>Kembali</Button>
-                                            <Button type="primary" htmlType="submit">
-                                                Submit
-                                            </Button>
-                                        </Space>
+                                    <Space>
+                                        <Button
+                                            onClick={handleBack}
+                                            disabled={uploading}
+                                        >
+                                            Kembali
+                                        </Button>
+                                        <Button
+                                            type="primary"
+                                            htmlType="submit"
+                                            loading={uploading}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Space>
                                 </Form.Item>
                             </>
                         ) : (
                             <>
                                 <Row>
                                     <Col span={5}>
-                                        <Typography.Text>Kategori Pelayanan</Typography.Text>
+                                        <Typography.Text>
+                                            Kategori Pelayanan
+                                        </Typography.Text>
                                     </Col>
                                     <Col span={19}>
-                                        <Form.Item>
-                                            <Select>
-                                                <Select.Option value="certification">Surat Keterangan & Dokumen</Select.Option>
-                                                <Select.Option value="licensing">Perizinan & Rekomendasi</Select.Option>
-                                                <Select.Option value="population">Administrasi Kependudukan</Select.Option>
-                                                <Select.Option value="land">Pertanahan & Bangunan</Select.Option>
-                                                <Select.Option value="community">Kegiatan Sosial & Kemasyarakatan</Select.Option>
-
+                                        <Form.Item
+                                            name="service_category_id"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        "Pilih kategori permohonan layanan!",
+                                                },
+                                            ]}
+                                        >
+                                            <Select placeholder="Pilih kategori">
+                                                {serviceCategories?.data.map(
+                                                    (category) => (
+                                                        <Select.Option
+                                                            key={category.id}
+                                                            value={category.id}
+                                                        >
+                                                            {category.name}
+                                                        </Select.Option>
+                                                    )
+                                                )}
                                             </Select>
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                
+
                                 <Row>
                                     <Col span={5}>
-                                        <Typography.Text>Unggah Dokumen</Typography.Text>
+                                        <Typography.Text>
+                                            Unggah Dokumen
+                                        </Typography.Text>
                                     </Col>
                                     <Col span={19}>
                                         <Form.Item>
-                                            <Form.Item name="filename" valuePropName="filename" noStyle>
-                                                <Upload.Dragger name="filename" action="/upload.do">
+                                            <Form.Item name="files[]">
+                                                <Upload.Dragger
+                                                    {...uploadProps}
+                                                >
                                                     <p className="ant-upload-drag-icon">
                                                         <InboxOutlined />
                                                     </p>
-                                                    <p className="ant-upload-text">Klik atau unggah file ke area ini</p>
-                                                    <p className="ant-upload-hint">Dapat mengunggah satu atau beberapa file sekaligus.</p>
+                                                    <p className="ant-upload-text">
+                                                        Klik atau unggah file ke
+                                                        area ini
+                                                    </p>
+                                                    <p className="ant-upload-hint">
+                                                        Dapat mengunggah satu
+                                                        atau beberapa file
+                                                        sekaligus.
+                                                    </p>
                                                 </Upload.Dragger>
-                                            </Form.Item>    
+                                            </Form.Item>
                                         </Form.Item>
                                     </Col>
                                 </Row>
 
-
                                 <Form.Item
-                                    style={{ 
+                                    style={{
                                         display: "flex",
                                         justifyContent: "center",
-                                        marginTop: "1rem"
+                                        marginTop: "1rem",
                                     }}
                                 >
-                                        <Space>
-                                            <Button>Kembali</Button>
-                                            <Button type="primary" htmlType="submit">
-                                                Submit
-                                            </Button>
-                                        </Space>
+                                    <Space>
+                                        <Button
+                                            onClick={handleBack}
+                                            disabled={uploading}
+                                        >
+                                            Kembali
+                                        </Button>
+                                        <Button
+                                            type="primary"
+                                            htmlType="submit"
+                                            loading={uploading}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Space>
                                 </Form.Item>
                             </>
                         )}
-                        
-                        
-                        
                     </Form>
                 </Card>
             </MainLayout>

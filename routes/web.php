@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -33,20 +34,13 @@ Route::middleware('auth')->prefix('pengaduan')->group(function () {
     Route::delete('/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
 });
 
-
-Route::get('/pelayanan', function () {
-    return Inertia::render('Service/Index');
+Route::middleware('auth')->prefix('pelayanan')->group(function () {
+    Route::get('/', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/buat_permohonan_layanan', [ServiceController::class, 'create'])->name('service.create');
+    Route::post('/', [ServiceController::class, 'store'])->name('service.store');
+    Route::get('/detail_permohonan_layanan/{id}', [ServiceController::class, 'show'])->name('service.detail');
+    Route::delete('/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
 });
-
-Route::get('/pelayanan/buat_permohonan_layanan', function () {
-    return Inertia::render('Service/Create');
-});
-
-Route::get('/pelayanan/detail_permohonan_layanan', function () {
-    return Inertia::render('Service/Detail');
-});
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

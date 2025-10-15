@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Pagination, Space, Table, Tag } from "antd";
+import { Button, Flex, Input, Pagination, Table } from "antd";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
@@ -8,7 +8,6 @@ import useTitleStore from "@/store/titleStore";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useTableHeight } from "@/hooks/useTableHeight";
-import dayjs from "dayjs";
 import TableAction from "@/Components/TableAction";
 
 const columns = [
@@ -24,7 +23,14 @@ const columns = [
         title: "Tanggal Aduan",
         dataIndex: "created_at",
         key: "created_at",
-        render: (date) => dayjs(date).format("DD-MM-YYYY"),
+        render: (date) => {
+            const options = {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            };
+            return new Date(date).toLocaleDateString("id-ID", options);
+        },
     },
     {
         title: "Nomor Aduan",
@@ -33,7 +39,7 @@ const columns = [
     },
     {
         title: "Kategori",
-        dataIndex: ["complaint_category", "name"], // ambil dari relasi
+        dataIndex: ["complaint_category", "name"],
         key: "complaint_category",
         render: (text) => text || "-",
     },
@@ -96,8 +102,12 @@ const columns = [
             <TableAction
                 showDetail
                 showEdit={false}
-                onClickDetail={() => router.visit(`/pengaduan/detail_aduan/${id}`)}
-                handleDelete={() => router.delete(`pengaduan/${id}`)}
+                onClickDetail={() =>
+                    router.visit(route("complaint.detail", id))
+                }
+                handleDelete={() =>
+                    router.delete(route("complaint.destroy", id))
+                }
             />
         ),
     },
@@ -106,7 +116,7 @@ const columns = [
 export default function Index() {
     // Hooks
     const { setTitle } = useTitleStore();
-    const { flash, auth, complaints } = usePage().props;
+    const { flash, complaints } = usePage().props;
     const tableHeight = useTableHeight(420);
 
     const { isMobile, isTablet } = useResponsive();

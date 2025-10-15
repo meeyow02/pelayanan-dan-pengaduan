@@ -26,4 +26,9 @@ class Service extends Model
     {
         return $this->belongsTo(ServiceCategory::class);
     }
+
+    public function serviceFiles()
+    {
+        return $this->hasMany(ServiceFile::class);
+    }
 }

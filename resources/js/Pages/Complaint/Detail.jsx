@@ -1,9 +1,5 @@
-import { Button, Col, Row, Typography, Image, Tag, Divider, Empty } from "antd";
-import {
-    ArrowLeftOutlined,
-    FileImageOutlined,
-    FilePdfOutlined,
-} from "@ant-design/icons";
+import { Button, Col, Row, Typography, Tag, Divider } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";

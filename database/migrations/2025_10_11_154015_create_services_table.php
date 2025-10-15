@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('service_category_id')->constrained('service_categories')->onDelete('cascade');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->enum('status', ['pending', 'on_progress', 'completed', 'cancel'])->default('pending');
 
             $table->timestamps();
