@@ -1,26 +1,27 @@
-import { Button, Flex, Input, Space, Table, Tag } from "antd";
+import { Button, Flex, Input, Pagination, Space, Table, Tag } from "antd";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
-import { Head, useForm, usePage } from "@inertiajs/react";
-import { Card, Form, message } from "antd";
+import { Head, router, usePage } from "@inertiajs/react";
+import { Card, message } from "antd";
 import useTitleStore from "@/store/titleStore";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useTableHeight } from "@/hooks/useTableHeight";
+import dayjs from "dayjs";
 
 const columns = [
     {
         title: "No.",
         dataIndex: "no",
         key: "no",
-        render: (text) => <a>{text}</a>,
+        render: (_, __, index) => index + 1, // otomatis nomor urut
     },
     {
         title: "Tanggal Aduan",
-        dataIndex: "date",
-        key: "date",
+        dataIndex: "created_at",
+        key: "created_at",
+        render: (date) => dayjs(date).format("DD-MM-YYYY"),
     },
     {
         title: "Nomor Aduan",
@@ -29,53 +30,61 @@ const columns = [
     },
     {
         title: "Kategori",
-        key: "complaint_category_id",
-        dataIndex: "complaint_category_id",
+        dataIndex: ["complaint_category", "name"], // ambil dari relasi
+        key: "complaint_category",
+        render: (text) => text || "-",
     },
     {
         title: "Aduan",
-        key: "content",
         dataIndex: "content",
+        key: "content",
+        ellipsis: true,
     },
     {
         title: "Status Aduan",
-        key: "status",
         dataIndex: "status",
+        key: "status",
+        render: (status) => {
+            const statusColor = {
+                pending: "orange",
+                on_progress: "blue",
+                completed: "green",
+                cancel: "red",
+            };
+            const statusLabel = {
+                pending: "Menunggu Persetujuan",
+                on_progress: "Diproses",
+                completed: "Selesai",
+                cancel: "Ditolak",
+            };
+            return (
+                <span style={{ color: statusColor[status] || "gray" }}>
+                    {statusLabel[status] || status}
+                </span>
+            );
+        },
     },
     {
         title: "Bukti Aduan",
-        key: "filename",
         dataIndex: "filename",
+        key: "filename",
+        render: (filename) =>
+            filename ? (
+                <a
+                    href={`/storage/complaint/${filename}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Lihat Bukti
+                </a>
+            ) : (
+                "-"
+            ),
     },
 ];
 
-// const data = [
-//     {
-//         key: '1',
-//         name: 'John Brown',
-//         age: 32,
-//         address: 'New York No. 1 Lake Park',
-//         tags: ['nice', 'developer'],
-//     },
-//     {
-//         key: '2',
-//         name: 'Jim Green',
-//         age: 42,
-//         address: 'London No. 1 Lake Park',
-//         tags: ['loser'],
-//     },
-//     {
-//         key: '3',
-//         name: 'Joe Black',
-//         age: 32,
-//         address: 'Sydney No. 1 Lake Park',
-//         tags: ['cool', 'teacher'],
-//     },
-// ];
-
 export default function Index() {
     // Hooks
-    const [form] = Form.useForm();
     const { setTitle } = useTitleStore();
     const { flash, auth, complaints } = usePage().props;
     const tableHeight = useTableHeight(420);
@@ -83,13 +92,41 @@ export default function Index() {
     const { isMobile, isTablet } = useResponsive();
     const { isCollapsed, isDrawerOpen, setIsCollapsed, setIsDrawerOpen } =
         useSidebarStore();
-    const queryClient = useQueryClient();
 
     const [messageApi, contextHolder] = message.useMessage();
+    const [page, setPage] = useState(complaints.current_page);
+    const [limit, setLimit] = useState(complaints.per_page);
 
     useEffect(() => {
         setTitle("Pengaduan");
     }, [setTitle]);
+
+    useEffect(() => {
+        if (flash?.success) {
+            messageApi.success(flash.success);
+        }
+        if (flash?.error) {
+            messageApi.error(flash.error);
+        }
+    }, [flash, messageApi]);
+
+    const handleCreateComplaint = () => {
+        router.visit(route("complaint.create"));
+    };
+
+    const handleChangePage = (newPage, newPageSize) => {
+        setPage(newPage);
+        setLimit(newPageSize);
+
+        Inertia.get(
+            route("complaint.index"),
+            { page: newPage, limit: newPageSize },
+            {
+                preserveScroll: true,
+                preserveState: true,
+            }
+        );
+    };
 
     return (
         <>
@@ -145,8 +182,11 @@ export default function Index() {
                                             height={16}
                                         />
                                     }
-                                    onClick={() => navigate("/karir/faq/tambah")}
-                                    style={{ fontSize: "0.85em", fontWeight: "bold" }}
+                                    onClick={handleCreateComplaint}
+                                    style={{
+                                        fontSize: "0.85em",
+                                        fontWeight: "bold",
+                                    }}
                                 >
                                     Buat Aduan
                                 </Button>
@@ -187,58 +227,33 @@ export default function Index() {
                                             height={16}
                                         />
                                     }
-                                    onClick={() => navigate("/karir/faq/tambah")}
-                                    style={{ fontSize: "0.85em", fontWeight: "bold" }}
+                                    onClick={handleCreateComplaint}
+                                    style={{
+                                        fontSize: "0.85em",
+                                        fontWeight: "bold",
+                                    }}
                                 >
                                     Buat Aduan
                                 </Button>
                             </Flex>
                         </>
                     )}
-                    
-
-                    {/* Loading Indicator */}
-                    {/* {(isLoading || isRefetching) && (
-                        <div style={{ padding: "0 24px", marginBottom: 16 }}>
-                            <div
-                                style={{
-                                    width: "100%",
-                                    height: 3,
-                                    backgroundColor: "#f0f0f0",
-                                    overflow: "hidden",
-                                    borderRadius: 4,
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        width: "30%",
-                                        height: "100%",
-                                        backgroundColor: "#1890ff",
-                                        animation: "loading 1.5s infinite",
-                                    }}
-                                />
-                            </div>
-                            <style>{`
-              @keyframes loading {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(400%); }
-              }
-            `}</style>
-                        </div>
-                    )} */}
 
                     {/* Table Data */}
                     <Table
                         columns={columns}
-                        // dataSource={dataItems}
+                        dataSource={complaints.data}
                         pagination={false}
                         size="small"
-                        loading={false} // We're handling the loading state separately
+                        loading={false}
                         rowKey={"id"}
                         scroll={{ y: tableHeight, x: 1000 }}
+                        style={{
+                            paddingInline: 24
+                        }}
                     />
 
-                    {/* <Pagination
+                    <Pagination
                         style={{
                             marginInline: 24,
                             marginTop: 24,
@@ -246,18 +261,16 @@ export default function Index() {
                             flexWrap: "wrap",
                             justifyContent: "flex-end",
                         }}
-                        total={total}
+                        total={complaints.total}
                         showTotal={(total, range) =>
                             `${range[0]}-${range[1]} dari ${total} item`
                         }
-                        current={dataParams.page}
-                        pageSize={limit}
+                        current={complaints.current_page}
+                        pageSize={complaints.per_page}
                         onChange={handleChangePage}
                         responsive
-                        showSizeChanger={{
-                            showSearch: false,
-                        }}
-                    /> */}
+                        showSizeChanger
+                    />
                 </Card>
             </MainLayout>
         </>

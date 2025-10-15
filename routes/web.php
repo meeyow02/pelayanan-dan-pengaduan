@@ -25,16 +25,13 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('complaint.index');
-});
+Route::middleware('auth')->prefix('pengaduan')->group(function () {
+    Route::get('/', [ComplaintController::class, 'index'])->name('complaint.index');
 
-Route::get('/pengaduan/buat_aduan', function () {
-    return Inertia::render('Complaint/Create');
-});
+    Route::get('/buat_aduan', [ComplaintController::class, 'create'])->name('complaint.create');
+    Route::post('/buat_aduan', [ComplaintController::class, 'store'])->name('complaint.store');
 
-Route::get('/pengaduan/detail_aduan', function () {
-    return Inertia::render('Complaint/Detail');
+    Route::get('/detail_aduan/{id}', [ComplaintController::class, 'show'])->name('complaint.detail');
 });
 
 

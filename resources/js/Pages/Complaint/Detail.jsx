@@ -1,37 +1,92 @@
-import { Button, Col, Flex, Input, Row, Select, Space, Table, Tag, Typography, Upload } from "antd";
-import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Col, Row, Typography, Image, Tag, Divider, Empty } from "antd";
+import {
+    ArrowLeftOutlined,
+    FileImageOutlined,
+    FilePdfOutlined,
+} from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
-import { Head, useForm, usePage } from "@inertiajs/react";
-import { Card, Form, message, Carousel, Image  } from "antd";
+import { Head, router, usePage } from "@inertiajs/react";
+import { Card, message } from "antd";
 import useTitleStore from "@/store/titleStore";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { Icon } from "@iconify/react";
-import { useTableHeight } from "@/hooks/useTableHeight";
-import TextArea from "antd/es/input/TextArea";
-import pallete from "@/utils/pallete";
 
-
-export default function Index() {
-    // Hooks
-    const [form] = Form.useForm();
+export default function Show() {
     const { setTitle } = useTitleStore();
-    const { flash, auth, complaints } = usePage().props;
-    const tableHeight = useTableHeight(420);
+    const { flash, complaint } = usePage().props;
 
-    const { isMobile, isTablet } = useResponsive();
-    const { isCollapsed, isDrawerOpen, setIsCollapsed, setIsDrawerOpen } =
-        useSidebarStore();
-    const queryClient = useQueryClient();
+    const { isMobile } = useResponsive();
+    const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
 
     const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
-        setTitle("Pengaduan");
+        setTitle("Detail Pengaduan");
     }, [setTitle]);
 
+    useEffect(() => {
+        if (flash?.success) {
+            messageApi.success(flash.success);
+        }
+        if (flash?.error) {
+            messageApi.error(flash.error);
+        }
+    }, [flash, messageApi]);
+
+    // Format tanggal
+    const formatDate = (dateString) => {
+        const options = {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        return new Date(dateString).toLocaleDateString("id-ID", options);
+    };
+
+    // Status color mapping
+    const getStatusColor = (status) => {
+        const statusColors = {
+            pending: "orange",
+            on_progress: "blue",
+            completed: "green",
+            cancel: "red",
+        };
+        return statusColors[status] || "default";
+    };
+
+    // Status text mapping
+    const getStatusText = (status) => {
+        const statusTexts = {
+            pending: "Menunggu Persetujuan",
+            on_progress: "Diproses",
+            completed: "Selesai",
+            cancel: "Dibatalkan",
+        };
+        return statusTexts[status] || status;
+    };
+
+    // Check if file is image or PDF
+    const isImage = (filename) => {
+        return /\.(jpg|jpeg|png|gif)$/i.test(filename);
+    };
+
+    const isPDF = (filename) => {
+        return /\.pdf$/i.test(filename);
+    };
+
+    // Get file URL
+    const getFileUrl = (filename) => {
+        return `/storage/complaints/${filename}`;
+    };
+
+    const handleBack = () => {
+        router.visit(route("complaint.index"));
+    };
+
+    console.log(complaint);
 
     return (
         <>
@@ -42,167 +97,166 @@ export default function Index() {
                 isMobile={isMobile}
                 setIsDrawerOpen={setIsDrawerOpen}
             >
-                <Head title="Pengaduan" />
+                <Head title="Detail Pengaduan" />
 
                 <Card
+                    style={{
+                        borderRadius: 8,
+                    }}
                     styles={{
                         body: {
-                            paddingLeft: 0,
-                            paddingRight: 0,
+                            paddingLeft: isMobile ? 16 : 24,
+                            paddingRight: isMobile ? 16 : 24,
                         },
                     }}
                 >
-                    {isMobile ? (
+                    {/* Header */}
+                    <div style={{ marginBottom: 24 }}>
+                        <Button
+                            icon={<ArrowLeftOutlined />}
+                            onClick={handleBack}
+                            style={{ marginBottom: 16 }}
+                        >
+                            Kembali
+                        </Button>
+
                         <Typography.Title
-                            style={{ 
-                                fontSize: "1rem",
-                                textAlign: "center",
-                            }}
+                            level={isMobile ? 4 : 2}
+                            style={{ margin: 0, textAlign: "center" }}
                         >
                             Detail Aduan
                         </Typography.Title>
-                    ) : (
-                        <Typography.Title
-                            style={{ 
-                                fontSize: "2rem",
-                                textAlign: "center",
-                            }}
+                    </div>
+
+                    <Divider />
+
+                    {/* Complaint Number & Status */}
+                    <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+                        <Col xs={24} sm={12}>
+                            <Typography.Text strong style={{ fontSize: 16 }}>
+                                Nomor Aduan:
+                            </Typography.Text>
+                            <br />
+                            <Typography.Text
+                                style={{
+                                    fontSize: 18,
+                                    color: "#1890ff",
+                                    fontWeight: 500,
+                                }}
+                            >
+                                {complaint.complaint_number}
+                            </Typography.Text>
+                        </Col>
+                        <Col
+                            xs={24}
+                            sm={12}
+                            style={{ textAlign: isMobile ? "left" : "right" }}
                         >
-                            Detail Aduan
-                        </Typography.Title>
-                    )}
-                    <Form 
-                        // labelCol={{ span: 4 }}
-                        // wrapperCol={{ span: 14 }}
-                        // layout="horizontal"
-                        form={form}
-                        style={{ 
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            padding: "1.1rem",
-                            margin: "auto 2rem"
+                            <Typography.Text strong style={{ fontSize: 16 }}>
+                                Status:
+                            </Typography.Text>
+                            <br />
+                            <Tag
+                                color={getStatusColor(complaint.status)}
+                                style={{
+                                    fontSize: 16,
+                                    padding: "4px 16px",
+                                    marginTop: 4,
+                                }}
+                            >
+                                {getStatusText(complaint.status)}
+                            </Tag>
+                        </Col>
+                    </Row>
+
+                    {/* Detail Information */}
+                    <div
+                        style={{
+                            background: "#fafafa",
+                            padding: isMobile ? "16px" : "24px",
+                            borderRadius: 8,
+                            marginBottom: 24,
                         }}
-                    >   
-                        {isMobile ? (
-                            <>
-                                <div>
-                                    <Typography.Text>Kategori Aduan</Typography.Text>
-                                    <Col span={24}>
-                                        <Form.Item>
-                                            <Select>
-                                                <Select.Option value="security">Keamanan & Ketertiban</Select.Option>
-                                                <Select.Option value="environment">Kebersihan & Lingkungan</Select.Option>
-                                                <Select.Option value="infrastructure">Infrastruktur & Fasilitas Umum</Select.Option>
-                                                <Select.Option value="service">Pelayanan Publik</Select.Option>
-                                                <Select.Option value="social">Sosial & Kesejahteraan</Select.Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </div>
+                    >
+                        {/* Kategori */}
+                        <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+                            <Col xs={24} md={6}>
+                                <Typography.Text strong>
+                                    Kategori Aduan:
+                                </Typography.Text>
+                            </Col>
+                            <Col xs={24} md={18}>
+                                <Typography.Text>
+                                    {complaint.complaint_category.name || "-"}
+                                </Typography.Text>
+                            </Col>
+                        </Row>
 
-                                <div>
-                                    <Typography.Text>Isi Aduan</Typography.Text>
-                                    <Col span={24}>
-                                        <Form.Item>
-                                            <TextArea rows={7} />
-                                        </Form.Item>
-                                    </Col>
-                                </div>
+                        {/* Tanggal */}
+                        <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+                            <Col xs={24} md={6}>
+                                <Typography.Text strong>
+                                    Tanggal Dibuat:
+                                </Typography.Text>
+                            </Col>
+                            <Col xs={24} md={18}>
+                                <Typography.Text>
+                                    {formatDate(complaint.created_at)}
+                                </Typography.Text>
+                            </Col>
+                        </Row>
 
-                                <div>
-                                    <Typography.Text>Dokumen Pendukung</Typography.Text>
-                                    <Col span={24}
-                                        style={{ 
-                                            background: pallete.background.black,
-                                        }}
-                                    >
-                                        <Carousel arrows infinite={false}>
-                                            <Image width={270} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                            <Image width={270} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                            <Image width={270} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                        </Carousel>
-                                        
-                                    </Col>
-                                </div>
+                        {/* Bukti Aduan */}
+                        <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+                            <Col xs={24} md={6}>
+                                <Typography.Text strong>
+                                    Bukti Aduan:
+                                </Typography.Text>
+                            </Col>
+                            <Col xs={24} md={18}>
+                                <Typography.Text>
+                                    {complaint.filename ? (
+                                        <a
+                                            href={`/storage/complaint/${complaint.filename}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Lihat Bukti
+                                        </a>
+                                    ) : (
+                                        "-"
+                                    )}
+                                </Typography.Text>
+                            </Col>
+                        </Row>
+                    </div>
 
-                                <Form.Item
-                                    style={{ 
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        marginTop: "1rem"
-                                    }}
-                                >
-                                    <Space>
-                                        <Button>Kembali</Button>
-                                    </Space>
-                                </Form.Item>
-                            </>
-                        ) : (
-                            <>
-                                <Row>
-                                    <Col span={5}>
-                                        <Typography.Text>Kategori Aduan</Typography.Text>
-                                    </Col>
-                                    <Col span={19}>
-                                        <Form.Item>
-                                            <Select>
-                                                <Select.Option value="security">Keamanan & Ketertiban</Select.Option>
-                                                <Select.Option value="environment">Kebersihan & Lingkungan</Select.Option>
-                                                <Select.Option value="infrastructure">Infrastruktur & Fasilitas Umum</Select.Option>
-                                                <Select.Option value="service">Pelayanan Publik</Select.Option>
-                                                <Select.Option value="social">Sosial & Kesejahteraan</Select.Option>
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col span={5}>
-                                        <Typography.Text>Isi Aduan</Typography.Text>
-                                    </Col>
-                                    <Col span={19}>
-                                        <Form.Item>
-                                            <TextArea rows={7} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                
-                                <Row>
-                                    <Col span={5}>
-                                        <Typography.Text>Dokumen Pendukung</Typography.Text>
-                                    </Col>
-                                    <Col span={8}
-                                        style={{ 
-                                            background: pallete.background.black,
-                                        }}
-                                    >
-                                        <Carousel arrows infinite={false}>
-                                            <Image width={400} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                            <Image width={400} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                            <Image width={400} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                                        </Carousel>
-                                        
-                                    </Col>
-                                </Row>
-
-
-                                <Form.Item
-                                    style={{ 
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        marginTop: "1rem"
-                                    }}
-                                >
-                                    <Space>
-                                        <Button>Kembali</Button>
-                                    </Space>
-                                </Form.Item>
-                            </>
-                        )}
-                        
-                        
-                    </Form>
+                    {/* Content */}
+                    <div style={{ marginBottom: 24 }}>
+                        <Typography.Title
+                            level={5}
+                            style={{ marginBottom: 12 }}
+                        >
+                            Isi Aduan
+                        </Typography.Title>
+                        <Card
+                            style={{
+                                background: "#fff",
+                                border: "1px solid #e8e8e8",
+                            }}
+                        >
+                            <Typography.Paragraph
+                                style={{
+                                    fontSize: 15,
+                                    lineHeight: 1.8,
+                                    margin: 0,
+                                    whiteSpace: "pre-wrap",
+                                }}
+                            >
+                                {complaint.content}
+                            </Typography.Paragraph>
+                        </Card>
+                    </div>
                 </Card>
             </MainLayout>
         </>

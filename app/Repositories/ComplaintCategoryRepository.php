@@ -2,23 +2,23 @@
 
 namespace App\Repositories;
 
-use App\Models\Complaint;
+use App\Models\ComplaintCategory;
 
-class ComplaintRepository implements ComplaintRepositoryInterface
+class ComplaintCategoryRepository implements ComplaintCategoryRepositoryInterface
 {
-    protected $Complaint;
+    protected $ComplaintCategory;
 
-    public function __construct(Complaint $Complaint)
+    public function __construct(ComplaintCategory $ComplaintCategory)
     {
-        $this->Complaint = $Complaint;
+        $this->ComplaintCategory = $ComplaintCategory;
     }
 
     public function getAll($search = null)
     {
-        $query = $this->Complaint::with('complaintCategory');
+        $query =  $this->ComplaintCategory;
 
         if ($search) {
-            $query->where('complaint_number', 'LIKE', '%' . $search . '%');
+            $query->where('name', 'LIKE', '%' . $search . '%');
         }
 
         return $query->paginate(10);
@@ -26,12 +26,12 @@ class ComplaintRepository implements ComplaintRepositoryInterface
 
     public function findById(int $id)
     {
-        return $this->Complaint::find($id)->with('complaintCategory')->first();
+        return $this->ComplaintCategory::find($id);
     }
 
     public function store(array $data)
     {
-        return $this->Complaint::create($data);
+        return $this->ComplaintCategory::create($data);
     }
 
     public function update(int $id, array $data)
