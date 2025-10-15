@@ -15,7 +15,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function getAll($search = null)
     {
-        $query = $this->Service::with('serviceCategory');
+        $query = $this->Service::with('serviceCategory', 'user');
 
         if ($search) {
             $query->where('description', 'LIKE', '%' . $search . '%');

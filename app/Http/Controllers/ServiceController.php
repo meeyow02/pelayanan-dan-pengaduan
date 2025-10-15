@@ -43,7 +43,7 @@ class ServiceController extends Controller
             $validated['user_id'] = auth()->user()->id;
 
             $service = $this->serviceService->store($validated);
-            
+
             if ($request->hasFile('files')) {
                 $files = $request->file('files');
                 foreach ($files as $file) {
@@ -76,6 +76,7 @@ class ServiceController extends Controller
     {
         try {
             $service = $this->serviceService->findById($id);
+            $service->load('serviceCategory', 'serviceFiles', 'user');
 
             if (!$service) {
                 return redirect()
@@ -104,10 +105,12 @@ class ServiceController extends Controller
 
             DB::beginTransaction();
 
-            dd($service->files);
-
-            if ($service->ser && Storage::disk('public')->exists('service/' . $service->filename)) {
-                Storage::disk('public')->delete('service/' . $service->filename);
+            $files = $service->serviceFiles;
+            foreach ($files as $file) {
+                if (Storage::disk('public')->exists('service/' . $file->filename)) {
+                    Storage::disk('public')->delete('service/' . $file->filename);
+                }
+                $this->serviceFileService->delete($file->id);
             }
 
             $this->serviceService->delete($id);

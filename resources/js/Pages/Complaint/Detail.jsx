@@ -64,25 +64,9 @@ export default function Show() {
         return statusTexts[status] || status;
     };
 
-    // Check if file is image or PDF
-    const isImage = (filename) => {
-        return /\.(jpg|jpeg|png|gif)$/i.test(filename);
-    };
-
-    const isPDF = (filename) => {
-        return /\.pdf$/i.test(filename);
-    };
-
-    // Get file URL
-    const getFileUrl = (filename) => {
-        return `/storage/complaints/${filename}`;
-    };
-
     const handleBack = () => {
         router.visit(route("complaint.index"));
     };
-
-    console.log(complaint);
 
     return (
         <>

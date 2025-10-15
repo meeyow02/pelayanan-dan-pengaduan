@@ -25,16 +25,11 @@ function Sidebar({ collapsed, isMobile = false }) {
 
         if (pathname.startsWith("/dental-treatment/fkrtl")) return ["fkrtl"];
         if (pathname.startsWith("/pengaduan")) return ['pengaduan'];
+        if (pathname.startsWith("/pelayanan")) return ['pelayanan'];
 
         switch (true) {
             case pathname === "/":
                 return ["dashboard"];
-            case pathname === "/pelayanan":
-                return ["pelayanan"];
-            case pathname === "/pelayanan/buat_permohonan_layanan":
-                return ["pelayanan"];
-            case pathname === "/pelayanan/detail_permohonan_layanan":
-                return ["pelayanan"];
             default:
                 return [];
         }
