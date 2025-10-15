@@ -9,12 +9,15 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useTableHeight } from "@/hooks/useTableHeight";
 import dayjs from "dayjs";
+import TableAction from "@/Components/TableAction";
 
 const columns = [
     {
         title: "No.",
         dataIndex: "no",
         key: "no",
+        width: 50,
+        fixed: "left",
         render: (_, __, index) => index + 1, // otomatis nomor urut
     },
     {
@@ -80,6 +83,23 @@ const columns = [
             ) : (
                 "-"
             ),
+    },
+    {
+        title: "Aksi",
+        className: "last-cell-p",
+        dataIndex: "id",
+        key: "id",
+        align: "center",
+        width: 90,
+        fixed: "right",
+        render: (id) => (
+            <TableAction
+                showDetail
+                showEdit={false}
+                onClickDetail={() => router.visit(`/pengaduan/detail_aduan/${id}`)}
+                handleDelete={() => router.delete(`pengaduan/${id}`)}
+            />
+        ),
     },
 ];
 
@@ -249,7 +269,7 @@ export default function Index() {
                         rowKey={"id"}
                         scroll={{ y: tableHeight, x: 1000 }}
                         style={{
-                            paddingInline: 24
+                            paddingInline: 24,
                         }}
                     />
 

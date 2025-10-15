@@ -8,6 +8,7 @@ use App\Services\ComplaintService;
 use DB;
 use Exception;
 use Inertia\Inertia;
+use Storage;
 use Str;
 
 class ComplaintController extends Controller
@@ -80,6 +81,39 @@ class ComplaintController extends Controller
             return redirect()
                 ->route('complaint.index')
                 ->with('error', 'Gagal memuat detail aduan');
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $complaint = $this->complaintService->findById($id);
+
+            if (!$complaint) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Aduan tidak ditemukan');
+            }
+
+            DB::beginTransaction();
+
+            if ($complaint->filename && Storage::disk('public')->exists('complaint/' . $complaint->filename)) {
+                Storage::disk('public')->delete('complaint/' . $complaint->filename);
+            }
+
+            $this->complaintService->delete($id);
+
+            DB::commit();
+
+            return redirect()
+                ->route('complaint.index')
+                ->with('success', 'Aduan berhasil dihapus');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal menghapus aduan');
         }
     }
 }
