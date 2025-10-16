@@ -198,6 +198,20 @@ export default function Index() {
 
                                 <div>
                                     <Typography.Text>
+                                        Deskripsi
+                                    </Typography.Text>
+                                    <Col span={24}>
+                                        <TextArea
+                                            rows={5}
+                                            placeholder="Tulis permohonan yang ingin anda ajukan"
+                                            showCount
+                                            maxLength={1000}
+                                        />
+                                    </Col>
+                                </div>
+
+                                <div style={{ marginTop: "1rem" }}>
+                                    <Typography.Text>
                                         Unggah Dokumen
                                     </Typography.Text>
                                     <Col span={24}>
@@ -284,6 +298,22 @@ export default function Index() {
                                 </Row>
 
                                 <Row>
+                                    <Col span={5}>
+                                        <Typography.Text>
+                                            Deskripsi
+                                        </Typography.Text>
+                                    </Col>
+                                    <Col span={19}>
+                                        <TextArea
+                                            rows={5}
+                                            placeholder="Tulis permohonan yang ingin anda ajukan"
+                                            showCount
+                                            maxLength={1000}
+                                        />
+                                    </Col>
+                                </Row>
+
+                                <Row style={{ marginTop: "2rem" }}>
                                     <Col span={5}>
                                         <Typography.Text>
                                             Unggah Dokumen

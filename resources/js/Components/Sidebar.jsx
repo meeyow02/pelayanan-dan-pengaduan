@@ -100,7 +100,9 @@ function Sidebar({ collapsed, isMobile = false }) {
                 align="center"
                 style={{ height: 32, marginBottom: 16 }}
             >
-                <Typography.Text>SiDUPA</Typography.Text>
+                <Link href="/" >
+                    <Typography.Text>SiDUPA</Typography.Text>
+                </Link>
             </Flex>
             <Menu
                 items={[
