@@ -1,18 +1,21 @@
-import { Flex, Image, Layout, Menu, Typography } from "antd";
+import { Col, Divider, Dropdown, Flex, Image, Layout, Menu, Space, Typography } from "antd";
 import { Link, usePage } from "@inertiajs/react";
 import pallete from "../utils/pallete";
 import PropTypes from "prop-types";
 import useSidebarStore from "../store/sidebarStore";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
+import { DownOutlined } from '@ant-design/icons';
 
 function Sidebar({ collapsed, isMobile = false }) {
     const { url } = usePage();
     const { setIsDrawerOpen } = useSidebarStore();
     const [openKeys, setOpenKeys] = useState([]);
+    const { auth } = usePage().props;
 
     const dentalTreatmentChildKeys = [];
     const historyChildKeys = [];
+    const masterDataChildKeys = ["master_data_complaint", "master_data_service"];
 
     const handleLinkClick = () => {
         if (isMobile) {
@@ -26,6 +29,8 @@ function Sidebar({ collapsed, isMobile = false }) {
         if (pathname.startsWith("/dental-treatment/fkrtl")) return ["fkrtl"];
         if (pathname.startsWith("/pengaduan")) return ['pengaduan'];
         if (pathname.startsWith("/pelayanan")) return ['pelayanan'];
+        if (pathname.startsWith("/master_data/kategori_aduan")) return ["master_data_complaint"];
+        if (pathname.startsWith("/master_data/kategori_pelayanan")) return ["master_data_service"];
 
         switch (true) {
             case pathname === "/":
@@ -98,82 +103,245 @@ function Sidebar({ collapsed, isMobile = false }) {
             <Flex
                 justify="center"
                 align="center"
-                style={{ height: 32, marginBottom: 16 }}
+                style={{ height: 32, marginBottom: collapsed ? "1rem" : "2rem" }}
             >
                 <Link href="/" >
-                    <Typography.Text>SiDUPA</Typography.Text>
+                    <Col span={24}>
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1.5rem" }}>
+                            <Image 
+                                alt="Si Cerdas Gantarang"
+                                src="/Bulukumba_Regency_Logo.png"
+                                width={collapsed ? 30 : 40}
+                                preview={false}
+                            />
+                        </div>
+                    </Col>
+                    {!collapsed && (
+                        <Typography.Text
+                            style={{ color: "#555", fontSize: ".7rem", textAlign: "center", display: "block" }}
+                        >
+                            Si Cerdas Gantarang
+                        </Typography.Text>
+                    )}
                 </Link>
             </Flex>
-            <Menu
-                items={[
-                    {
-                        key: "dashboard",
-                        icon: isParentActive("dashboard", []) ? (
-                            <Icon
-                                icon="material-symbols:dashboard"
-                                className="scale-110"
-                            />
-                        ) : (
-                            <Icon
-                                color={defaultIconColor}
-                                icon="material-symbols:dashboard"
-                                className="scale-110"
-                            />
-                        ),
-                        label: (
-                            <Link href="/" onClick={handleLinkClick}>
-                                Dashboard
-                            </Link>
-                        ),
-                    },
-                    {
-                        key: "pengaduan",
-                        icon: isParentActive("pengaduan", []) ? (
-                            <Icon
-                                icon="material-symbols:note-stack-sharp"
-                                className="scale-110"
-                            />
-                        ) : (
-                            <Icon
-                                color={defaultIconColor}
-                                icon="material-symbols:note-stack-sharp"
-                                className="scale-110"
-                            />
-                        ),
-                        label: (
-                            <Link href="/pengaduan" onClick={handleLinkClick}>
-                                Pengaduan
-                            </Link>
-                        ),
-                    },
-                    {
-                        key: "pelayanan",
-                        icon: isParentActive("pelayanan", []) ? (
-                            <Icon
-                                icon="material-symbols:folder-open"
-                                className="scale-110"
-                            />
-                        ) : (
-                            <Icon
-                                color={defaultIconColor}
-                                icon="material-symbols:folder-open"
-                                className="scale-110"
-                            />
-                        ),
-                        label: (
-                            <Link href="/pelayanan" onClick={handleLinkClick}>
-                                Pelayanan
-                            </Link>
-                        ),
-                    },
-                ]}
-                style={{ borderRight: "none" }}
-                selectedKeys={selectedKeys}
-                mode="inline"
-                inlineCollapsed={collapsed}
-                openKeys={collapsed ? undefined : openKeys}
-                onOpenChange={onOpenChange}
-            />
+            <Divider style={{ marginBottom: ".5rem", borderTop: ".1rem solid #DFE3E8" }}/> 
+
+            {auth.user.role == "admin" ? (
+                <Menu
+                    items={[
+                        {
+                            key: "dashboard",
+                            icon: isParentActive("dashboard", []) ? (
+                                <Icon
+                                    icon="material-symbols:dashboard"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:dashboard"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link href="/" onClick={handleLinkClick}>
+                                    Dashboard
+                                </Link>
+                            ),
+                        },
+                        {
+                            key: "pengaduan",
+                            icon: isParentActive("pengaduan", []) ? (
+                                <Icon
+                                    icon="material-symbols:note-stack-sharp"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:note-stack-sharp"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link href="/pengaduan" onClick={handleLinkClick}>
+                                    Pengaduan
+                                </Link>
+                            ),
+                        },
+                        {
+                            key: "pelayanan",
+                            icon: isParentActive("pelayanan", []) ? (
+                                <Icon
+                                    icon="material-symbols:folder-open"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:folder-open"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link href="/pelayanan" onClick={handleLinkClick}>
+                                    Pelayanan
+                                </Link>
+                            ),
+                        },
+                        {
+                            key: "master_data",
+                            icon: isParentActive("master_data", []) ? (
+                                <Icon icon="material-symbols:database" className="scale-110" />
+                            ) : (
+                                <Icon color={defaultIconColor} icon="material-symbols:database" className="scale-110" />
+                            ),
+                            label: "Master Data",
+                            children: [
+                                {
+                                    key: "master_data_complaint",
+                                    style: { paddingLeft: 16 },
+                                    // icon: getDotIcon("master_data", "master_data_complaint"),
+                                    label: (
+                                        <Link href="/master_data/kategori_aduan" onClick={handleLinkClick}>
+                                            Kategori Aduan
+                                        </Link>
+                                    ),
+                                },
+                                {
+                                    key: "master_data_service",
+                                    style: { paddingLeft: 16 },
+                                    // icon: getDotIcon("master_data", "master_data_service"),
+                                    label: (
+                                        <Link href="/master_data/kategori_pelayanan" onClick={handleLinkClick}>
+                                            Kategori Pelayanan
+                                        </Link>
+                                    ),
+                                },
+                            ],
+                        },
+
+                        
+                        // {
+                        //     key: "master_data",
+                        //     icon: isParentActive("master_data", []) ? (
+                        //         <Icon
+                        //             icon="material-symbols:database"
+                        //             className="scale-110"
+                        //         />
+                        //     ) : (
+                        //         <Icon
+                        //             color={defaultIconColor}
+                        //             icon="material-symbols:database"
+                        //             className="scale-110"
+                        //         />
+                        //     ),
+                        //     label: (
+                        //         <div style={{ position: "relative", width: "100%" }}>
+                        //             <Dropdown
+                        //                 menu={{ items: masterDataItems }}
+                        //                 trigger={['click']}
+                        //                 placement="bottomRight"
+                        //             >
+                        //                 <a
+                        //                 onClick={(e) => e.preventDefault()}
+                        //                 style={{
+                        //                     display: "flex",
+                        //                     justifyContent: "space-between",
+                        //                     alignItems: "center",
+                        //                     width: "100%",
+                        //                 }}
+                        //                 >
+                        //                     <span>Master Data</span>
+                        //                     <DownOutlined style={{ fontSize: 10 }} />
+                        //                 </a>
+                        //             </Dropdown>
+                        //         </div>
+                        //     ),
+                        // },
+                    ]}
+                    style={{ borderRight: "none" }}
+                    selectedKeys={selectedKeys}
+                    mode="inline"
+                    inlineCollapsed={collapsed}
+                    openKeys={collapsed ? undefined : openKeys}
+                    onOpenChange={onOpenChange}
+                />
+            ) : (
+                <Menu
+                    items={[
+                        {
+                            key: "dashboard",
+                            icon: isParentActive("dashboard", []) ? (
+                                <Icon
+                                    icon="material-symbols:dashboard"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:dashboard"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link href="/" onClick={handleLinkClick}>
+                                    Dashboard
+                                </Link>
+                            ),
+                        },
+                        {
+                            key: "pengaduan",
+                            icon: isParentActive("pengaduan", []) ? (
+                                <Icon
+                                    icon="material-symbols:note-stack-sharp"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:note-stack-sharp"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link href="/pengaduan" onClick={handleLinkClick}>
+                                    Pengaduan
+                                </Link>
+                            ),
+                        },
+                        {
+                            key: "pelayanan",
+                            icon: isParentActive("pelayanan", []) ? (
+                                <Icon
+                                    icon="material-symbols:folder-open"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:folder-open"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link href="/pelayanan" onClick={handleLinkClick}>
+                                    Pelayanan
+                                </Link>
+                            ),
+                        },
+                    ]}
+                    style={{ borderRight: "none" }}
+                    selectedKeys={selectedKeys}
+                    mode="inline"
+                    inlineCollapsed={collapsed}
+                    openKeys={collapsed ? undefined : openKeys}
+                    onOpenChange={onOpenChange}
+                />
+            )}
+            
+            
         </>
     );
 

@@ -11,7 +11,7 @@ export default function Footer() {
                 color: pallete.grey[600],
             }}
         >
-            © Copyright 2025. Sistem Aduan dan Pelayanan Administrasi.
+            © Copyright 2025. Si Cerdas Gantarang.
         </Layout.Footer>
     );
 }

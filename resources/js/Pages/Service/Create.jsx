@@ -166,8 +166,11 @@ export default function Index() {
                         {isMobile ? (
                             <>
                                 <div>
-                                    <Typography.Text>
-                                        Kategori Pelayanan
+                                    <Typography.Text strong>
+                                        Kategori Pelayanan{" "}
+                                        <span style={{ color: "red" }}>
+                                            *
+                                        </span>
                                     </Typography.Text>
                                     <Col span={24}>
                                         <Form.Item
@@ -197,8 +200,11 @@ export default function Index() {
                                 </div>
 
                                 <div>
-                                    <Typography.Text>
-                                        Deskripsi
+                                    <Typography.Text strong>
+                                        Deskripsi{" "}
+                                        <span style={{ color: "red" }}>
+                                            *
+                                        </span>
                                     </Typography.Text>
                                     <Col span={24}>
                                         <TextArea
@@ -211,8 +217,11 @@ export default function Index() {
                                 </div>
 
                                 <div style={{ marginTop: "1rem" }}>
-                                    <Typography.Text>
-                                        Unggah Dokumen
+                                    <Typography.Text strong>
+                                        Unggah Dokumen{" "}
+                                        <span style={{ color: "red" }}>
+                                            *
+                                        </span>
                                     </Typography.Text>
                                     <Col span={24}>
                                         <Form.Item>
@@ -266,8 +275,11 @@ export default function Index() {
                             <>
                                 <Row>
                                     <Col span={5}>
-                                        <Typography.Text>
-                                            Kategori Pelayanan
+                                        <Typography.Text strong>
+                                            Kategori Pelayanan{" "}
+                                            <span style={{ color: "red" }}>
+                                                *
+                                            </span>
                                         </Typography.Text>
                                     </Col>
                                     <Col span={19}>
@@ -299,8 +311,11 @@ export default function Index() {
 
                                 <Row>
                                     <Col span={5}>
-                                        <Typography.Text>
-                                            Deskripsi
+                                        <Typography.Text strong>
+                                            Deskripsi{" "}
+                                            <span style={{ color: "red" }}>
+                                                *
+                                            </span>
                                         </Typography.Text>
                                     </Col>
                                     <Col span={19}>
@@ -315,8 +330,11 @@ export default function Index() {
 
                                 <Row style={{ marginTop: "2rem" }}>
                                     <Col span={5}>
-                                        <Typography.Text>
-                                            Unggah Dokumen
+                                        <Typography.Text strong>
+                                            Unggah Dokumen{" "}
+                                            <span style={{ color: "red" }}>
+                                                *
+                                            </span>
                                         </Typography.Text>
                                     </Col>
                                     <Col span={19}>

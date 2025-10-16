@@ -20,14 +20,14 @@ const columns = [
         render: (_, __, index) => index + 1, // otomatis nomor urut
     },
     {
-        title: "Kategori Aduan",
-        dataIndex: ["complaint_category", "name"],
-        key: "complaint_category",
+        title: "Kategori Pelayanan Administrasi",
+        dataIndex: ["service_category", "name"],
+        key: "service_category",
         render: (text) => text || "-",
     },
     {
         title: "Deskripsi",
-        dataIndex: ["complaint_category", "deskripsi"],
+        dataIndex: ["service_category", "deskripsi"],
         key: "description",
         ellipsis: true,
     },
@@ -44,10 +44,10 @@ const columns = [
                 showDetail
                 showEdit={false}
                 onClickDetail={() =>
-                    router.visit(route("complaint.detail", id))
+                    router.visit(route("service.detail", id))
                 }
                 handleDelete={() =>
-                    router.delete(route("complaint.destroy", id))
+                    router.delete(route("service.destroy", id))
                 }
             />
         ),
@@ -69,7 +69,7 @@ export default function Index() {
     // const [limit, setLimit] = useState(complaints.per_page);
 
     useEffect(() => {
-        setTitle("Kategori Aduan");
+        setTitle("Kategori Pelayanan Administrasi");
     }, [setTitle]);
 
     useEffect(() => {
@@ -108,7 +108,7 @@ export default function Index() {
                 isMobile={isMobile}
                 setIsDrawerOpen={setIsDrawerOpen}
             >
-                <Head title="Master Data" />
+                <Head title="Kategori Pelayanan Administrasi" />
 
                 <Card
                     styles={{
@@ -159,7 +159,7 @@ export default function Index() {
                                         fontWeight: "bold",
                                     }}
                                 >
-                                    Buat Kategori Aduan
+                                    Buat Kategori Pelayanan Administrasi
                                 </Button>
                             </Flex>
                         </>
@@ -198,14 +198,14 @@ export default function Index() {
                                             height={16}
                                         />
                                     }
-                                    href="/master_data/kategori_aduan/buat_kategori_aduan"
+                                    href="/master_data/kategori_pelayanan/buat_kategori_pelayanan"
                                     // onClick={handleCreateComplaint}
                                     style={{
                                         fontSize: "0.85em",
                                         fontWeight: "bold",
                                     }}
                                 >
-                                    Buat Kategori Aduan
+                                    Buat Kategori Pelayanan Administrasi
                                 </Button>
                             </Flex>
                         </>

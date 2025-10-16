@@ -52,13 +52,13 @@ export default function Dashboard() {
                         <Card variant='borderless' style={{ 
                             background: pallete.info.darker, 
                             width: "100%",
-                            height: "30vh",
+                            height: "35vh",
                         }}>
                             <Typography.Title style={{ color: "#fff", fontSize: "1.5rem" }}>Selamat Datang, {name}!</Typography.Title>
 
                             <Row>
                                 <Col span={24}>
-                                    <Typography.Text style={{ color: pallete.grey[200] }}>Terima kasih telah menggunakan SiDUPA.</Typography.Text>
+                                    <Typography.Text style={{ color: pallete.grey[200] }}>Terima kasih telah menggunakan <Typography.Text strong style={{ color: pallete.grey[200] }}>Si Cerdas Gantarang</Typography.Text>.</Typography.Text>
                                 </Col>
                                 <Col span={24}>
                                     <Typography.Text style={{ color: pallete.grey[200] }}>Silakan ajukan aduan atau permohonan administrasi Anda melalui menu di bawah ini.</Typography.Text>
@@ -89,15 +89,9 @@ export default function Dashboard() {
                     </Row>
 
                     <Divider orientation='left' style={{ color: pallete.grey[900], marginTop: "2rem" }}>
-                        Pusat Layanan SiDUPA
+                        Si Cerdas Gantarang
                     </Divider>
-                    <Row style={{ color: pallete.grey[900], gap: ".1rem" }}>
-                        <Col span={24}>
-                            <Typography.Text style={{ color: pallete.grey[900] }}>
-                                Terima kasih telah menggunakan Sistem Aduan dan Pelayanan Administrasi (SiDUPA).
-                            </Typography.Text>
-                        </Col>
-
+                    <Row style={{ color: pallete.grey[900], gap: ".1rem", padding: "0 .5rem" }}>
                         <Col span={24} style={{ color: pallete.grey[900] }}>
                             <Typography.Text>Butuh bantuan? Hubungi kami melalui:</Typography.Text>
                         </Col>
@@ -119,14 +113,14 @@ export default function Dashboard() {
                         <Col span={24}>
                             <Row style={{ gap: ".5rem" }}>
                                 <Icon icon={"material-symbols:stacked-email-outline-rounded"} />
-                                <Typography.Text style={{ color: pallete.grey[900] }}>Email: cs@sidupa.go.id</Typography.Text>
+                                <Typography.Text style={{ color: pallete.grey[900] }}>Email: cs@sicerdasgantarang.go.id</Typography.Text>
                             </Row>
                         </Col>
 
                         <Col span={24}>
                             <Row style={{ gap: ".5rem" }}>
                                 <Icon icon={"material-symbols:pin-drop-rounded"} />
-                                <Typography.Text style={{ color: pallete.grey[900] }}>Alamat: Gedung Pelayanan Publik Bulukumba</Typography.Text>
+                                <Typography.Text style={{ color: pallete.grey[900] }}>Alamat: Kantor Camat Gantarang Bulukumba</Typography.Text>
                             </Row>
                         </Col>
 
@@ -152,7 +146,7 @@ export default function Dashboard() {
 
                             <Row>
                                 <Col span={24}>
-                                    <Typography.Text style={{ color: pallete.grey[200] }}>Terima kasih telah menggunakan SiDUPA.</Typography.Text>
+                                    <Typography.Text style={{ color: pallete.grey[200] }}>Terima kasih telah menggunakan <Typography.Text strong style={{ color: pallete.grey[200] }}>Si Cerdas Gantarang</Typography.Text>.</Typography.Text>
                                 </Col>
                                 <Col span={24}>
                                     <Typography.Text style={{ color: pallete.grey[200] }}>Silakan ajukan aduan atau permohonan administrasi Anda melalui menu di bawah ini.</Typography.Text>
@@ -181,15 +175,9 @@ export default function Dashboard() {
                     </Row>
 
                     <Divider orientation='left' style={{ color: pallete.grey[900], marginTop: "2rem" }}>
-                        Pusat Layanan SiDUPA
+                        {/* Si Cerdas Gantarang */}
                     </Divider>
                     <Row style={{ color: pallete.grey[900], gap: ".5rem" }}>
-                        <Col span={24}>
-                            <Typography.Text style={{ color: pallete.grey[900] }}>
-                                Terima kasih telah menggunakan Sistem Aduan dan Pelayanan Administrasi (SiDUPA).
-                            </Typography.Text>
-                        </Col>
-
                         <Col span={24} style={{ color: pallete.grey[900] }}>
                             <Typography.Text>Butuh bantuan? Hubungi kami melalui:</Typography.Text>
                         </Col>
@@ -211,14 +199,14 @@ export default function Dashboard() {
                         <Col span={24}>
                             <Row style={{ gap: ".5rem" }}>
                                 <Icon icon={"material-symbols:stacked-email-outline-rounded"} />
-                                <Typography.Text style={{ color: pallete.grey[900] }}>Email: cs@sidupa.go.id</Typography.Text>
+                                <Typography.Text style={{ color: pallete.grey[900] }}>Email: cs@sicerdasgantarang.go.id</Typography.Text>
                             </Row>
                         </Col>
 
                         <Col span={24}>
                             <Row style={{ gap: ".5rem" }}>
                                 <Icon icon={"material-symbols:pin-drop-rounded"} />
-                                <Typography.Text style={{ color: pallete.grey[900] }}>Alamat: Gedung Pelayanan Publik Bulukumba</Typography.Text>
+                                <Typography.Text style={{ color: pallete.grey[900] }}>Alamat: Kantor Camat Gantarang Bulukumba</Typography.Text>
                             </Row>
                         </Col>
 

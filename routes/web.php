@@ -21,6 +21,19 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 });
 
+Route::get('/master_data/kategori_aduan', function () {
+    return Inertia::render('Master Data/Complaint Category/Index');
+});
+Route::get('/master_data/kategori_aduan/buat_kategori_aduan', function () {
+    return Inertia::render('Master Data/Complaint Category/Create');
+});
+
+Route::get('/master_data/kategori_pelayanan', function () {
+    return Inertia::render('Master Data/Service Category/Index');
+});
+Route::get('/master_data/kategori_pelayanan/buat_kategori_pelayanan', function () {
+    return Inertia::render('Master Data/Service Category/Create');
+});
 
 Route::get('/', function () {
     return Inertia::render('Dashboard');

@@ -1,4 +1,4 @@
-import { Button, Col, Row, Select, Typography, Upload } from "antd";
+import { Button, Col, Input, Row, Select, Typography, Upload } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
@@ -8,6 +8,7 @@ import { Card, Form, message } from "antd";
 import useTitleStore from "@/store/titleStore";
 import { useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
+import pallete from "@/utils/pallete";
 
 export default function Create() {
     // Hooks
@@ -23,7 +24,7 @@ export default function Create() {
     const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
-        setTitle("Pengaduan");
+        setTitle("Buat Kategori Pelayanan Administrasi");
     }, [setTitle]);
 
     useEffect(() => {
@@ -35,60 +36,60 @@ export default function Create() {
         }
     }, [flash, messageApi]);
 
-    const handleSubmit = (values) => {
-        setUploading(true);
+    // const handleSubmit = (values) => {
+    //     setUploading(true);
 
-        const formData = new FormData();
-        formData.append("complaint_category_id", values.complaint_category_id);
-        formData.append("content", values.content);
+    //     const formData = new FormData();
+    //     formData.append("complaint_category_id", values.complaint_category_id);
+    //     formData.append("content", values.content);
 
-        // Append file jika ada
-        if (fileList.length > 0) {
-            formData.append("filename", fileList[0]);
-        }
+    //     // Append file jika ada
+    //     if (fileList.length > 0) {
+    //         formData.append("filename", fileList[0]);
+    //     }
 
-        router.post(route("complaint.store"), formData, {
-            forceFormData: true,
-            onFinish: () => {
-                setUploading(false);
-            },
-        });
-    };
+    //     router.post(route("complaint.store"), formData, {
+    //         forceFormData: true,
+    //         onFinish: () => {
+    //             setUploading(false);
+    //         },
+    //     });
+    // };
 
-    const handleBack = () => {
-        router.visit(route("complaint.index"));
-    };
+    // const handleBack = () => {
+    //     router.visit(route("complaint.index"));
+    // };
 
-    const uploadProps = {
-        beforeUpload: (file) => {
-            // Validasi file (opsional)
-            const isValidType =
-                file.type === "image/jpeg" ||
-                file.type === "image/png" ||
-                file.type === "application/pdf";
+    // const uploadProps = {
+    //     beforeUpload: (file) => {
+    //         // Validasi file (opsional)
+    //         const isValidType =
+    //             file.type === "image/jpeg" ||
+    //             file.type === "image/png" ||
+    //             file.type === "application/pdf";
 
-            if (!isValidType) {
-                messageApi.error(
-                    "Hanya dapat mengunggah file JPG, PNG, atau PDF!"
-                );
-                return Upload.LIST_IGNORE;
-            }
+    //         if (!isValidType) {
+    //             messageApi.error(
+    //                 "Hanya dapat mengunggah file JPG, PNG, atau PDF!"
+    //             );
+    //             return Upload.LIST_IGNORE;
+    //         }
 
-            const isLt5M = file.size / 1024 / 1024 < 5;
-            if (!isLt5M) {
-                messageApi.error("File harus lebih kecil dari 5MB!");
-                return Upload.LIST_IGNORE;
-            }
+    //         const isLt5M = file.size / 1024 / 1024 < 5;
+    //         if (!isLt5M) {
+    //             messageApi.error("File harus lebih kecil dari 5MB!");
+    //             return Upload.LIST_IGNORE;
+    //         }
 
-            setFileList([file]);
-            return false; // Prevent auto upload
-        },
-        onRemove: () => {
-            setFileList([]);
-        },
-        fileList: fileList,
-        maxCount: 1,
-    };
+    //         setFileList([file]);
+    //         return false; // Prevent auto upload
+    //     },
+    //     onRemove: () => {
+    //         setFileList([]);
+    //     },
+    //     fileList: fileList,
+    //     maxCount: 1,
+    // };
 
     return (
         <>
@@ -99,7 +100,7 @@ export default function Create() {
                 isMobile={isMobile}
                 setIsDrawerOpen={setIsDrawerOpen}
             >
-                <Head title="Buat Pengaduan" />
+                <Head title="Buat Kategori Pelayanan Administrasi" />
 
                 <Card
                     styles={{
@@ -116,12 +117,12 @@ export default function Create() {
                             marginBottom: 32,
                         }}
                     >
-                        Form Pengisian Aduan
+                        Form Pengisian Kategori Pelayanan Administrasi
                     </Typography.Title>
 
                     <Form
                         form={form}
-                        onFinish={handleSubmit}
+                        // onFinish={handleSubmit}
                         layout="vertical"
                         style={{
                             padding: isMobile ? "1rem" : "1.1rem",
@@ -131,69 +132,60 @@ export default function Create() {
                         {isMobile ? (
                             <>
                                 <Form.Item
-                                    label="Kategori Aduan"
-                                    name="complaint_category_id"
+                                    label={
+                                        <Typography.Text strong>
+                                            Kategori Pelayanan Administrasi{" "}
+                                            <span style={{ color: "red" }}>
+                                                *
+                                            </span>
+                                        </Typography.Text>
+                                    }
+                                    // name="complaint_category_id"
+                                    
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Pilih kategori aduan!",
+                                            message: "Tambahkan kategori pelayanan administrasi!",
                                         },
                                     ]}
                                 >
-                                    <Select placeholder="Pilih kategori">
-                                        {complaintCategories?.data.map(
-                                            (category) => (
-                                                <Select.Option
-                                                    key={category.id}
-                                                    value={category.id}
-                                                >
-                                                    {category.name}
-                                                </Select.Option>
-                                            )
-                                        )}
-                                    </Select>
+                                    <Input placeholder="Masukkan Kategori pelayanan administrasi" 
+                                        style={{ 
+                                            borderRadius: ".5rem",
+                                            borderColor: pallete.grey[300]
+                                        }}
+                                    />
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="Isi Aduan"
-                                    name="content"
+                                    label= {
+                                        <Typography.Text strong>
+                                            Isi Kategori Pelayanan Administrasi{" "}
+                                            <span style={{ color: "red" }}>
+                                                *
+                                            </span>
+                                        </Typography.Text>
+                                    }
+                                    // name="content"
                                     rules={[
                                         {
                                             required: true,
                                             message:
-                                                "Isi aduan tidak boleh kosong!",
+                                                "Isi deskripsi kategori pelayanan administrasi tidak boleh kosong!",
                                         },
                                         {
                                             min: 10,
                                             message:
-                                                "Isi aduan minimal 10 karakter!",
+                                                "Isi deskripsi kategori pelayanan administrasi minimal 10 karakter!",
                                         },
                                     ]}
                                 >
                                     <TextArea
                                         rows={7}
-                                        placeholder="Tulis aduan Anda..."
+                                        placeholder="Tulis deskripsi kategori pelayanan administrasi ..."
                                         showCount
                                         maxLength={1000}
                                     />
-                                </Form.Item>
-
-                                <Form.Item
-                                    label="Unggah Dokumen Pendukung (Opsional)"
-                                    name="filename"
-                                    style={{ marginTop: "2rem" }}
-                                >
-                                    <Upload.Dragger {...uploadProps}>
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined />
-                                        </p>
-                                        <p className="ant-upload-text">
-                                            Klik atau unggah file ke area ini
-                                        </p>
-                                        <p className="ant-upload-hint">
-                                            Format: JPG, PNG, PDF (Maks. 5MB)
-                                        </p>
-                                    </Upload.Dragger>
                                 </Form.Item>
 
                                 <Form.Item
@@ -203,7 +195,7 @@ export default function Create() {
                                     }}
                                 >
                                     <Button
-                                        onClick={handleBack}
+                                        // onClick={handleBack}
                                         disabled={uploading}
                                         style={{ marginRight: 8 }}
                                     >
@@ -221,104 +213,66 @@ export default function Create() {
                         ) : (
                             <>
                                 <Row gutter={16}>
-                                    <Col span={5}>
+                                    <Col span={6}>
                                         <Typography.Text strong>
-                                            Kategori Aduan{" "}
+                                            Kategori Pelayanan Administrasi{" "}
                                             <span style={{ color: "red" }}>
                                                 *
                                             </span>
                                         </Typography.Text>
                                     </Col>
-                                    <Col span={19}>
+                                    <Col span={18}>
                                         <Form.Item
-                                            name="complaint_category_id"
+                                            // name="complaint_category_id"
                                             rules={[
                                                 {
                                                     required: true,
                                                     message:
-                                                        "Pilih kategori aduan!",
+                                                        "Masukkan kategori pelayanan administrasi!",
                                                 },
                                             ]}
                                         >
-                                            <Select placeholder="Pilih kategori">
-                                                {complaintCategories?.data.map(
-                                                    (category) => (
-                                                        <Select.Option
-                                                            key={category.id}
-                                                            value={category.id}
-                                                        >
-                                                            {category.name}
-                                                        </Select.Option>
-                                                    )
-                                                )}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-
-                                <Row gutter={16}>
-                                    <Col span={5}>
-                                        <Typography.Text strong>
-                                            Isi Aduan{" "}
-                                            <span style={{ color: "red" }}>
-                                                *
-                                            </span>
-                                        </Typography.Text>
-                                    </Col>
-                                    <Col span={19}>
-                                        <Form.Item
-                                            name="content"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message:
-                                                        "Isi aduan tidak boleh kosong!",
-                                                },
-                                                {
-                                                    min: 10,
-                                                    message:
-                                                        "Isi aduan minimal 10 karakter!",
-                                                },
-                                            ]}
-                                        >
-                                            <TextArea
-                                                rows={7}
-                                                placeholder="Tulis aduan Anda..."
-                                                showCount
-                                                maxLength={1000}
+                                            <Input placeholder="Masukkan Kategori pelayanan administrasi" 
+                                                style={{ 
+                                                    borderRadius: ".3rem",
+                                                    borderColor: pallete.grey[300]
+                                                }}
                                             />
                                         </Form.Item>
                                     </Col>
                                 </Row>
 
-                                <Row gutter={16} style={{ marginTop: "2rem" }}>
-                                    <Col span={5}>
+                                <Row gutter={16}>
+                                    <Col span={6}>
                                         <Typography.Text strong>
-                                            Unggah Dokumen Pendukung
-                                        </Typography.Text>
-                                        <br />
-                                        <Typography.Text
-                                            type="secondary"
-                                            style={{ fontSize: "12px" }}
-                                        >
-                                            (Opsional)
+                                            Isi Kategori Pelayanan Administrasi{" "}
+                                            <span style={{ color: "red" }}>
+                                                *
+                                            </span>
                                         </Typography.Text>
                                     </Col>
-                                    <Col span={19}>
-                                        <Form.Item name="filename">
-                                            <Upload.Dragger {...uploadProps}>
-                                                <p className="ant-upload-drag-icon">
-                                                    <InboxOutlined />
-                                                </p>
-                                                <p className="ant-upload-text">
-                                                    Klik atau unggah file ke
-                                                    area ini
-                                                </p>
-                                                <p className="ant-upload-hint">
-                                                    Format: JPG, PNG, PDF (Maks.
-                                                    5MB)
-                                                </p>
-                                            </Upload.Dragger>
+                                    <Col span={18}>
+                                        <Form.Item
+                                            // name="content"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        "Isi deskripsi kategori pelayanan administrasi tidak boleh kosong!",
+                                                },
+                                                {
+                                                    min: 10,
+                                                    message:
+                                                        "Isi deskripsi kategori pelayanan administrasi minimal 10 karakter!",
+                                                },
+                                            ]}
+                                        >
+                                            <TextArea
+                                                rows={7}
+                                                placeholder="Tulis deskripsi kategori pelayanan administrasi ..."
+                                                showCount
+                                                maxLength={1000}
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -331,8 +285,8 @@ export default function Create() {
                                     }}
                                 >
                                     <Button
-                                        onClick={handleBack}
-                                        disabled={uploading}
+                                        // onClick={handleBack}
+                                        // disabled={uploading}
                                         style={{ marginRight: 8 }}
                                     >
                                         Kembali
@@ -340,7 +294,7 @@ export default function Create() {
                                     <Button
                                         type="primary"
                                         htmlType="submit"
-                                        loading={uploading}
+                                        // loading={uploading}
                                     >
                                         Submit
                                     </Button>
