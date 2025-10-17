@@ -160,7 +160,7 @@ export default function Create() {
                                 <Form.Item
                                     label= {
                                         <Typography.Text strong>
-                                            Isi Kategori Pelayanan Administrasi{" "}
+                                            Deskripsi{" "}
                                             <span style={{ color: "red" }}>
                                                 *
                                             </span>
@@ -245,7 +245,7 @@ export default function Create() {
                                 <Row gutter={16}>
                                     <Col span={6}>
                                         <Typography.Text strong>
-                                            Isi Kategori Pelayanan Administrasi{" "}
+                                            Deskripsi{" "}
                                             <span style={{ color: "red" }}>
                                                 *
                                             </span>
