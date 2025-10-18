@@ -43,6 +43,7 @@ Route::middleware('auth')->prefix('pengaduan')->group(function () {
     Route::get('/', [ComplaintController::class, 'index'])->name('complaint.index');
     Route::get('/buat_aduan', [ComplaintController::class, 'create'])->name('complaint.create');
     Route::post('/buat_aduan', [ComplaintController::class, 'store'])->name('complaint.store');
+    Route::put('/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaint.update-status');
     Route::get('/detail_aduan/{id}', [ComplaintController::class, 'show'])->name('complaint.detail');
     Route::delete('/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
 });
@@ -51,6 +52,7 @@ Route::middleware('auth')->prefix('pelayanan')->group(function () {
     Route::get('/', [ServiceController::class, 'index'])->name('service.index');
     Route::get('/buat_permohonan_layanan', [ServiceController::class, 'create'])->name('service.create');
     Route::post('/', [ServiceController::class, 'store'])->name('service.store');
+    Route::put('/{id}/status', [ServiceController::class, 'updateStatus'])->name('service.update-status');
     Route::get('/detail_permohonan_layanan/{id}', [ServiceController::class, 'show'])->name('service.detail');
     Route::delete('/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
 });

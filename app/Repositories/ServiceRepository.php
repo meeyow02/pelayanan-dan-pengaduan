@@ -16,9 +16,14 @@ class ServiceRepository implements ServiceRepositoryInterface
     public function getAll($search = null)
     {
         $query = $this->Service::with('serviceCategory', 'user');
+        $user = auth()->user();
 
         if ($search) {
             $query->where('description', 'LIKE', '%' . $search . '%');
+        }
+
+        if ($user->role === 'user') {
+            $query->where('user_id', $user->id);
         }
 
         return $query->paginate(10);
@@ -26,7 +31,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function findById(int $id)
     {
-        return $this->Service::find($id)::with('serviceCategory')->first();
+        return $this->Service::with('serviceCategory')->find($id)->first();
     }
 
     public function store(array $data)
@@ -38,6 +43,19 @@ class ServiceRepository implements ServiceRepositoryInterface
     {
         $model = $this->findById($id);
         return $model ? $model->update($data) : null;
+    }
+
+    public function updateStatus(int $id, string $status)
+    {
+        $model = $this->findById($id);
+        if (!$model) {
+            return null;
+        }
+
+        $model->status = $status;
+        $model->save();
+
+        return $model;
     }
 
     public function delete(int $id)

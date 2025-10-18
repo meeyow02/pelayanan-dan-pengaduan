@@ -3,9 +3,8 @@ import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
 import { Head, router, usePage } from "@inertiajs/react";
-import { Card, Form, message } from "antd";
+import { Card, message } from "antd";
 import useTitleStore from "@/store/titleStore";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useTableHeight } from "@/hooks/useTableHeight";
@@ -89,19 +88,17 @@ const columns = [
 
 export default function Index() {
     // Hooks
-    const [form] = Form.useForm();
     const { setTitle } = useTitleStore();
-    const { flash, auth, services } = usePage().props;
-    const { isMobile, isTablet } = useResponsive();
+    const { flash, services, filters } = usePage().props;
+    const { isMobile } = useResponsive();
     const tableHeight = useTableHeight(420);
 
-    const { isCollapsed, isDrawerOpen, setIsCollapsed, setIsDrawerOpen } =
-        useSidebarStore();
-    const queryClient = useQueryClient();
+    const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
 
     const [messageApi, contextHolder] = message.useMessage();
     const [page, setPage] = useState(services.current_page);
     const [limit, setLimit] = useState(services.per_page);
+    const [keyword, setKeyword] = useState(filters?.search || "");
 
     useEffect(() => {
         setTitle("Pelayanan");
@@ -115,6 +112,17 @@ export default function Index() {
             messageApi.error(flash.error);
         }
     }, [flash, messageApi]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            router.get(
+                route("service.index"),
+                { search: keyword, page: 1, limit },
+                { preserveScroll: true, preserveState: true, replace: true }
+            );
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [keyword]);
 
     const handleCreateService = () => {
         router.visit(route("service.create"));
@@ -165,8 +173,8 @@ export default function Index() {
                                 }}
                             >
                                 <Input
-                                    // onChange={(e) => setKeyword(e.target.value)}
-                                    // value={keyword}
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     style={{ width: 320 }}
                                     placeholder="Cari"
                                     prefix={
@@ -210,8 +218,8 @@ export default function Index() {
                                 }}
                             >
                                 <Input
-                                    // onChange={(e) => setKeyword(e.target.value)}
-                                    // value={keyword}
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     style={{ width: 320 }}
                                     placeholder="Cari"
                                     prefix={

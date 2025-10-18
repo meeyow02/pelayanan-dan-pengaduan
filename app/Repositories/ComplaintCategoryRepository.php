@@ -15,7 +15,7 @@ class ComplaintCategoryRepository implements ComplaintCategoryRepositoryInterfac
 
     public function getAll($search = null)
     {
-        $query =  $this->ComplaintCategory;
+        $query = $this->ComplaintCategory;
 
         if ($search) {
             $query->where('name', 'LIKE', '%' . $search . '%');
@@ -38,6 +38,19 @@ class ComplaintCategoryRepository implements ComplaintCategoryRepositoryInterfac
     {
         $model = $this->findById($id);
         return $model ? $model->update($data) : null;
+    }
+
+    public function updateStatus(int $id, string $status)
+    {
+        $model = $this->findById($id);
+        if (!$model) {
+            return null;
+        }
+
+        $model->status = $status;
+        $model->save();
+
+        return $model;
     }
 
     public function delete(int $id)

@@ -116,16 +116,16 @@ const columns = [
 export default function Index() {
     // Hooks
     const { setTitle } = useTitleStore();
-    const { flash, complaints } = usePage().props;
+    const { flash, complaints, filters } = usePage().props;
     const tableHeight = useTableHeight(420);
 
-    const { isMobile, isTablet } = useResponsive();
-    const { isCollapsed, isDrawerOpen, setIsCollapsed, setIsDrawerOpen } =
-        useSidebarStore();
+    const { isMobile } = useResponsive();
+    const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
 
     const [messageApi, contextHolder] = message.useMessage();
     const [page, setPage] = useState(complaints.current_page);
     const [limit, setLimit] = useState(complaints.per_page);
+    const [keyword, setKeyword] = useState(filters?.search || "");
 
     useEffect(() => {
         setTitle("Pengaduan");
@@ -139,6 +139,17 @@ export default function Index() {
             messageApi.error(flash.error);
         }
     }, [flash, messageApi]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            router.get(
+                route("complaint.index"),
+                { search: keyword, page: 1, limit },
+                { preserveScroll: true, preserveState: true, replace: true }
+            );
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [keyword]);
 
     const handleCreateComplaint = () => {
         router.visit(route("complaint.create"));
@@ -190,8 +201,8 @@ export default function Index() {
                                 }}
                             >
                                 <Input
-                                    // onChange={(e) => setKeyword(e.target.value)}
-                                    // value={keyword}
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     style={{ width: 320 }}
                                     placeholder="Cari"
                                     prefix={
@@ -235,8 +246,8 @@ export default function Index() {
                                 }}
                             >
                                 <Input
-                                    // onChange={(e) => setKeyword(e.target.value)}
-                                    // value={keyword}
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     style={{ width: 320 }}
                                     placeholder="Cari"
                                     prefix={

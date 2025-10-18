@@ -1,11 +1,21 @@
-import { Col, Divider, Dropdown, Flex, Image, Layout, Menu, Space, Typography } from "antd";
+import {
+    Col,
+    Divider,
+    Dropdown,
+    Flex,
+    Image,
+    Layout,
+    Menu,
+    Space,
+    Typography,
+} from "antd";
 import { Link, usePage } from "@inertiajs/react";
 import pallete from "../utils/pallete";
 import PropTypes from "prop-types";
 import useSidebarStore from "../store/sidebarStore";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined } from "@ant-design/icons";
 
 function Sidebar({ collapsed, isMobile = false }) {
     const { url } = usePage();
@@ -15,7 +25,10 @@ function Sidebar({ collapsed, isMobile = false }) {
 
     const dentalTreatmentChildKeys = [];
     const historyChildKeys = [];
-    const masterDataChildKeys = ["master_data_complaint", "master_data_service"];
+    const masterDataChildKeys = [
+        "master_data_complaint",
+        "master_data_service",
+    ];
 
     const handleLinkClick = () => {
         if (isMobile) {
@@ -27,14 +40,18 @@ function Sidebar({ collapsed, isMobile = false }) {
         const pathname = url;
 
         if (pathname.startsWith("/dental-treatment/fkrtl")) return ["fkrtl"];
-        if (pathname.startsWith("/pengaduan")) return ['pengaduan'];
-        if (pathname.startsWith("/pelayanan")) return ['pelayanan'];
-        if (pathname.startsWith("/master_data/kategori_aduan")) return ["master_data_complaint"];
-        if (pathname.startsWith("/master_data/kategori_pelayanan")) return ["master_data_service"];
+        if (pathname.startsWith("/pengaduan")) return ["pengaduan"];
+        if (pathname.startsWith("/pelayanan")) return ["pelayanan"];
+        if (pathname.startsWith("/master_data/kategori_aduan"))
+            return ["master_data_complaint"];
+        if (pathname.startsWith("/master_data/kategori_pelayanan"))
+            return ["master_data_service"];
 
         switch (true) {
             case pathname === "/":
                 return ["dashboard"];
+            case pathname.startsWith("/master_data"):
+                return ["master_data"];
             default:
                 return [];
         }
@@ -48,14 +65,10 @@ function Sidebar({ collapsed, isMobile = false }) {
                 const keys = [];
                 if (
                     selectedKeys.some((key) =>
-                        dentalTreatmentChildKeys.includes(key)
+                        masterDataChildKeys.includes(key)
                     )
                 ) {
-                    keys.push("dental-treatment");
-                } else if (
-                    selectedKeys.some((key) => historyChildKeys.includes(key))
-                ) {
-                    keys.push("history");
+                    keys.push("master_data");
                 }
                 return keys;
             };
@@ -103,12 +116,21 @@ function Sidebar({ collapsed, isMobile = false }) {
             <Flex
                 justify="center"
                 align="center"
-                style={{ height: 32, marginBottom: collapsed ? "1rem" : "2rem" }}
+                style={{
+                    height: 32,
+                    marginBottom: collapsed ? "1rem" : "2rem",
+                }}
             >
-                <Link href="/" >
+                <Link href="/">
                     <Col span={24}>
-                        <div style={{ display: "flex", justifyContent: "center", marginTop: "1.5rem" }}>
-                            <Image 
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: "1.5rem",
+                            }}
+                        >
+                            <Image
                                 alt="Si Cerdas Gantarang"
                                 src="/Bulukumba_Regency_Logo.png"
                                 width={collapsed ? 30 : 40}
@@ -118,14 +140,24 @@ function Sidebar({ collapsed, isMobile = false }) {
                     </Col>
                     {!collapsed && (
                         <Typography.Text
-                            style={{ color: "#555", fontSize: ".7rem", textAlign: "center", display: "block" }}
+                            style={{
+                                color: "#555",
+                                fontSize: ".7rem",
+                                textAlign: "center",
+                                display: "block",
+                            }}
                         >
                             Si Cerdas Gantarang
                         </Typography.Text>
                     )}
                 </Link>
             </Flex>
-            <Divider style={{ marginBottom: ".5rem", borderTop: ".1rem solid #DFE3E8" }}/> 
+            <Divider
+                style={{
+                    marginBottom: ".5rem",
+                    borderTop: ".1rem solid #DFE3E8",
+                }}
+            />
 
             {auth.user.role == "admin" ? (
                 <Menu
@@ -165,7 +197,10 @@ function Sidebar({ collapsed, isMobile = false }) {
                                 />
                             ),
                             label: (
-                                <Link href="/pengaduan" onClick={handleLinkClick}>
+                                <Link
+                                    href="/pengaduan"
+                                    onClick={handleLinkClick}
+                                >
                                     Pengaduan
                                 </Link>
                             ),
@@ -185,7 +220,10 @@ function Sidebar({ collapsed, isMobile = false }) {
                                 />
                             ),
                             label: (
-                                <Link href="/pelayanan" onClick={handleLinkClick}>
+                                <Link
+                                    href="/pelayanan"
+                                    onClick={handleLinkClick}
+                                >
                                     Pelayanan
                                 </Link>
                             ),
@@ -193,28 +231,47 @@ function Sidebar({ collapsed, isMobile = false }) {
                         {
                             key: "master_data",
                             icon: isParentActive("master_data", []) ? (
-                                <Icon icon="material-symbols:database" className="scale-110" />
+                                <Icon
+                                    icon="material-symbols:database"
+                                    className="scale-110"
+                                />
                             ) : (
-                                <Icon color={defaultIconColor} icon="material-symbols:database" className="scale-110" />
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:database"
+                                    className="scale-110"
+                                />
                             ),
                             label: "Master Data",
                             children: [
                                 {
                                     key: "master_data_complaint",
-                                    style: { paddingLeft: 16 },
-                                    // icon: getDotIcon("master_data", "master_data_complaint"),
+                                    style: { paddingLeft: 32 },
+                                    icon: getDotIcon(
+                                        "master_data",
+                                        "master_data_complaint"
+                                    ),
                                     label: (
-                                        <Link href="/master_data/kategori_aduan" onClick={handleLinkClick}>
+                                        <Link
+                                            href="/master_data/kategori_aduan"
+                                            onClick={handleLinkClick}
+                                        >
                                             Kategori Aduan
                                         </Link>
                                     ),
                                 },
                                 {
                                     key: "master_data_service",
-                                    style: { paddingLeft: 16 },
-                                    // icon: getDotIcon("master_data", "master_data_service"),
+                                    style: { paddingLeft: 32 },
+                                    icon: getDotIcon(
+                                        "master_data",
+                                        "master_data_service"
+                                    ),
                                     label: (
-                                        <Link href="/master_data/kategori_pelayanan" onClick={handleLinkClick}>
+                                        <Link
+                                            href="/master_data/kategori_pelayanan"
+                                            onClick={handleLinkClick}
+                                        >
                                             Kategori Pelayanan
                                         </Link>
                                     ),
@@ -222,7 +279,6 @@ function Sidebar({ collapsed, isMobile = false }) {
                             ],
                         },
 
-                        
                         // {
                         //     key: "master_data",
                         //     icon: isParentActive("master_data", []) ? (
@@ -306,7 +362,10 @@ function Sidebar({ collapsed, isMobile = false }) {
                                 />
                             ),
                             label: (
-                                <Link href="/pengaduan" onClick={handleLinkClick}>
+                                <Link
+                                    href="/pengaduan"
+                                    onClick={handleLinkClick}
+                                >
                                     Pengaduan
                                 </Link>
                             ),
@@ -326,7 +385,10 @@ function Sidebar({ collapsed, isMobile = false }) {
                                 />
                             ),
                             label: (
-                                <Link href="/pelayanan" onClick={handleLinkClick}>
+                                <Link
+                                    href="/pelayanan"
+                                    onClick={handleLinkClick}
+                                >
                                     Pelayanan
                                 </Link>
                             ),
@@ -340,8 +402,6 @@ function Sidebar({ collapsed, isMobile = false }) {
                     onOpenChange={onOpenChange}
                 />
             )}
-            
-            
         </>
     );
 

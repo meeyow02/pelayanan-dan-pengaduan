@@ -22,9 +22,10 @@ class ServiceController extends Controller
     ) {
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $services = $this->serviceService->getAll();
+        $services = $this->serviceService->getAll($request->get('search'));
+
         return Inertia::render('Service/Index', compact('services'));
     }
 
@@ -70,6 +71,17 @@ class ServiceController extends Controller
                 ->withInput()
                 ->with('error', 'Gagal menyimpan permohonan. ' . $e->getMessage());
         }
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,on_progress,completed,cancel',
+        ]);
+
+        $this->serviceService->updateStatus($id, $request->status);
+
+        return redirect()->back()->with('success', 'Status berhasil diperbarui.');
     }
 
     public function show($id)

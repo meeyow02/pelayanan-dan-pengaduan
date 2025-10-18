@@ -1,4 +1,4 @@
-import { Button, Col, Row, Typography, Tag, Divider } from "antd";
+import { Button, Col, Row, Typography, Tag, Divider, Select } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export default function Show() {
     const { setTitle } = useTitleStore();
-    const { flash, complaint } = usePage().props;
+    const { flash, complaint, auth } = usePage().props;
 
     const { isMobile } = useResponsive();
     const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
@@ -66,6 +66,17 @@ export default function Show() {
 
     const handleBack = () => {
         router.visit(route("complaint.index"));
+    };
+
+    const handleStatusChange = (value) => {
+        router.put(
+            route("complaint.update-status", complaint.id),
+            { status: value },
+            {
+                preserveScroll: true,
+                onError: () => messageApi.error("Gagal mengubah status"),
+            }
+        );
     };
 
     return (
@@ -136,16 +147,43 @@ export default function Show() {
                                 Status:
                             </Typography.Text>
                             <br />
-                            <Tag
-                                color={getStatusColor(complaint.status)}
-                                style={{
-                                    fontSize: 16,
-                                    padding: "4px 16px",
-                                    marginTop: 4,
-                                }}
-                            >
-                                {getStatusText(complaint.status)}
-                            </Tag>
+
+                            {auth?.user?.role === "admin" ? (
+                                <Select
+                                    defaultValue={complaint.status}
+                                    style={{ width: 200 }}
+                                    onChange={handleStatusChange}
+                                    options={[
+                                        {
+                                            value: "pending",
+                                            label: "Menunggu Persetujuan",
+                                        },
+                                        {
+                                            value: "on_progress",
+                                            label: "Diproses",
+                                        },
+                                        {
+                                            value: "completed",
+                                            label: "Selesai",
+                                        },
+                                        {
+                                            value: "cancel",
+                                            label: "Dibatalkan",
+                                        },
+                                    ]}
+                                />
+                            ) : (
+                                <Tag
+                                    color={getStatusColor(complaint.status)}
+                                    style={{
+                                        fontSize: 16,
+                                        padding: "4px 16px",
+                                        marginTop: 4,
+                                    }}
+                                >
+                                    {getStatusText(complaint.status)}
+                                </Tag>
+                            )}
                         </Col>
                     </Row>
 

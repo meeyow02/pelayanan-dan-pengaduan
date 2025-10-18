@@ -30,6 +30,11 @@ class ComplaintService
     {
         return $this->ComplaintRepository->update($id, $data);
     }
+    
+    public function updateStatus(int $id, string $status)
+    {
+        return $this->ComplaintRepository->updateStatus($id, $status);
+    }
 
     public function delete(int $id)
     {

@@ -1,4 +1,4 @@
-import { Button, Col, Row, Typography, Tag, Divider } from "antd";
+import { Button, Col, Row, Typography, Tag, Divider, Select } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export default function Show() {
     const { setTitle } = useTitleStore();
-    const { flash, service } = usePage().props;
+    const { flash, service, auth } = usePage().props;
 
     const { isMobile } = useResponsive();
     const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
@@ -68,7 +68,16 @@ export default function Show() {
         router.visit(route("service.index"));
     };
 
-    console.log(service);
+    const handleStatusChange = (value) => {
+        router.put(
+            route("service.update-status", service.id),
+            { status: value },
+            {
+                preserveScroll: true,
+                onError: () => messageApi.error("Gagal mengubah status"),
+            }
+        );
+    };
 
     return (
         <>
@@ -137,16 +146,43 @@ export default function Show() {
                                 Status:
                             </Typography.Text>
                             <br />
-                            <Tag
-                                color={getStatusColor(service.status)}
-                                style={{
-                                    fontSize: 16,
-                                    padding: "4px 16px",
-                                    marginTop: 4,
-                                }}
-                            >
-                                {getStatusText(service.status)}
-                            </Tag>
+
+                            {auth?.user?.role === "admin" ? (
+                                <Select
+                                    defaultValue={service.status}
+                                    style={{ width: 200 }}
+                                    onChange={handleStatusChange}
+                                    options={[
+                                        {
+                                            value: "pending",
+                                            label: "Menunggu Persetujuan",
+                                        },
+                                        {
+                                            value: "on_progress",
+                                            label: "Diproses",
+                                        },
+                                        {
+                                            value: "completed",
+                                            label: "Selesai",
+                                        },
+                                        {
+                                            value: "cancel",
+                                            label: "Dibatalkan",
+                                        },
+                                    ]}
+                                />
+                            ) : (
+                                <Tag
+                                    color={getStatusColor(service.status)}
+                                    style={{
+                                        fontSize: 16,
+                                        padding: "4px 16px",
+                                        marginTop: 4,
+                                    }}
+                                >
+                                    {getStatusText(service.status)}
+                                </Tag>
+                            )}
                         </Col>
                     </Row>
 
@@ -233,86 +269,95 @@ export default function Show() {
                             {service.service_files &&
                             service.service_files.length > 0 ? (
                                 <Row gutter={[16, 16]}>
-                                    {service.service_files.map((file, index) => {
-                                        const fileUrl = `/storage/service/${file.filename}`;
-                                        const ext = file.filename
-                                            .split(".")
-                                            .pop()
-                                            .toLowerCase();
-                                        const isImage = [
-                                            "jpg",
-                                            "jpeg",
-                                            "png",
-                                            "gif",
-                                            "webp",
-                                        ].includes(ext);
+                                    {service.service_files.map(
+                                        (file, index) => {
+                                            const fileUrl = `/storage/service/${file.filename}`;
+                                            const ext = file.filename
+                                                .split(".")
+                                                .pop()
+                                                .toLowerCase();
+                                            const isImage = [
+                                                "jpg",
+                                                "jpeg",
+                                                "png",
+                                                "gif",
+                                                "webp",
+                                            ].includes(ext);
 
-                                        return (
-                                            <Col
-                                                xs={24}
-                                                sm={12}
-                                                md={8}
-                                                lg={6}
-                                                key={index}
-                                            >
-                                                <Card
-                                                    hoverable
-                                                    cover={
-                                                        isImage ? (
-                                                            <img
-                                                                alt={`Bukti ${
+                                            return (
+                                                <Col
+                                                    xs={24}
+                                                    sm={12}
+                                                    md={8}
+                                                    lg={6}
+                                                    key={index}
+                                                >
+                                                    <Card
+                                                        hoverable
+                                                        cover={
+                                                            isImage ? (
+                                                                <img
+                                                                    alt={`Bukti ${
+                                                                        index +
+                                                                        1
+                                                                    }`}
+                                                                    src={
+                                                                        fileUrl
+                                                                    }
+                                                                    style={{
+                                                                        width: "100%",
+                                                                        height: 180,
+                                                                        objectFit:
+                                                                            "cover",
+                                                                        borderRadius: 6,
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <div
+                                                                    style={{
+                                                                        height: 180,
+                                                                        display:
+                                                                            "flex",
+                                                                        alignItems:
+                                                                            "center",
+                                                                        justifyContent:
+                                                                            "center",
+                                                                        background:
+                                                                            "#fafafa",
+                                                                        borderRadius: 6,
+                                                                        fontSize: 16,
+                                                                    }}
+                                                                >
+                                                                    📄{" "}
+                                                                    {ext.toUpperCase()}{" "}
+                                                                    File
+                                                                </div>
+                                                            )
+                                                        }
+                                                        actions={[
+                                                            <a
+                                                                href={fileUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                            >
+                                                                Lihat / Unduh
+                                                            </a>,
+                                                        ]}
+                                                        style={{
+                                                            borderRadius: 8,
+                                                        }}
+                                                    >
+                                                        <Typography.Text strong>
+                                                            {file.original_name ||
+                                                                `Dokumen ${
                                                                     index + 1
                                                                 }`}
-                                                                src={fileUrl}
-                                                                style={{
-                                                                    width: "100%",
-                                                                    height: 180,
-                                                                    objectFit:
-                                                                        "cover",
-                                                                    borderRadius: 6,
-                                                                }}
-                                                            />
-                                                        ) : (
-                                                            <div
-                                                                style={{
-                                                                    height: 180,
-                                                                    display:
-                                                                        "flex",
-                                                                    alignItems:
-                                                                        "center",
-                                                                    justifyContent:
-                                                                        "center",
-                                                                    background:
-                                                                        "#fafafa",
-                                                                    borderRadius: 6,
-                                                                    fontSize: 16,
-                                                                }}
-                                                            >
-                                                                📄{" "}
-                                                                {ext.toUpperCase()}{" "}
-                                                                File
-                                                            </div>
-                                                        )
-                                                    }
-                                                    actions={[
-                                                        <a
-                                                            href={fileUrl}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            Lihat / Unduh
-                                                        </a>,
-                                                    ]}
-                                                    style={{ borderRadius: 8 }}
-                                                >
-                                                    <Typography.Text strong>
-                                                        {file.original_name ||
-                                                            `Dokumen ${index + 1}`}
-                                                    </Typography.Text>
-                                                </Card>
-                                            </Col>
-                                        );
-                                    })}
+                                                        </Typography.Text>
+                                                    </Card>
+                                                </Col>
+                                            );
+                                        }
+                                    )}
                                 </Row>
                             ) : (
                                 <Typography.Text>

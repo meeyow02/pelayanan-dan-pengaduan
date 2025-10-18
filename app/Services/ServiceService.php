@@ -30,6 +30,11 @@ class ServiceService
     {
         return $this->ServiceRepository->update($id, $data);
     }
+    
+    public function updateStatus(int $id, string $status)
+    {
+        return $this->ServiceRepository->updateStatus($id, $status);
+    }
 
     public function delete(int $id)
     {

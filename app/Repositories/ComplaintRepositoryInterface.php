@@ -8,5 +8,6 @@ interface ComplaintRepositoryInterface
     public function findById(int $id);
     public function store(array $data);
     public function update(int $id, array $data);
+    public function updateStatus(int $id, string $status);
     public function delete(int $id);
 }

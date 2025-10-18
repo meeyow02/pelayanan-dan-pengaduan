@@ -16,9 +16,14 @@ class ComplaintRepository implements ComplaintRepositoryInterface
     public function getAll($search = null)
     {
         $query = $this->Complaint::with('complaintCategory');
+        $user = auth()->user();
 
         if ($search) {
             $query->where('complaint_number', 'LIKE', '%' . $search . '%');
+        }
+
+        if ($user->role === 'user') {
+            $query->where('user_id', $user->id);
         }
 
         return $query->paginate(10);
@@ -38,6 +43,19 @@ class ComplaintRepository implements ComplaintRepositoryInterface
     {
         $model = $this->findById($id);
         return $model ? $model->update($data) : null;
+    }
+
+    public function updateStatus(int $id, string $status)
+    {
+        $model = $this->findById($id);
+        if (!$model) {
+            return null;
+        }
+
+        $model->status = $status;
+        $model->save();
+
+        return $model;
     }
 
     public function delete(int $id)
