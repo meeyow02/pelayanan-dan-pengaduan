@@ -149,10 +149,10 @@ export default function TableAction({
                     />
                 </Flex>
                 <Title level={4} style={{ marginBottom: "8px" }}>
-                    Apakah Anda yakin Hapus?
+                    Apakah Anda yakin menghapus data ini?
                 </Title>
                 <Text style={{ color: "#7A7A7A" }}>
-                    Data yang telah dihapus tidak dapat dikembalikan
+                    Data yang telah dihapus tidak dapat dibatalkan.
                 </Text>
                 <Flex justify="center" gap={10} style={{ marginTop: "24px" }}>
                     <Button

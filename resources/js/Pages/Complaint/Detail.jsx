@@ -123,7 +123,10 @@ export default function Show() {
 
                     {/* Complaint Number & Status */}
                     <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-                        <Col xs={24} sm={12}>
+                        <Col 
+                            // xs={24} sm={12}
+                            span={19}
+                        >
                             <Typography.Text strong style={{ fontSize: 16 }}>
                                 Nomor Aduan:
                             </Typography.Text>
@@ -139,9 +142,9 @@ export default function Show() {
                             </Typography.Text>
                         </Col>
                         <Col
-                            xs={24}
-                            sm={12}
-                            style={{ textAlign: isMobile ? "left" : "right" }}
+                            // xs={24}
+                            // sm={12}
+                            style={{ textAlign: "left" }}
                         >
                             <Typography.Text strong style={{ fontSize: 16 }}>
                                 Status:
