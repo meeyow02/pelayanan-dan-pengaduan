@@ -1,21 +1,10 @@
-import {
-    Col,
-    Divider,
-    Dropdown,
-    Flex,
-    Image,
-    Layout,
-    Menu,
-    Space,
-    Typography,
-} from "antd";
+import { Col, Divider, Flex, Image, Layout, Menu, Typography } from "antd";
 import { Link, usePage } from "@inertiajs/react";
 import pallete from "../utils/pallete";
 import PropTypes from "prop-types";
 import useSidebarStore from "../store/sidebarStore";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
-import { DownOutlined } from "@ant-design/icons";
 
 function Sidebar({ collapsed, isMobile = false }) {
     const { url } = usePage();
@@ -23,8 +12,6 @@ function Sidebar({ collapsed, isMobile = false }) {
     const [openKeys, setOpenKeys] = useState([]);
     const { auth } = usePage().props;
 
-    const dentalTreatmentChildKeys = [];
-    const historyChildKeys = [];
     const masterDataChildKeys = [
         "master_data_complaint",
         "master_data_service",
@@ -132,7 +119,7 @@ function Sidebar({ collapsed, isMobile = false }) {
                         >
                             <Image
                                 alt="Si Cerdas Gantarang"
-                                src="/Bulukumba_Regency_Logo.png"
+                                src="/logo si cerdas gantarang.png"
                                 width={collapsed ? 30 : 40}
                                 preview={false}
                             />
@@ -141,10 +128,11 @@ function Sidebar({ collapsed, isMobile = false }) {
                     {!collapsed && (
                         <Typography.Text
                             style={{
-                                color: "#555",
+                                color: "#E9961C",
                                 fontSize: ".7rem",
                                 textAlign: "center",
                                 display: "block",
+                                fontWeight: "bold",
                             }}
                         >
                             Si Cerdas Gantarang
@@ -278,44 +266,6 @@ function Sidebar({ collapsed, isMobile = false }) {
                                 },
                             ],
                         },
-
-                        // {
-                        //     key: "master_data",
-                        //     icon: isParentActive("master_data", []) ? (
-                        //         <Icon
-                        //             icon="material-symbols:database"
-                        //             className="scale-110"
-                        //         />
-                        //     ) : (
-                        //         <Icon
-                        //             color={defaultIconColor}
-                        //             icon="material-symbols:database"
-                        //             className="scale-110"
-                        //         />
-                        //     ),
-                        //     label: (
-                        //         <div style={{ position: "relative", width: "100%" }}>
-                        //             <Dropdown
-                        //                 menu={{ items: masterDataItems }}
-                        //                 trigger={['click']}
-                        //                 placement="bottomRight"
-                        //             >
-                        //                 <a
-                        //                 onClick={(e) => e.preventDefault()}
-                        //                 style={{
-                        //                     display: "flex",
-                        //                     justifyContent: "space-between",
-                        //                     alignItems: "center",
-                        //                     width: "100%",
-                        //                 }}
-                        //                 >
-                        //                     <span>Master Data</span>
-                        //                     <DownOutlined style={{ fontSize: 10 }} />
-                        //                 </a>
-                        //             </Dropdown>
-                        //         </div>
-                        //     ),
-                        // },
                     ]}
                     style={{ borderRight: "none" }}
                     selectedKeys={selectedKeys}
