@@ -110,7 +110,7 @@ function Sidebar({ collapsed, isMobile = false }) {
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "1.5rem" }}>
                             <Image 
                                 alt="Si Cerdas Gantarang"
-                                src="/Bulukumba_Regency_Logo.png"
+                                src="/logo si cerdas gantarang.png"
                                 width={collapsed ? 30 : 40}
                                 preview={false}
                             />
@@ -118,7 +118,7 @@ function Sidebar({ collapsed, isMobile = false }) {
                     </Col>
                     {!collapsed && (
                         <Typography.Text
-                            style={{ color: "#555", fontSize: ".7rem", textAlign: "center", display: "block" }}
+                            style={{ color: "#E9961C", fontSize: ".7rem", textAlign: "center", display: "block", fontWeight: "bold" }}
                         >
                             Si Cerdas Gantarang
                         </Typography.Text>

@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Flex, Row, Typography } from 'antd';
+import { Button, Col, Divider, Flex, Row, Typography, Image } from 'antd';
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
@@ -52,8 +52,27 @@ export default function Dashboard() {
                         <Card variant='borderless' style={{ 
                             background: pallete.info.darker, 
                             width: "100%",
-                            height: "35vh",
+                            height: "45vh",
                         }}>
+                            <div style={{ marginLeft: ".6rem" }}>
+                                <Row gutter={16}>
+                                    <Image 
+                                        alt="Si Cerdas Gantarang"
+                                        src="/Bulukumba_Regency_Logo.png"
+                                        width={40}
+                                        preview={false}
+                                    />
+                                    <Col span={12}>
+                                        <Image 
+                                            alt="Si Cerdas Gantarang"
+                                            src="/logo si cerdas gantarang with text.png"
+                                            width={60}
+                                            preview={false}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            
                             <Typography.Title style={{ color: "#fff", fontSize: "1.5rem" }}>Selamat Datang, {name}!</Typography.Title>
 
                             <Row>
@@ -140,8 +159,27 @@ export default function Dashboard() {
                         <Card variant='borderless' style={{ 
                             background: pallete.info.darker, 
                             width: "100%",
-                            height: "28vh",
+                            height: "37vh",
                         }}>
+                            <div style={{ marginLeft: ".6rem" }}>
+                                <Row gutter={16}>
+                                    <Image 
+                                        alt="Si Cerdas Gantarang"
+                                        src="/Bulukumba_Regency_Logo.png"
+                                        width={50}
+                                        preview={false}
+                                    />
+                                    <Col span={12}>
+                                        <Image 
+                                            alt="Si Cerdas Gantarang"
+                                            src="/logo si cerdas gantarang with text.png"
+                                            width={70}
+                                            preview={false}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                        
                             <Typography.Title style={{ color: "#fff" }}>Selamat Datang, {name}!</Typography.Title>
 
                             <Row>
