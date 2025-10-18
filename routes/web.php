@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ComplaintCategoryController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,23 +23,27 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 });
 
-Route::get('/master_data/kategori_aduan', function () {
-    return Inertia::render('Master Data/Complaint Category/Index');
-});
-Route::get('/master_data/kategori_aduan/buat_kategori_aduan', function () {
-    return Inertia::render('Master Data/Complaint Category/Create');
-});
-
-Route::get('/master_data/kategori_pelayanan', function () {
-    return Inertia::render('Master Data/Service Category/Index');
-});
-Route::get('/master_data/kategori_pelayanan/buat_kategori_pelayanan', function () {
-    return Inertia::render('Master Data/Service Category/Create');
-});
-
 Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->prefix('master_data/kategori_pelayanan')->group(function () {
+    Route::get('/', [ServiceCategoryController::class, 'index'])->name('service-category.index');
+    Route::get('/buat_kategori_pelayanan', [ServiceCategoryController::class, 'create'])->name('service-category.create');
+    Route::post('/', [ServiceCategoryController::class, 'store'])->name('service-category.store');
+    Route::get('/{id}/edit', [ServiceCategoryController::class, 'edit'])->name('service-category.edit');
+    Route::put('/{id}', [ServiceCategoryController::class, 'update'])->name('service-category.update');
+    Route::delete('/{id}', [ServiceCategoryController::class, 'destroy'])->name('service-category.destroy');
+});
+
+Route::middleware('auth')->prefix('master_data/kategori_aduan')->group(function () {
+    Route::get('/', [ComplaintCategoryController::class, 'index'])->name('complaint-category.index');
+    Route::get('/buat_kategori_aduan', [ComplaintCategoryController::class, 'create'])->name('complaint-category.create');
+    Route::post('/', [ComplaintCategoryController::class, 'store'])->name('complaint-category.store');
+    Route::get('/{id}/edit', [ComplaintCategoryController::class, 'edit'])->name('complaint-category.edit');
+    Route::put('/{id}', [ComplaintCategoryController::class, 'update'])->name('complaint-category.update');
+    Route::delete('/{id}', [ComplaintCategoryController::class, 'destroy'])->name('complaint-category.destroy');
+});
 
 Route::middleware('auth')->prefix('pengaduan')->group(function () {
     Route::get('/', [ComplaintController::class, 'index'])->name('complaint.index');

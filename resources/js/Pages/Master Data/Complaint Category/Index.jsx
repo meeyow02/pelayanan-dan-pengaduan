@@ -17,17 +17,18 @@ const columns = [
         key: "no",
         width: 50,
         fixed: "left",
-        render: (_, __, index) => index + 1, // otomatis nomor urut
+        render: (_, __, index) => index + 1,
     },
     {
         title: "Kategori Aduan",
-        dataIndex: ["complaint_category", "name"],
-        key: "complaint_category",
+        dataIndex: "name",
+        key: "name",
+        width: 200,
         render: (text) => text || "-",
     },
     {
         title: "Deskripsi",
-        dataIndex: ["complaint_category", "deskripsi"],
+        dataIndex: "description",
         key: "description",
         ellipsis: true,
     },
@@ -41,13 +42,11 @@ const columns = [
         fixed: "right",
         render: (id) => (
             <TableAction
-                showDetail
-                showEdit={false}
-                onClickDetail={() =>
-                    router.visit(route("complaint.detail", id))
+                onClickEdit={() =>
+                    router.visit(route("complaint-category.edit", id))
                 }
                 handleDelete={() =>
-                    router.delete(route("complaint.destroy", id))
+                    router.delete(route("complaint-category.destroy", id))
                 }
             />
         ),
@@ -57,16 +56,16 @@ const columns = [
 export default function Index() {
     // Hooks
     const { setTitle } = useTitleStore();
-    const { flash, complaints } = usePage().props;
+    const { flash, complaintCategories, filters = {} } = usePage().props;
     const tableHeight = useTableHeight(420);
 
-    const { isMobile, isTablet } = useResponsive();
-    const { isCollapsed, isDrawerOpen, setIsCollapsed, setIsDrawerOpen } =
-        useSidebarStore();
+    const { isMobile } = useResponsive();
+    const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
 
     const [messageApi, contextHolder] = message.useMessage();
-    // const [page, setPage] = useState(complaints.current_page);
-    // const [limit, setLimit] = useState(complaints.per_page);
+    const [page, setPage] = useState(complaintCategories.current_page);
+    const [limit, setLimit] = useState(complaintCategories.per_page);
+    const [keyword, setKeyword] = useState(filters?.search || "");
 
     useEffect(() => {
         setTitle("Kategori Aduan");
@@ -81,23 +80,34 @@ export default function Index() {
         }
     }, [flash, messageApi]);
 
-    // const handleCreateComplaint = () => {
-    //     router.visit(route("complaint.create"));
-    // };
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            router.get(
+                route("complaint-category.index"),
+                { search: keyword, page: 1, limit },
+                { preserveScroll: true, preserveState: true, replace: true }
+            );
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [keyword]);
 
-    // const handleChangePage = (newPage, newPageSize) => {
-    //     setPage(newPage);
-    //     setLimit(newPageSize);
+    const handleCreateComplaintCategory = () => {
+        router.visit(route("complaint-category.create"));
+    };
 
-    //     Inertia.get(
-    //         route("complaint.index"),
-    //         { page: newPage, limit: newPageSize },
-    //         {
-    //             preserveScroll: true,
-    //             preserveState: true,
-    //         }
-    //     );
-    // };
+    const handleChangePage = (newPage, newPageSize) => {
+        setPage(newPage);
+        setLimit(newPageSize);
+
+        Inertia.get(
+            route("complaint-category.index"),
+            { page: newPage, limit: newPageSize },
+            {
+                preserveScroll: true,
+                preserveState: true,
+            }
+        );
+    };
 
     return (
         <>
@@ -131,8 +141,8 @@ export default function Index() {
                                 }}
                             >
                                 <Input
-                                    // onChange={(e) => setKeyword(e.target.value)}
-                                    // value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                    value={keyword}
                                     style={{ width: 320 }}
                                     placeholder="Cari"
                                     prefix={
@@ -153,7 +163,7 @@ export default function Index() {
                                             height={16}
                                         />
                                     }
-                                    // onClick={handleCreateComplaint}
+                                    onClick={handleCreateComplaintCategory}
                                     style={{
                                         fontSize: "0.85em",
                                         fontWeight: "bold",
@@ -176,8 +186,8 @@ export default function Index() {
                                 }}
                             >
                                 <Input
-                                    // onChange={(e) => setKeyword(e.target.value)}
-                                    // value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                    value={keyword}
                                     style={{ width: 320 }}
                                     placeholder="Cari"
                                     prefix={
@@ -199,7 +209,7 @@ export default function Index() {
                                         />
                                     }
                                     href="/master_data/kategori_aduan/buat_kategori_aduan"
-                                    // onClick={handleCreateComplaint}
+                                    onClick={handleCreateComplaintCategory}
                                     style={{
                                         fontSize: "0.85em",
                                         fontWeight: "bold",
@@ -214,7 +224,7 @@ export default function Index() {
                     {/* Table Data */}
                     <Table
                         columns={columns}
-                        // dataSource={complaints.data}
+                        dataSource={complaintCategories.data}
                         pagination={false}
                         size="small"
                         loading={false}
@@ -233,13 +243,13 @@ export default function Index() {
                             flexWrap: "wrap",
                             justifyContent: "flex-end",
                         }}
-                        // total={complaints.total}
-                        // showTotal={(total, range) =>
-                        //     `${range[0]}-${range[1]} dari ${total} item`
-                        // }
-                        // current={complaints.current_page}
-                        // pageSize={complaints.per_page}
-                        // onChange={handleChangePage}
+                        total={complaintCategories.total}
+                        showTotal={(total, range) =>
+                            `${range[0]}-${range[1]} dari ${total} item`
+                        }
+                        current={complaintCategories.current_page}
+                        pageSize={complaintCategories.per_page}
+                        onChange={handleChangePage}
                         responsive
                         showSizeChanger
                     />

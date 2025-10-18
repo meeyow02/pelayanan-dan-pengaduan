@@ -15,7 +15,7 @@ class ComplaintCategoryRepository implements ComplaintCategoryRepositoryInterfac
 
     public function getAll($search = null)
     {
-        $query = $this->ComplaintCategory;
+        $query = $this->ComplaintCategory->query();
 
         if ($search) {
             $query->where('name', 'LIKE', '%' . $search . '%');
