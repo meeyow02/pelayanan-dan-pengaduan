@@ -166,6 +166,10 @@ export default function Register() {
                                     required: true,
                                     message: "Password harus diisi",
                                 },
+                                {
+                                    min: 8,
+                                    message: "Masukkan password minimal 8 karakter",
+                                }
                             ]}
                             placeholder="Masukkan password"
                             type="password"
