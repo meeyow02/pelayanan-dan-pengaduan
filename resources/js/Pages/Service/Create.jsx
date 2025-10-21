@@ -1,27 +1,20 @@
 import {
     Button,
     Col,
-    Flex,
-    Input,
     Row,
     Select,
     Space,
-    Table,
-    Tag,
     Typography,
     Upload,
 } from "antd";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import { useResponsive } from "@/hooks/useResponsive";
 import MainLayout from "@/Layouts/MainLayout";
 import useSidebarStore from "@/store/sidebarStore";
-import { Head, router, useForm, usePage } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
 import { Card, Form, message } from "antd";
 import useTitleStore from "@/store/titleStore";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Icon } from "@iconify/react";
-import { useTableHeight } from "@/hooks/useTableHeight";
 import TextArea from "antd/es/input/TextArea";
 
 export default function Index() {
@@ -31,12 +24,10 @@ export default function Index() {
     const [uploading, setUploading] = useState(false);
     const [fileList, setFileList] = useState([]);
     const { flash, auth, serviceCategories } = usePage().props;
-    const tableHeight = useTableHeight(420);
 
-    const { isMobile, isTablet } = useResponsive();
-    const { isCollapsed, isDrawerOpen, setIsCollapsed, setIsDrawerOpen } =
+    const { isMobile } = useResponsive();
+    const { isCollapsed, isDrawerOpen, setIsDrawerOpen } =
         useSidebarStore();
-    const queryClient = useQueryClient();
 
     const [messageApi, contextHolder] = message.useMessage();
 

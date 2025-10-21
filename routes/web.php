@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComplaintCategoryController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ServiceController;
@@ -19,13 +21,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-});
+Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/ubah-password', [AuthController::class, 'changePassword'])->middleware(['auth', 'verified'])->name('change-password');
+Route::put('/ubah-password', [AuthController::class, 'updatePassword'])->middleware(['auth', 'verified'])->name('password.update');
 
 Route::middleware('auth')->prefix('master_data/kategori_pelayanan')->group(function () {
     Route::get('/', [ServiceCategoryController::class, 'index'])->name('service-category.index');
