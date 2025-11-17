@@ -28,8 +28,11 @@ const columns = [
                 year: "numeric",
                 month: "long",
                 day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZone: "Asia/Makassar",
             };
-            return new Date(date).toLocaleDateString("id-ID", options);
+            return new Date(date).toLocaleDateString("id-ID", options) + " WITA";
         },
     },
     {

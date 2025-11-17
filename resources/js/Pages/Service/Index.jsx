@@ -20,7 +20,7 @@ const columns = [
         render: (_, __, index) => index + 1,
     },
     {
-        title: "Tanggal Inputan",
+        title: "Tanggal dan Waktu Inputan",
         dataIndex: "created_at",
         key: "created_at",
         render: (date) => {
@@ -28,8 +28,11 @@ const columns = [
                 year: "numeric",
                 month: "long",
                 day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZone: "Asia/Makassar",
             };
-            return new Date(date).toLocaleDateString("id-ID", options);
+            return new Date(date).toLocaleDateString("id-ID", options) + " WITA";
         },
     },
     {

@@ -26,7 +26,9 @@ class ComplaintRepository implements ComplaintRepositoryInterface
             $query->where('user_id', $user->id);
         }
 
-        return $query->paginate(10);
+        return $query
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
     }
 
     public function findById(int $id)

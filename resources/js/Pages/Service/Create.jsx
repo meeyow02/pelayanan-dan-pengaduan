@@ -49,6 +49,7 @@ export default function Index() {
 
         const formData = new FormData();
         formData.append("service_category_id", values.service_category_id);
+        formData.append("description", values.description);
 
         // Append file jika ada
         if (fileList.length > 0) {
@@ -165,7 +166,7 @@ export default function Index() {
                                     </Typography.Text>
                                     <Col span={24}>
                                         <Form.Item
-                                            name="complaint_category_id"
+                                            name="service_category_id"
                                             rules={[
                                                 {
                                                     required: true,
@@ -198,12 +199,23 @@ export default function Index() {
                                         </span>
                                     </Typography.Text>
                                     <Col span={24}>
-                                        <TextArea
-                                            rows={5}
-                                            placeholder="Tulis permohonan yang ingin anda ajukan"
-                                            showCount
-                                            maxLength={1000}
-                                        />
+                                        <Form.Item
+                                            name="description"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        "Isi deskription tidak boleh kosong!",
+                                                },
+                                            ]}
+                                        >
+                                            <TextArea
+                                                rows={5}
+                                                placeholder="Tulis permohonan yang ingin anda ajukan"
+                                                showCount
+                                                maxLength={1000}
+                                            />
+                                        </Form.Item>
                                     </Col>
                                 </div>
 
@@ -310,12 +322,23 @@ export default function Index() {
                                         </Typography.Text>
                                     </Col>
                                     <Col span={19}>
-                                        <TextArea
-                                            rows={5}
-                                            placeholder="Tulis permohonan yang ingin anda ajukan"
-                                            showCount
-                                            maxLength={1000}
-                                        />
+                                        <Form.Item
+                                            name="description"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: "Isi deskripsi tidak boleh kosong!",
+                                                }
+                                            ]}
+                                        >
+                                            <TextArea
+                                                name="description"
+                                                rows={5}
+                                                placeholder="Tulis permohonan yang ingin anda ajukan"
+                                                showCount
+                                                maxLength={1000}
+                                            />
+                                        </Form.Item>
                                     </Col>
                                 </Row>
 

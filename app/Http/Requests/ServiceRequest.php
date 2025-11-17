@@ -24,6 +24,7 @@ class ServiceRequest extends FormRequest
         return [
             'service_category_id' => ['required', 'exists:service_categories,id'],
             'files' => ['required'],
+            'description' => ['required', 'string'],
         ];
     }
 
@@ -33,6 +34,7 @@ class ServiceRequest extends FormRequest
             'service_category_id.required' => 'Kategori layanan harus diisi',
             'service_category_id.exists' => 'Kategori layanan yang dipilih tidak terdaftar',
             'files.required' => 'Dokumen harus diisi',
+            'description.required' => 'Isi deskripsi harus berupa teks',
         ];
     }
 }

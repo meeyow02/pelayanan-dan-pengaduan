@@ -7,7 +7,7 @@ import CustomButton from "@/Components/CustomButton";
 
 export default function Login() {
     const { data, setData, post, processing } = useForm({
-        email: "",
+        login: "",
         password: "",
     });
     const [messageApi, contextHolder] = message.useMessage();
@@ -17,8 +17,8 @@ export default function Login() {
         try {
             post(route("login"), {
                 onError: (errors) => {
-                    if (errors.email) {
-                        messageApi.error(errors.email);
+                    if (errors.login) {
+                        messageApi.error(errors.login);
                     } else if (errors.password) {
                         messageApi.error(errors.password);
                     } else {
@@ -85,18 +85,18 @@ export default function Login() {
                     >
                         <CustomInput
                             blackLabel
-                            label="Email"
-                            name="email"
+                            label="Email atau Username"
+                            name="login"
                             rules={[
                                 {
                                     required: true,
-                                    message: "Email harus diisi",
+                                    message: "Email atau Username harus diisi",
                                 },
                             ]}
-                            placeholder="Masukkan Email"
-                            value={data.email}
+                            placeholder="Masukkan Email atau Username"
+                            value={data.login}
                             onChange={(e) => {
-                                setData("email", e.target.value);
+                                setData("login", e.target.value);
                             }}
                         />
 
