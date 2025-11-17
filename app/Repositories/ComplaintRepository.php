@@ -31,7 +31,7 @@ class ComplaintRepository implements ComplaintRepositoryInterface
 
     public function findById(int $id)
     {
-        return $this->Complaint::find($id)->with('complaintCategory')->first();
+        return $this->Complaint::where('id', $id)->with('complaintCategory')->first();
     }
 
     public function store(array $data)

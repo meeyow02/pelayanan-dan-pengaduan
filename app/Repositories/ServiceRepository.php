@@ -31,7 +31,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function findById(int $id)
     {
-        return $this->Service::with('serviceCategory')->find($id)->first();
+        return $this->Service::with('serviceCategory')->where('id', $id)->first();
     }
 
     public function store(array $data)
