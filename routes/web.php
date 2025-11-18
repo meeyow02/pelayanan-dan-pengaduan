@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserListController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,6 +26,15 @@ Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'ver
 
 Route::get('/ubah-password', [AuthController::class, 'changePassword'])->middleware(['auth', 'verified'])->name('change-password');
 Route::put('/ubah-password', [AuthController::class, 'updatePassword'])->middleware(['auth', 'verified'])->name('password.update');
+
+Route::middleware('auth')->prefix('daftar_user')->group(function () {
+    Route::get('/', [UserListController::class, 'index'])->name('user-list.index');
+    Route::get('/tambah_user', [UserListController::class, 'create'])->name('user-list.create');
+    Route::post('/', [UserListController::class, 'store'])->name('user-list.store');
+    Route::get('/{id}/edit', [UserListController::class, 'edit'])->name('user-list.edit');
+    Route::put('/{id}', [UserListController::class, 'update'])->name('user-list.update');
+    Route::delete('/{id}', [UserListController::class, 'destroy'])->name('user-list.destroy');
+});
 
 Route::middleware('auth')->prefix('master_data/kategori_pelayanan')->group(function () {
     Route::get('/', [ServiceCategoryController::class, 'index'])->name('service-category.index');
