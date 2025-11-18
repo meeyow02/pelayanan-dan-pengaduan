@@ -8,12 +8,11 @@ class ComplaintService
 {
     public function __construct(
         protected ComplaintRepositoryInterface $ComplaintRepository
-    ) {
-    }
+    ) {}
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
-        return $this->ComplaintRepository->getAll($search);
+        return $this->ComplaintRepository->getAll($search, $limit);
     }
 
     public function findById(int $id)
@@ -30,7 +29,7 @@ class ComplaintService
     {
         return $this->ComplaintRepository->update($id, $data);
     }
-    
+
     public function updateStatus(int $id, string $status)
     {
         return $this->ComplaintRepository->updateStatus($id, $status);

@@ -18,7 +18,9 @@ class ServiceCategoryController extends Controller
 
     public function index(Request $request)
     {
-        $serviceCategories = $this->serviceCategoryService->getAll($request->get('search'));
+        $search = $request->get('search');
+        $limit = $request->get('limit', 10);
+        $serviceCategories = $this->serviceCategoryService->getAll($search, $limit);
 
         return Inertia::render('Master Data/Service Category/Index', compact('serviceCategories'));
     }

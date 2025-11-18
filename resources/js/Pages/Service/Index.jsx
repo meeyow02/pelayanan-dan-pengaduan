@@ -94,7 +94,7 @@ export default function Index() {
     const { setTitle } = useTitleStore();
     const { flash, services, filters } = usePage().props;
     const { isMobile } = useResponsive();
-    const tableHeight = useTableHeight(420);
+    const tableHeight = useTableHeight(380);
 
     const { isCollapsed, isDrawerOpen, setIsDrawerOpen } = useSidebarStore();
 
@@ -135,7 +135,7 @@ export default function Index() {
         setPage(newPage);
         setLimit(newPageSize);
 
-        Inertia.get(
+        router.get(
             route("service.index"),
             { page: newPage, limit: newPageSize },
             {

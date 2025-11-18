@@ -13,17 +13,18 @@ class UserListRepository implements UserListRepositoryInterface
         $this->UserList = $UserList;
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
         $query = $this->UserList->query();
-        
+
         if ($search) {
             $query->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%")
-                ->orWhere('username', 'LIKE', "%{$search}%");
+                ->orWhere('username', 'LIKE', "%{$search}%")
+                ->orWhere('phone_number', 'LIKE', "%{$search}%");
         }
 
-        return $query->paginate(10);
+        return $query->paginate($limit);
     }
 
     public function findById(int $id)

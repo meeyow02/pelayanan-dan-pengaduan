@@ -17,12 +17,13 @@ class ComplaintController extends Controller
     public function __construct(
         private ComplaintService $complaintService,
         private ComplaintCategoryService $complaintCategoryService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request)
     {
-        $complaints = $this->complaintService->getAll($request->get('search'));
+        $search = $request->get('search');
+        $limit = $request->get('limit', 10);
+        $complaints = $this->complaintService->getAll($search, $limit);
 
         return Inertia::render('Complaint/Index', compact('complaints'));
     }
@@ -55,7 +56,6 @@ class ComplaintController extends Controller
             return redirect()
                 ->route('complaint.index')
                 ->with('success', 'Aduan berhasil disimpan');
-
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -78,7 +78,6 @@ class ComplaintController extends Controller
             }
 
             return Inertia::render('Complaint/Detail', compact('complaint'));
-
         } catch (Exception $e) {
             return redirect()
                 ->route('complaint.index')

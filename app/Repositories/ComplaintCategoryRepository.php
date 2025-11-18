@@ -13,7 +13,7 @@ class ComplaintCategoryRepository implements ComplaintCategoryRepositoryInterfac
         $this->ComplaintCategory = $ComplaintCategory;
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
         $query = $this->ComplaintCategory->query();
 
@@ -21,7 +21,7 @@ class ComplaintCategoryRepository implements ComplaintCategoryRepositoryInterfac
             $query->where('name', 'LIKE', '%' . $search . '%');
         }
 
-        return $query->paginate(10);
+        return $query->paginate($limit);
     }
 
     public function findById(int $id)

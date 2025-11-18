@@ -13,13 +13,29 @@ class ServiceRepository implements ServiceRepositoryInterface
         $this->Service = $Service;
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
         $query = $this->Service::with('serviceCategory', 'user');
         $user = auth()->user();
 
         if ($search) {
-            $query->where('description', 'LIKE', '%' . $search . '%');
+            $query->where(function ($q) use ($search) {
+                $q->where('description', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('serviceCategory', function ($q2) use ($search) {
+                        $q2->where('name', 'LIKE', '%' . $search . '%');
+                    });
+
+                $timestamp = strtotime($search);
+                if ($timestamp !== false) {
+                    $year = date('Y', $timestamp);
+                    $month = date('m', $timestamp);
+                    $day = date('d', $timestamp);
+
+                    $q->orWhereDate('created_at', $year . '-' . $month . '-' . $day)
+                        ->orWhereYear('created_at', $year)
+                        ->orWhereMonth('created_at', $month);
+                }
+            });
         }
 
         if ($user->role === 'user') {
@@ -28,7 +44,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
         return $query
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate($limit);
     }
 
     public function findById(int $id)

@@ -24,7 +24,9 @@ class ServiceController extends Controller
 
     public function index(Request $request)
     {
-        $services = $this->serviceService->getAll($request->get('search'));
+        $search = $request->get('search');
+        $limit = $request->get('limit', 10);
+        $services = $this->serviceService->getAll($search, $limit);
 
         return Inertia::render('Service/Index', compact('services'));
     }

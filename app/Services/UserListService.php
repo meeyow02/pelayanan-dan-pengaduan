@@ -11,9 +11,9 @@ class UserListService
     ) {
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
-        return $this->UserListRepository->getAll($search);
+        return $this->UserListRepository->getAll($search, $limit);
     }
 
     public function findById(int $id)

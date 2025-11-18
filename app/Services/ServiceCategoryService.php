@@ -8,12 +8,11 @@ class ServiceCategoryService
 {
     public function __construct(
         protected ServiceCategoryRepositoryInterface $ServiceCategoryRepository
-    ) {
-    }
+    ) {}
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
-        return $this->ServiceCategoryRepository->getAll($search);
+        return $this->ServiceCategoryRepository->getAll($search, $limit);
     }
 
     public function findById(int $id)

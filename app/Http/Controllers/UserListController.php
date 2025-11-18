@@ -17,7 +17,9 @@ class UserListController extends Controller
 
     public function index(Request $request)
     {
-        $userList = $this->userListService->getAll($request->get('search'));
+        $search = $request->get('search');
+        $limit = $request->get('limit', 10);
+        $userList = $this->userListService->getAll($search, $limit);
 
         return Inertia::render('User List/Index', compact('userList'));
     }

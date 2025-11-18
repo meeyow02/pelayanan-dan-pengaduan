@@ -13,15 +13,15 @@ class ServiceCategoryRepository implements ServiceCategoryRepositoryInterface
         $this->ServiceCategory = $ServiceCategory;
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
-        $query =  $this->ServiceCategory;
+        $query =  $this->ServiceCategory->query();
 
         if ($search) {
             $query->where('name', 'LIKE', '%' . $search . '%');
         }
 
-        return $query->paginate(10);
+        return $query->paginate($limit);
     }
 
     public function findById(int $id)

@@ -13,14 +13,32 @@ class ComplaintRepository implements ComplaintRepositoryInterface
         $this->Complaint = $Complaint;
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
         $query = $this->Complaint::with('complaintCategory');
         $user = auth()->user();
 
         if ($search) {
-            $query->where('complaint_number', 'LIKE', '%' . $search . '%');
+            $query->where(function ($q) use ($search) {
+                $q->where('complaint_number', 'LIKE', '%' . $search . '%')
+                    ->orWhere('content', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('complaintCategory', function ($q2) use ($search) {
+                        $q2->where('name', 'LIKE', '%' . $search . '%');
+                    });
+
+                $timestamp = strtotime($search);
+                if ($timestamp !== false) {
+                    $year = date('Y', $timestamp);
+                    $month = date('m', $timestamp);
+                    $day = date('d', $timestamp);
+
+                    $q->orWhereDate('created_at', $year . '-' . $month . '-' . $day)
+                        ->orWhereYear('created_at', $year)
+                        ->orWhereMonth('created_at', $month);
+                }
+            });
         }
+
 
         if ($user->role === 'user') {
             $query->where('user_id', $user->id);
@@ -28,7 +46,7 @@ class ComplaintRepository implements ComplaintRepositoryInterface
 
         return $query
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate($limit);
     }
 
     public function findById(int $id)

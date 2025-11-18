@@ -11,9 +11,9 @@ class ServiceService
     ) {
     }
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
-        return $this->ServiceRepository->getAll($search);
+        return $this->ServiceRepository->getAll($search, $limit);
     }
 
     public function findById(int $id)

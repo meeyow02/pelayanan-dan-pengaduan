@@ -8,12 +8,11 @@ class ComplaintCategoryService
 {
     public function __construct(
         protected ComplaintCategoryRepositoryInterface $ComplaintCategoryRepository
-    ) {
-    }
+    ) {}
 
-    public function getAll($search = null)
+    public function getAll($search = null, $limit = 10)
     {
-        return $this->ComplaintCategoryRepository->getAll($search);
+        return $this->ComplaintCategoryRepository->getAll($search, $limit);
     }
 
     public function findById(int $id)
