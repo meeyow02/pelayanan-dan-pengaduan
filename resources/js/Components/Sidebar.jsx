@@ -29,6 +29,7 @@ function Sidebar({ collapsed, isMobile = false }) {
         if (pathname.startsWith("/dental-treatment/fkrtl")) return ["fkrtl"];
         if (pathname.startsWith("/pengaduan")) return ["pengaduan"];
         if (pathname.startsWith("/pelayanan")) return ["pelayanan"];
+        if (pathname.startsWith("/daftar_user")) return ["daftar_user"];
         if (pathname.startsWith("/master_data/kategori_aduan"))
             return ["master_data_complaint"];
         if (pathname.startsWith("/master_data/kategori_pelayanan"))
@@ -213,6 +214,29 @@ function Sidebar({ collapsed, isMobile = false }) {
                                     onClick={handleLinkClick}
                                 >
                                     Pelayanan
+                                </Link>
+                            ),
+                        },
+                        {
+                            key: "daftar_user",
+                            icon: isParentActive("daftar_user", []) ? (
+                                <Icon
+                                    icon="material-symbols:person-add-rounded"
+                                    className="scale-110"
+                                />
+                            ) : (
+                                <Icon
+                                    color={defaultIconColor}
+                                    icon="material-symbols:person-add-rounded"
+                                    className="scale-110"
+                                />
+                            ),
+                            label: (
+                                <Link
+                                    href="/daftar_user"
+                                    onClick={handleLinkClick}
+                                >
+                                    Daftar User
                                 </Link>
                             ),
                         },
